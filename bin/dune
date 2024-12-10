@@ -1,0 +1,5 @@
+(executable
+ (public_name Cobb_PBT)
+ (name main)
+ (libraries Cobb_PBT qcheck)
+)
