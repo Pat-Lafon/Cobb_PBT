@@ -1,4 +1,15 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_sorted[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_sorted (generating)[2K[ ]  6118     0     0   845 / 20000     0.1s tests_R_us: is_sorted (collecting)[2K[ ] 16670     0     0  2391 / 20000     0.2s tests_R_us: is_sorted (collecting)[2K[[32;1m✓[0m] 20200     0     0  2918 / 20000     0.2s tests_R_us: is_sorted
+[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us (generating)[2K[ ] 10260     0     0  5120 / 20000     0.1s tests_R_us (collecting)[2K[ ] 19806     0     0  9835 / 20000     0.2s tests_R_us (collecting)[2K[[32;1m✓[0m] 20200     0     0 10035 / 20000     0.2s tests_R_us
+[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_sorted[2K[ ] 10751     0     0  1615 / 20000     0.1s tests_R_us: is_sorted (collecting)[2K[[32;1m✓[0m] 20200     0     0  2949 / 20000     0.2s tests_R_us: is_sorted
+[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_duplicate[2K[ ]   866     0     0     0 / 20000     0.0s tests_R_us: is_duplicate (collecting)[2K[ ] 11916     0     0     0 / 20000     0.1s tests_R_us: is_duplicate (collecting)[2K[[32;1m✓[0m] 20200     0     0     0 / 20000     0.2s tests_R_us: is_duplicate
+
+!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Warning for test tests_R_us: is_duplicate:
+
+WARNING: only 0.0% tests (of 20000) passed precondition for "tests_R_us: is_duplicate"
+
+NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
 ================================================================================
-[32;1msuccess[0m (ran 1 tests)
+1 warning(s)
+[32;1msuccess[0m (ran 3 tests)
