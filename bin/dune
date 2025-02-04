@@ -1,4 +1,6 @@
 (executable
  (public_name Cobb_PBT)
  (name main)
+ (modules main combinators)
  (libraries qcheck))
+

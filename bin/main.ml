@@ -1,5 +1,11 @@
 
+open Combinators
 let file = "results.txt"
+
+let test = int_list 10
+
+let () = print_endline "run test"
+let () = print_list test
 
 let func _l = true[@@ gen]
 
@@ -18,7 +24,6 @@ let rec is_duplicate = function
 (* let rec is_unique = function
 | [] -> true
 | h::t -> if List.mem h t then false else is_unique t *)
-
 
 let precondition_frequency_size =
   QCheck.(Test.make
