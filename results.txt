@@ -1,15 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us (generating)[2K[ ] 10260     0     0  5120 / 20000     0.1s tests_R_us (collecting)[2K[ ] 19806     0     0  9835 / 20000     0.2s tests_R_us (collecting)[2K[[32;1m✓[0m] 20200     0     0 10035 / 20000     0.2s tests_R_us
-[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_sorted[2K[ ] 10751     0     0  1615 / 20000     0.1s tests_R_us: is_sorted (collecting)[2K[[32;1m✓[0m] 20200     0     0  2949 / 20000     0.2s tests_R_us: is_sorted
-[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_duplicate[2K[ ]   866     0     0     0 / 20000     0.0s tests_R_us: is_duplicate (collecting)[2K[ ] 11916     0     0     0 / 20000     0.1s tests_R_us: is_duplicate (collecting)[2K[[32;1m✓[0m] 20200     0     0     0 / 20000     0.2s tests_R_us: is_duplicate
-
-!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-Warning for test tests_R_us: is_duplicate:
-
-WARNING: only 0.0% tests (of 20000) passed precondition for "tests_R_us: is_duplicate"
-
-NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
+[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_sized[2K[ ]     0     0     0     0 / 20000     0.0s tests_R_us: is_sized (generating)[2K[ ]  9387     0     0  4760 / 20000     0.1s tests_R_us: is_sized (collecting)[2K[ ] 19055     0     0  9563 / 20000     0.2s tests_R_us: is_sized (collecting)[2K[[32;1m✓[0m] 20200     0     0 10145 / 20000     0.2s tests_R_us: is_sized
 ================================================================================
-1 warning(s)
-[32;1msuccess[0m (ran 3 tests)
+[32;1msuccess[0m (ran 1 tests)
