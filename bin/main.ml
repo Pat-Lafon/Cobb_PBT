@@ -1,11 +1,5 @@
 
-open Combinators
 let file = "results.txt"
-
-let test = int_list 10
-
-let () = print_endline "run test"
-let () = print_list test
 
 let func _l = true[@@ gen]
 
