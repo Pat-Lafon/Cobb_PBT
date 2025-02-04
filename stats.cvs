@@ -1,4 +1,4 @@
-Name,Error,Pass,Total,Time
+Name,Error,Fail,Pass,Total,Time
 tests_R_us,0,0,10118,20000,0.2s
 tests_R_us: is_sorted,0,0,2907,20000,0.2s
-tests_R_us: is_duplicate,0,0,0,20000,0.2s
+tests_R_us: is_duplicate,0,0,2145,20000,0.2s

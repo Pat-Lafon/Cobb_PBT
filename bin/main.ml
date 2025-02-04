@@ -11,50 +11,28 @@ let rec is_sorted = function
 
 let rec is_duplicate = function
 | h1::h2::t -> if h1 = h2 then is_duplicate (h2::t) else false
-| _ -> false
+| _ -> true
 
 (* this is quite slow *)
-(* also could be broken? Every case passes *)
 (* let rec is_unique = function
 | [] -> true
 | h::t -> if List.mem h t then false else is_unique t *)
 
-let precondition_frequency_size =
+(* let precondition_frequency_sized = precondition_frequency is_sized *)
+
+let precondition_frequency prop name =
   QCheck.(Test.make
   ~count:20000
-  ~name:"tests_R_us"
+  ~name
    (pair (int) (list int)) (fun (n, l) ->
-      assume (is_sized n l);
+      assume (prop n l);
       func l))
 
-let precondition_frequency_sort =
-  QCheck.(Test.make
-  ~count:20000
-  ~name:"tests_R_us: is_sorted"
-   (pair (int)  (list int)) (fun (_n, l) ->
-      assume (is_sorted l);
-      func l))
+let precondition_frequency_size = precondition_frequency is_sized "tests_R_us: is_sized"
+let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "tests_R_us: is_sorted"
+let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "tests_R_us: is_duplicate"
 
-let precondition_frequency_dup =
-  QCheck.(Test.make
-  ~count:20000
-  ~name:"tests_R_us: is_duplicate"
-   (pair (int)  (list int)) (fun (_n, l) ->
-      assume (is_duplicate l);
-      func l))
-
-(* let precondition_frequency_unique =
-  QCheck.(Test.make
-  ~count:20000
-  ~name:"tests_R_us: is_uniqe"
-   (pair (int)  (list int)) (fun (_n, l) ->
-      assume (is_unique l);
-      func l)) *)
-
-      (* let () =
-        let oc = open_out file in
-        Printf.fprintf oc "%s\n" "hi";
-        close_out oc; *)
+(* let precondition_frequency_dup = precondition_frequency (fun _ l -> is_unique l) "tests_R_us: is_unique" *)
 
 let tests = [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup]
 
