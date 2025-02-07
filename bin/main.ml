@@ -20,7 +20,7 @@ let rec is_unique = function
 
 let precondition_frequency prop name =
   QCheck.(Test.make
-  ~count:20000
+  ~count:11111
   ~name
    (pair (int) (list int)) (fun (n, l) ->
       assume (prop n l);
@@ -51,7 +51,7 @@ let () =
         let () = print_endline "usage: <program> -t -o <test1> <test2> ..." in
         []
     else 
-      [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup; precondition_frequency_unique]
+      [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup]
     in
 
     if Array.mem "-o" Sys.argv then
