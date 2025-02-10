@@ -1,0 +1,5 @@
+generated error  fail  pass / total     time test name
+[2K[ ]     0     0     0     0 / 11111     0.0s is_sorted[2K[ ]     0     0     0     0 / 11111     0.0s is_sorted (generating)[2K[ ]  9809     0     0  1404 / 11111     0.1s is_sorted (collecting)[2K[[32;1m✓[0m] 11311     0     0  1615 / 11111     0.1s is_sorted
+[2K[ ]     0     0     0     0 / 11111     0.0s is_duplicate[2K[ ]  8619     0     0   941 / 11111     0.1s is_duplicate (collecting)[2K[[32;1m✓[0m] 11311     0     0  1187 / 11111     0.1s is_duplicate
+================================================================================
+[32;1msuccess[0m (ran 2 tests)
