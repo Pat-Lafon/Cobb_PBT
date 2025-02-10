@@ -14,7 +14,6 @@ def read_input():
             extracted_values = list(match.groups()) 
             # print(extracted_values)
             extracted_values.insert(0, extracted_values[3])
-            extracted_values[0] = "tests_R_us_" + extracted_values[0]
             extracted_values.pop()
             stats.append(extracted_values)
     return stats
@@ -23,7 +22,7 @@ stats = read_input()
 
 with open("stats.csv", mode="w", newline="") as file:
     writer = csv.writer(file)
-    writer.writerow(["Name", "Pass", "Total", "Time"])
+    writer.writerow(["Name", "Total", "Pass", "Time"])
     for row in stats:
         writer.writerow(row)
 
