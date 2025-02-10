@@ -37,7 +37,7 @@ let sample_tests = [precondition_frequency_size; precondition_frequency_sort; pr
 (* command line args *)
 let args = Array.to_list(Sys.argv)
 
-(* returns name of the test*)
+(* returns name of the test *)
 let t_get_name (QCheck2.Test.Test c) = QCheck2.Test.get_name c
 
 (* condition for filter *)
@@ -48,7 +48,7 @@ let () =
   let (tests) = 
     if Array.mem "-t" Sys.argv then
       if argc >= 3 then
-        (* filters out non-name tests s*)
+        (* filters out non-name tests *)
         List.filter is_required sample_tests
       else 
         let () = print_endline "usage: <program> -t -o <test1> <test2> ..." in

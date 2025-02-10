@@ -1,4 +1,4 @@
-Name,Pass,Total,Time
-tests_R_us_is_sized,20200,10118,0.2s
-tests_R_us_is_sorted,20200,2907,0.2s
-tests_R_us_is_duplicate,20200,2145,0.2s
+Name,Total,Pass,Time
+is_sized,20200,10118,0.2s
+is_sorted,20200,2907,0.2s
+is_duplicate,20200,2145,0.2s
