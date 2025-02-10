@@ -20,38 +20,41 @@ let rec is_unique = function
 
 let precondition_frequency prop name =
   QCheck.(Test.make
-  ~count:11111
+  ~count:20000
   ~name
    (pair (int) (list int)) (fun (n, l) ->
       assume (prop n l);
       func l))
 
-let precondition_frequency_size = precondition_frequency is_sized "tests_R_us: is_sized"
-let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "tests_R_us: is_sorted"
-let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "tests_R_us: is_duplicate"
-let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "tests_R_us: is_unique"
+let precondition_frequency_size = precondition_frequency is_sized "is_sized"
+let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "is_sorted"
+let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "is_duplicate"
+let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "is_unique"
 
+(* list of all possible tests to run *)
+let sample_tests = [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup; precondition_frequency_unique]
 
-let rec add_tests (tests : QCheck.Test.t list) = function
-| [] -> tests
-| "is_sized" :: t -> add_tests (precondition_frequency_size :: tests) t
-| "is_sorted" :: t -> add_tests (precondition_frequency_sort :: tests) t
-| "is_duplicate" :: t -> add_tests (precondition_frequency_dup :: tests) t
-| "is_unique" :: t-> add_tests (precondition_frequency_unique :: tests) t
-| _ :: t -> add_tests tests t
+(* command line args *)
+let args = Array.to_list(Sys.argv)
+
+(* returns name of the test*)
+let t_get_name (QCheck2.Test.Test c) = QCheck2.Test.get_name c
+
+(* condition for filter *)
+let is_required (test : QCheck2.Test.t) = List.mem (t_get_name test) args 
 
 let () = 
   let argc = Array.length Sys.argv in
-  let (tests : QCheck2.Test.t list) = 
+  let (tests) = 
     if Array.mem "-t" Sys.argv then
-      if argc > 2 then
-        let test_names = Array.to_list (Array.sub Sys.argv 1 (argc - 1)) in
-        add_tests [] test_names
+      if argc >= 3 then
+        (* filters out non-name tests s*)
+        List.filter is_required sample_tests
       else 
         let () = print_endline "usage: <program> -t -o <test1> <test2> ..." in
         []
     else 
-      [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup]
+      sample_tests
     in
 
     if Array.mem "-o" Sys.argv then

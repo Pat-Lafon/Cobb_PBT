@@ -1,4 +1,4 @@
 Name,Pass,Total,Time
-11311,5653,0.1s,tests_R_us: is_sized
-11311,1631,0.1s,tests_R_us: is_sorted
-11311,1184,0.2s,tests_R_us: is_duplicate
+is_sized,19873,9954,0.2s
+is_sorted,10251,1471,0.1s
+is_duplicate,11673,1219,0.1s

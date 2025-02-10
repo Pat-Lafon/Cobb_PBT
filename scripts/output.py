@@ -2,7 +2,7 @@ import sys
 import re
 import csv
 
-pattern = r"[^\s]+\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+([\w,:,\ ]+)"
+pattern = r"[^\s]+\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
 # pattern = r"^.+\d+\s+(\d+)\s+(\d+)\s+(\d+)\s\/\s(\d+)\s+(\d\.\ds)\s+([\w,:,\ ]+)"
 
 def read_input():
@@ -13,8 +13,8 @@ def read_input():
         if match:
             extracted_values = list(match.groups()) 
             print(extracted_values)
-            #extracted_values.insert(0, extracted_values[5])
-            #extracted_values.pop()
+            extracted_values.insert(0, extracted_values[3])
+            extracted_values.pop()
             stats.append(extracted_values)
     return stats
 
