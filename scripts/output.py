@@ -2,18 +2,19 @@ import sys
 import re
 import csv
 
-pattern = r"[^\s]+\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
+pattern = r"\[\\[32;1m✓\\[0m\]\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
 # pattern = r"^.+\d+\s+(\d+)\s+(\d+)\s+(\d+)\s\/\s(\d+)\s+(\d\.\ds)\s+([\w,:,\ ]+)"
 
 def read_input():
     stats = []
     for line in sys.stdin:
-        print(line)
+        # print(line)
         match = re.search(pattern, line)
         if match:
             extracted_values = list(match.groups()) 
-            print(extracted_values)
+            # print(extracted_values)
             extracted_values.insert(0, extracted_values[3])
+            extracted_values[0] = "tests_R_us_" + extracted_values[0]
             extracted_values.pop()
             stats.append(extracted_values)
     return stats
