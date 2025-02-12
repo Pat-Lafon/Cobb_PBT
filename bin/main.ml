@@ -13,11 +13,6 @@ let rec is_duplicate = function
 | h1::h2::t -> if h1 = h2 then is_duplicate (h2::t) else false
 | _ -> true
 
-(* this is quite slow *)
-(* let rec is_unique = function
-| [] -> true
-| h::t -> if List.mem h t then false else is_unique t *)
-
 let is_unique l = 
   let len = List.length l in
   let set = Hashtbl.create len in
@@ -28,7 +23,7 @@ let precondition_frequency prop name =
   QCheck.(Test.make
   ~count:20000
   ~name
-   (pair (int) (Combinators.int_list_dup)) (fun (n, l) ->
+   (pair (int) (Combinators.int_list_sorted)) (fun (n, l) ->
       assume (prop n l);
       func l))
 
