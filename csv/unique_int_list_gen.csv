@@ -1,0 +1,5 @@
+Postcondition Name,Total,Pass,Time
+is_sized,20200,10118,0.8s
+is_sorted,20200,3905,0.7s
+is_duplicate,20200,3187,0.8s
+is_unique,20000,20000,1.4s

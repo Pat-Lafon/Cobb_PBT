@@ -23,7 +23,7 @@ let precondition_frequency prop name =
   QCheck.(Test.make
   ~count:20000
   ~name
-   (pair (int) (Combinators.int_list_sorted)) (fun (n, l) ->
+   (pair (int) (Combinators.int_list_unique)) (fun (n, l) ->
       assume (prop n l);
       func l))
 
