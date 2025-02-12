@@ -1,4 +1,4 @@
-Name,Total,Pass,Time
+Postcondition Name,Total,Pass,Time
 is_sized,20200,10073,0.1s
 is_sorted,20000,20000,0.1s
 is_duplicate,20000,20000,0.1s

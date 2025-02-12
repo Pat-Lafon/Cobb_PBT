@@ -31,19 +31,19 @@ let int_list_dup_gen s st =
   aux s st
 
 (* int list with each element unique *)
-(* either dup or unique needs more work *)
+(* ignore, still in progress *)
 let int_list_unique_gen s st = 
   let set = Hashtbl.create s in
-  let rec aux s' st' =
+  let rec aux s' st' len =
     if s' <= 0 then
       []
     else
       let n = QCheck.Gen.int st' in
-      (fun x -> Hashtbl.replace set x ()) n;
-      if s' <> Hashtbl.length set then 
-        n :: aux (s' - 1) st' else 
-        aux (s' - 1) st' in
-  aux s st
+      Hashtbl.replace set n ();
+      if len <> Hashtbl.length set then 
+        n :: aux (s' - 1) st' (len + 1) else 
+        aux (s' - 1) st' len in
+  aux s st 1
 
 (* higher order programming *)
 let list f = QCheck.make (fun st -> f (QCheck.Gen.nat st) st)

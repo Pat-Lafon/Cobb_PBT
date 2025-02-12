@@ -30,7 +30,7 @@ filename = "./csv/" + args.filename + ".csv"
 
 with open(filename, mode="w", newline="") as file:
     writer = csv.writer(file)
-    writer.writerow(["Name", "Total", "Pass", "Time"])
+    writer.writerow(["Postcondition Name", "Total", "Pass", "Time"])
     for row in stats:
         writer.writerow(row)
 
