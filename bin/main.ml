@@ -1,6 +1,6 @@
 
 let file = "results.txt"
-
+ 
 let func _l = true[@@ gen]
 
 let is_sized n l = List.length l <= n
