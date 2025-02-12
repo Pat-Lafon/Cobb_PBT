@@ -1,0 +1,4 @@
+Name,Total,Pass,Time
+is_sized,20200,10121,3.8s
+is_sorted,20200,6,4.0s
+is_duplicate,20200,6,3.8s
