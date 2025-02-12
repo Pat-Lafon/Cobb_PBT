@@ -1,6 +1,7 @@
 import sys
 import re
 import csv
+import argparse
 
 pattern = r"\[\\[32;1m✓\\[0m\]\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
 # pattern = r"^.+\d+\s+(\d+)\s+(\d+)\s+(\d+)\s\/\s(\d+)\s+(\d\.\ds)\s+([\w,:,\ ]+)"
@@ -20,7 +21,14 @@ def read_input():
 
 stats = read_input()
 
-with open("stats.csv", mode="w", newline="") as file:
+parser = argparse.ArgumentParser(description="Process a filename from the -n flag.")
+parser.add_argument("-n", dest="filename", default="stats.csv", help="Specify the filename.")
+
+args = parser.parse_args()
+filename = args.filename + ".csv"
+
+
+with open(filename, mode="w", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(["Name", "Total", "Pass", "Time"])
     for row in stats:
