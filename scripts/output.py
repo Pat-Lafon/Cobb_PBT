@@ -25,7 +25,7 @@ parser = argparse.ArgumentParser(description="Process a filename from the -n fla
 parser.add_argument("-n", dest="filename", default="stats.csv", help="Specify the filename.")
 
 args = parser.parse_args()
-filename = args.filename + ".csv"
+filename = "./csv/" + args.filename + ".csv"
 
 
 with open(filename, mode="w", newline="") as file:
