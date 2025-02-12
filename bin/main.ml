@@ -18,7 +18,7 @@ let rec is_duplicate = function
 | [] -> true
 | h::t -> if List.mem h t then false else is_unique t *)
 
-let is_unique' l = 
+let is_unique l = 
   let len = List.length l in
   let set = Hashtbl.create len in
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
