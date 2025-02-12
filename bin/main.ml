@@ -18,15 +18,11 @@ let rec is_duplicate = function
 | [] -> true
 | h::t -> if List.mem h t then false else is_unique t *)
 
-let rec is_unique_aux l hs len= 
-  match l with
-  | [] -> Hashtbl.length hs = len
-  | x::xs -> let () = Hashtbl.replace hs x () in is_unique_aux xs hs len
-
-
-let is_unique l = let len = List.length l in
+let is_unique' l = 
+  let len = List.length l in
   let set = Hashtbl.create len in
-  is_unique_aux l set len
+  let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
+  len = Hashtbl.length set
 
 let precondition_frequency prop name =
   QCheck.(Test.make
