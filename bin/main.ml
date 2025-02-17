@@ -19,22 +19,33 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
-let default_gen = Combinators.int_list_sorted
+let default_gen = Combinators.int_list_dup
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
   ~name
-   (pair (int) (gen_type)) (fun (n, l) ->
-      assume (prop n l);
-      func l))
+   (gen_type) prop)
 
-let precondition_frequency_size = precondition_frequency is_sized "is_sized" default_gen
+(* this seems dumb, needs more work *)
+let assume_prop prop l = QCheck.assume (prop l); func l
+let assume_prop_pair prop (n, l) = QCheck.assume (prop n l); func l
+
+(* should QCheck.int be replpaced with our own gen that has st abstracted away? 
+there are also considerations with running int_list_variable_size, and how it also needs to accesss the size*)
+let precondition_frequency_size = precondition_frequency (assume_prop_pair is_sized) "is_sized" (QCheck.pair (QCheck.int) (default_gen))
+let precondition_frequency_sort = precondition_frequency (assume_prop is_sorted) "is_sorted" default_gen
+let precondition_frequency_dup = precondition_frequency (assume_prop is_duplicate) "is_duplicate" default_gen
+let precondition_frequency_unique = precondition_frequency (assume_prop is_unique) "is_unique" default_gen
+
+(* let precondition_frequency_size = precondition_frequency is_sized "is_sized" default_gen
 let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "is_sorted" default_gen
 let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "is_duplicate" default_gen
-let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "is_unique" default_gen
+let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "is_unique" default_gen *)
 
 (* list of all possible tests to run *)
 let sample_tests = [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup; precondition_frequency_unique]
+(* let sample_tests = [precondition_frequency_size; precondition_frequency_sort] *)
+
 
 (* command line args *)
 let args = Array.to_list(Sys.argv)
