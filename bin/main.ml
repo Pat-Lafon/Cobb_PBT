@@ -20,7 +20,6 @@ let is_unique l =
   len = Hashtbl.length set
 
 let default_gen = Combinators.int_list_sorted
-
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000

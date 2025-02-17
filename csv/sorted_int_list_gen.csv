@@ -1,5 +1,5 @@
-Postcondition Name,Total,Pass,Time
-is_sized,20200,10118,0.2s
+Precondition Name,Pass,Total,Time
+is_sized,10152,20200,0.2s
 is_sorted,20000,20000,0.2s
-is_duplicate,20200,6629,0.2s
+is_duplicate,6794,20200,0.2s
 is_unique,20000,20000,0.2s

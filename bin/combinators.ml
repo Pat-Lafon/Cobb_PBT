@@ -5,15 +5,21 @@
 
 (* trying to abstract away random state, not sure what
 intentions are, will ask for clarification on Monday *)
-let st = ref (Random.State.make [| 2100 |])
+let st = ref (Random.State.make [| 0 |])
 
 (* removed st parameter *)
+(* default int list gen with size s*)
 let rec int_list_size_gen s = 
   if s <= 0 then
     []
   else
     (* using st initialized in ref *)
     QCheck.Gen.int !st :: int_list_size_gen (s - 1)
+
+(* int list gen of size s or less*)
+let int_list_variable_size_gen s =
+  let s' = Random.State.int !st (s + 1) in 
+    int_list_size_gen s'
 
 (* int list sorted in ascending order *)
 let rec int_list_sorted_gen prev s = 
@@ -52,13 +58,16 @@ let int_list_unique_gen s =
   aux s 1
 
 (* higher order programming *)
+(* uses QCheck.Gen.nat for random size of list *)
 (* make still expects random state as parameter, "_" gets rid of it*)
-let list f = QCheck.make (fun _ -> f (QCheck.Gen.nat !st) )
+let arb_builer f = QCheck.make (fun _ -> f (QCheck.Gen.nat !st) )
 
-let int_list = list int_list_size_gen
-let int_list_sorted = list (int_list_sorted_gen 0)
-let int_list_dup = list int_list_dup_gen
-let int_list_unique = list int_list_unique_gen
+
+let int_list = arb_builer int_list_size_gen
+let int_list_variable_size = arb_builer int_list_variable_size_gen
+let int_list_sorted = arb_builer (int_list_sorted_gen 0)
+let int_list_dup = arb_builer int_list_dup_gen
+let int_list_unique = arb_builer int_list_unique_gen
 
 let gens = [int_list, int_list_sorted, int_list_dup]
 
