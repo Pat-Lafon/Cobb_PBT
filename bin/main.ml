@@ -19,18 +19,20 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
-let precondition_frequency prop name =
+let default_gen = Combinators.int_list
+
+let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
   ~name
-   (pair (int) (Combinators.int_list_unique)) (fun (n, l) ->
+   (pair (int) (gen_type)) (fun (n, l) ->
       assume (prop n l);
       func l))
 
-let precondition_frequency_size = precondition_frequency is_sized "is_sized"
-let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "is_sorted"
-let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "is_duplicate"
-let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "is_unique"
+let precondition_frequency_size = precondition_frequency is_sized "is_sized" default_gen
+let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "is_sorted" default_gen
+let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "is_duplicate" default_gen
+let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "is_unique" default_gen
 
 (* list of all possible tests to run *)
 let sample_tests = [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup; precondition_frequency_unique]
