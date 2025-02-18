@@ -1,23 +1,27 @@
-(* random int generators are from qcheck 
-  - allows test results to be consistent
-  - shortcut for the function signature 
-  I'll probably create my own version tho *)
+(* random int generators are from qcheck *)
+let st = ref (Random.State.make [| 24738 |])
+let st' = ref None
+let seed = 0
 
-(* trying to abstract away random state, not sure what
-intentions are, will ask for clarification on Monday *)
-let st = ref (Random.State.make [| 0 |])
+let set_st = let state = Random.State.make [| seed |] in
+  st' := Some state;
+  state
 
-let int_gen = QCheck.Gen.int !st
-let bool_gen = QCheck.Gen.bool !st
+let get_st st = match !st with
+| Some s -> s
+| None -> set_st
+
+let int_gen = QCheck.Gen.int (get_st st')
+let bool_gen = QCheck.Gen.bool (get_st st')
 
 (* removed st parameter *)
 (* default int list gen with size s*)
-let rec int_list_size_gen s = 
+let rec int_list_gen s = 
   if s <= 0 then
     []
   else
     (* using st initialized in ref *)
-    QCheck.Gen.int !st :: int_list_size_gen (s - 1)
+  int_gen :: int_list_gen (s - 1)
 
 (* default int list gen with random size 
   defining list_gen causes a stack overflow (???)
@@ -27,7 +31,7 @@ let rec int_list_size_gen s =
 (* int list gen of size s or less*)
 let int_list_variable_size_gen s =
   let s' = Random.State.int !st (s + 1) in 
-    int_list_size_gen s'
+    int_list_gen s'
 
 (* int list sorted in ascending order *)
 let rec int_list_sorted_gen prev s = 
@@ -58,13 +62,16 @@ let int_list_unique_gen s =
     if s' <= 0 then
       []
     else
-      let n = QCheck.Gen.int !st in
+      let n = int_gen in
       Hashtbl.replace set n ();
       if len <> Hashtbl.length set then 
         n :: aux (s' - 1) (len + 1) else 
         aux (s' - 1) len in
   aux s 1
 
+
+let size_gen_wrapper f = f (QCheck.Gen.nat !st)
+  
 (* higher order programming *)
 (* uses QCheck.Gen.nat for random size of list *)
 (* make still expects random state as parameter, "_" gets rid of it*)
@@ -72,13 +79,12 @@ let arb_builer f = QCheck.make (fun _ -> f (QCheck.Gen.nat !st) )
 let arb_builer' f = QCheck.make (fun _ -> f)
 
 
-let int_list = arb_builer int_list_size_gen
+let int_list = arb_builer' (size_gen_wrapper int_list_gen)
 let int_list_variable_size = arb_builer int_list_variable_size_gen
 let int_list_sorted = arb_builer (int_list_sorted_gen 0)
 let int_list_dup = arb_builer int_list_dup_gen
 let int_list_unique = arb_builer int_list_unique_gen
 
-let gens = [int_list, int_list_sorted, int_list_dup]
 
 
 
