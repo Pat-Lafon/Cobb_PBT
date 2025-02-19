@@ -19,20 +19,20 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
-let default_gen = Combinators.int_list_sorted
+let default_gen = Combinators.int_list
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
   ~name
    (gen_type) prop)
 
-(* this seems dumb, needs more work *)
 let assume_prop prop l = QCheck.assume (prop l); func l
-let assume_prop_pair prop (n, l) = QCheck.assume (prop n l); func l
 
 (* should QCheck.int be replaced with our own gen that has st abstracted away? *)
-(* there are also considerations with running the precondition for sisze, and how it also needs to accesss the size *)
-let precondition_frequency_size = precondition_frequency (assume_prop_pair is_sized) "is_sized" (QCheck.pair (QCheck.int) (default_gen))
+(* there are also considerations with running the precondition for size, and how it also needs to accesss the size *)
+let precondition_frequency_size = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
+  "is_sized" (QCheck.pair (QCheck.int) (default_gen))
+(* let precondition_frequency_size = precondition_frequency (assume_prop_pair is_sized) "is_sized" (QCheck.pair (QCheck.int) (Combinators.int_list_size)) *)
 let precondition_frequency_sort = precondition_frequency (assume_prop is_sorted) "is_sorted" default_gen
 let precondition_frequency_dup = precondition_frequency (assume_prop is_duplicate) "is_duplicate" default_gen
 let precondition_frequency_unique = precondition_frequency (assume_prop is_unique) "is_unique" default_gen
@@ -80,5 +80,4 @@ let () =
       in ()
 
     else 
-      let _ = Combinators.set_st in
       let () = QCheck_runner.run_tests_main ~argv:[|"-v"; "--verbose"; "--seed"; "0"|] tests in ()
