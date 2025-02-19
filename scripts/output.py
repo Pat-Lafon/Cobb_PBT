@@ -4,7 +4,6 @@ import csv
 import argparse
 
 pattern = r"\[\\[32;1m✓\\[0m\]\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
-# pattern = r"^.+\d+\s+(\d+)\s+(\d+)\s+(\d+)\s\/\s(\d+)\s+(\d\.\ds)\s+([\w,:,\ ]+)"
 
 def read_input():
     stats = []
@@ -27,7 +26,7 @@ parser = argparse.ArgumentParser(description="Process a filename from the -n fla
 parser.add_argument("-o", dest="filename", default="stats.csv", help="Specify the filename.")
 
 args = parser.parse_args()
-filename = "./csv/" + args.filename + ".csv"
+filename = "./csv/" + args.filename
 
 
 with open(filename, mode="w", newline="") as file:
