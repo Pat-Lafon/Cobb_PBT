@@ -4,7 +4,6 @@ import csv
 import argparse
 
 pattern = r"\[\\[32;1m✓\\[0m\]\s(\d+)[\s\d]+?(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
-# pattern = r"^.+\d+\s+(\d+)\s+(\d+)\s+(\d+)\s\/\s(\d+)\s+(\d\.\ds)\s+([\w,:,\ ]+)"
 
 def read_input():
     stats = []
@@ -16,21 +15,23 @@ def read_input():
             # print(extracted_values)
             extracted_values.insert(0, extracted_values[3])
             extracted_values.pop()
+            extracted_values.insert(1, extracted_values[2])
+            del extracted_values[3]
             stats.append(extracted_values)
     return stats
 
 stats = read_input()
 
 parser = argparse.ArgumentParser(description="Process a filename from the -n flag.")
-parser.add_argument("-n", dest="filename", default="stats.csv", help="Specify the filename.")
+parser.add_argument("-o", dest="filename", default="stats.csv", help="Specify the filename.")
 
 args = parser.parse_args()
-filename = "./csv/" + args.filename + ".csv"
+filename = "./csv/" + args.filename
 
 
 with open(filename, mode="w", newline="") as file:
     writer = csv.writer(file)
-    writer.writerow(["Postcondition Name", "Total", "Pass", "Time"])
+    writer.writerow(["Precondition Name", "Pass", "Total", "Time"])
     for row in stats:
         writer.writerow(row)
 
