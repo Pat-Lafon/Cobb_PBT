@@ -24,16 +24,17 @@ let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
   ~name
-    (pair (int) (gen_type)) (fun (n, l) ->
-      assume (prop n l);
+    (gen_type) (fun l ->
+      assume (prop l);
       func l))
 
 (* let assume_prop prop l = QCheck.assume (prop l); func l *)
 
-let precondition_frequency_size = precondition_frequency is_sized "is_sized" default_gen
-let precondition_frequency_sort = precondition_frequency (fun _ l -> is_sorted l) "is_sorted" default_gen
-let precondition_frequency_dup = precondition_frequency (fun _ l -> is_duplicate l) "is_duplicate" default_gen
-let precondition_frequency_unique = precondition_frequency (fun _ l -> is_unique l) "is_unique" default_gen
+let precondition_frequency_size = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
+  "is_sized" (QCheck.pair (QCheck.int) (default_gen))
+let precondition_frequency_sort = precondition_frequency is_sorted "is_sorted" default_gen
+let precondition_frequency_dup = precondition_frequency is_duplicate "is_duplicate" default_gen
+let precondition_frequency_unique = precondition_frequency is_unique "is_unique" default_gen
 
 (* should QCheck.int be replaced with our own gen that has st abstracted away? *)
 (* there are also considerations with running the precondition for size, and how it also needs to accesss the size *)
