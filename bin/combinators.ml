@@ -2,6 +2,18 @@ let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
 
+(* re-implementing sizecheck and subs from Cobb for now
+  (because I don't understand how they work) *)
+let sizecheck s = (s >= 0)
+(* let[@library] sizecheck =
+  let x = (true : [%v: int]) [@over] in
+  (iff v (x == 0) && iff (not v) (x > 0) : [%v: bool]) [@under] *)
+let subs s = s - 1
+
+(* let[@library] subs =
+  let s = (true : [%v: int]) [@over] in
+  (v == s - 1 : [%v: int]) [@under] *)
+
 (* default int list gen with size s *)
 (* achievable with as an a' arbitrary *)
 let int_list_gen () = 
@@ -64,21 +76,21 @@ let int_list_unique_gen () =
         n :: aux (s - 1) (len + 1) else 
         aux (s - 1) len in
   aux size 1
-
-
-let size_gen_wrapper f = f (nat_gen ())
   
-(* higher order programming *)
-(* make still expects random state as parameter, "_" gets rid of it *)
-let arb_builder f = QCheck.make (fun _ -> f ())
 
 
-let int_list = arb_builder int_list_gen
-let int_list_size = arb_builder int_list_variable_size_gen
-let int_list_sorted = arb_builder int_list_sorted_gen
-let int_list_dup = arb_builder int_list_dup_gen
-let int_list_unique = arb_builder int_list_unique_gen
 
+(* let rec sized_list_gen (s : int) : int list =
+  if sizecheck s then []
+  else if bool_gen () then []
+  else int_gen () :: sized_list_gen (subs s)
 
+let test_gen1 ()=
+  let size = int_gen () in
+  sized_list_gen size
+
+let test1 = arb_builder test_gen1
+
+ *)
 
 
