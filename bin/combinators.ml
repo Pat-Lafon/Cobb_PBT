@@ -25,6 +25,7 @@ let int_list_variable_size_gen () s =
 
 (* int list sorted in ascending order *)
 let int_list_sorted_gen () = 
+  let start = int_gen () in
   let size = nat_gen () in
   let rec aux prev s =
     if s <= 0 then
@@ -35,7 +36,7 @@ let int_list_sorted_gen () =
         n :: aux n (s - 1)
       else 
         aux prev (s - 1) in
-  aux 0 size
+  aux start size
 
 (* int list with each element identical *)
 let int_list_dup_gen () = 
