@@ -19,7 +19,7 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
-let default_gen = Combinators.int_list
+let default_gen = Arbitrary_builder.test1
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000

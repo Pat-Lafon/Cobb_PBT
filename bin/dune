@@ -1,6 +1,6 @@
 (executable
  (public_name Cobb_PBT)
  (name main)
- (modules main combinators)
+  (modules main combinators arbitrary_builder sized_list_prog)
  (libraries qcheck))
 
