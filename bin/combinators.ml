@@ -2,15 +2,23 @@ let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
 
-(* default int list gen with size s*)
-let int_list_gen () = 
-  let size = nat_gen () in
+(* default int list gen with size s *)
+(* achievable with as an a' arbitrary *)
+let int_list_gen size () = 
+  let s = size () in
   let rec aux s =
     if s <= 0 then
       []
     else
       int_gen () :: aux (s - 1) in
-  aux size
+  aux s
+
+(* looks like cobb synthesized generators *)
+let rec int_list_gen' s =
+  if s <= 0 then
+    []
+  else
+    int_gen () :: int_list_gen' (s - 1)
 
 
 (* int list gen of size s or less *)
@@ -72,7 +80,7 @@ let size_gen_wrapper f = f (nat_gen ())
 let arb_builder f = QCheck.make (fun _ -> f ())
 
 
-let int_list = arb_builder int_list_gen
+let int_list = arb_builder (int_list_gen nat_gen)
 let int_list_size = arb_builder int_list_variable_size_gen
 let int_list_sorted = arb_builder int_list_sorted_gen
 let int_list_dup = arb_builder int_list_dup_gen
