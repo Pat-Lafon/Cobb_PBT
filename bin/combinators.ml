@@ -2,20 +2,12 @@ let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
 
-(* re-implementing sizecheck and subs from Cobb for now
-  (because I don't understand how they work) *)
-let sizecheck s = (s >= 0)
-(* let[@library] sizecheck =
-  let x = (true : [%v: int]) [@over] in
-  (iff v (x == 0) && iff (not v) (x > 0) : [%v: bool]) [@under] *)
+(* re-implementing sizecheck and subs from Cobb *)
+let sizecheck s = (s <= 0)
 let subs s = s - 1
 
-(* let[@library] subs =
-  let s = (true : [%v: int]) [@over] in
-  (v == s - 1 : [%v: int]) [@under] *)
 
 (* default int list gen with size s *)
-(* achievable with as an a' arbitrary *)
 let int_list_gen () = 
   let size = nat_gen () in
   let rec aux s =
@@ -77,20 +69,5 @@ let int_list_unique_gen () =
         aux (s - 1) len in
   aux size 1
   
-
-
-
-(* let rec sized_list_gen (s : int) : int list =
-  if sizecheck s then []
-  else if bool_gen () then []
-  else int_gen () :: sized_list_gen (subs s)
-
-let test_gen1 ()=
-  let size = int_gen () in
-  sized_list_gen size
-
-let test1 = arb_builder test_gen1
-
- *)
 
 
