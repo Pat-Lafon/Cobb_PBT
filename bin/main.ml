@@ -64,8 +64,6 @@ let precondition_frequency_pair prop (gen_type, name) =
       assume (prop n l);
       func l))
 
-
-
 let create_test_list prop gen_name = List.map (precondition_frequency prop) gen_name
 let create_test_pair_list prop gen_name = List.map (precondition_frequency_pair prop) gen_name
 

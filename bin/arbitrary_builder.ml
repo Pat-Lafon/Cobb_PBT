@@ -65,4 +65,3 @@ let unique_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wr
 let sorted_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) sorted_list_generators
 
 let example = arb_builder (pair_size Sized_list.Prog.sized_list_gen)
-
