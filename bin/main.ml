@@ -19,7 +19,7 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
-let default_gen = Arbitrary_builder.test1
+(* let default_gen = Arbitrary_builder.sized_list_1 *)
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
@@ -28,22 +28,11 @@ let precondition_frequency prop name gen_type =
       assume (prop l);
       func l))
 
-(* let assume_prop prop l = QCheck.assume (prop l); func l *)
-
 let precondition_frequency_size = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
-  "is_sized" (QCheck.pair (QCheck.int) (default_gen))
-let precondition_frequency_sort = precondition_frequency is_sorted "is_sorted" default_gen
-let precondition_frequency_dup = precondition_frequency is_duplicate "is_duplicate" default_gen
-let precondition_frequency_unique = precondition_frequency is_unique "is_unique" default_gen
-
-(* should QCheck.int be replaced with our own gen that has st abstracted away? *)
-(* there are also considerations with running the precondition for size, and how it also needs to accesss the size *)
-(* let precondition_frequency_size = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
-  "is_sized" (QCheck.pair (QCheck.int) (default_gen))
-(* let precondition_frequency_size = precondition_frequency (assume_prop_pair is_sized) "is_sized" (QCheck.pair (QCheck.int) (Combinators.int_list_size)) *)
-let precondition_frequency_sort = precondition_frequency (assume_prop is_sorted) "is_sorted" default_gen
-let precondition_frequency_dup = precondition_frequency (assume_prop is_duplicate) "is_duplicate" default_gen
-let precondition_frequency_unique = precondition_frequency (assume_prop is_unique) "is_unique" default_gen *)
+  "is_sized" (QCheck.pair (QCheck.int) (Arbitrary_builder.int_list))
+let precondition_frequency_sort = precondition_frequency is_sorted "is_sorted" Arbitrary_builder.int_list
+let precondition_frequency_dup = precondition_frequency is_duplicate "is_duplicate" Arbitrary_builder.int_list
+let precondition_frequency_unique = precondition_frequency is_unique "is_unique" Arbitrary_builder.int_list
 
 
 (* list of all possible tests to run *)
