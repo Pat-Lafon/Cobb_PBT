@@ -26,6 +26,26 @@ let size_int_wrapper f () =
   let x2 = int_gen () in
   f x1 x2
 
+(* sized lists *)
+let sized_list = arb_builder (size_wrapper Sized_list.Prog.sized_list_gen)
+(* synthesized *)
+let sized_list_prog1_syn = arb_builder (size_wrapper Sized_list.Prog1_syn_edit.sized_list_gen)
+let sized_list_prog2_syn = arb_builder (size_wrapper Sized_list.Prog2_syn_edit.sized_list_gen)
+(* coverage-only *)
+let sized_list_prog1_cov = arb_builder (size_wrapper Sized_list.Prog1_cov.sized_list_gen)
+let sized_list_prog2_cov = arb_builder (size_wrapper Sized_list.Prog2_cov.sized_list_gen)
+
+
+
+(* duplicate lists *)
+let duplicate_list = arb_builder (size_int_wrapper Duplicate_list.Prog.duplicate_list_gen)
+(* synthesized *)
+let duplicate_list_prog1_syn = arb_builder (size_int_wrapper Duplicate_list.Prog1_syn_edit.duplicate_list_gen)
+let duplicate_list_prog2_syn = arb_builder (size_int_wrapper Duplicate_list.Prog2_syn_edit.duplicate_list_gen)
+(* coverage-only *)
+let duplicate_list_prog1_cov = arb_builder (size_int_wrapper Duplicate_list.Prog1_cov.duplicate_list_gen)
+let duplicate_list_prog2_cov = arb_builder (size_wrapper Duplicate_list.Prog2_cov.duplicate_list_gen)
+
 
 (* Cobb synthesized generators *)
 
