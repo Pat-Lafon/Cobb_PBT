@@ -19,7 +19,6 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
-(* let default_gen = Arbitrary_builder.sized_list_1 *)
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
@@ -28,16 +27,17 @@ let precondition_frequency prop name gen_type =
       assume (prop l);
       func l))
 
-let precondition_frequency_size = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
-  "is_sized" (QCheck.pair (QCheck.int) (Arbitrary_builder.int_list))
-let precondition_frequency_sort = precondition_frequency is_sorted "is_sorted" Arbitrary_builder.int_list
-let precondition_frequency_dup = precondition_frequency is_duplicate "is_duplicate" Arbitrary_builder.int_list
-let precondition_frequency_unique = precondition_frequency is_unique "is_unique" Arbitrary_builder.int_list
+let precondition_frequency_size gen = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
+  "is_sized" (QCheck.pair (QCheck.int) (gen))
+let precondition_frequency_sort gen = precondition_frequency is_sorted "is_sorted" gen
+let precondition_frequency_dup gen = precondition_frequency is_duplicate "is_duplicate" gen
+let precondition_frequency_unique gen = precondition_frequency is_unique "is_unique" gen
 
 
 (* list of all possible tests to run *)
-let sample_tests = [precondition_frequency_size; precondition_frequency_sort; precondition_frequency_dup; precondition_frequency_unique]
+let create_test_list gen = precondition_frequency_size gen :: precondition_frequency_sort gen :: precondition_frequency_dup gen :: precondition_frequency_unique gen :: []
 
+let tests = create_test_list Arbitrary_builder.sized_list_prog1_syn
 
 (* command line args *)
 let args = Array.to_list(Sys.argv)
@@ -53,12 +53,12 @@ let () =
     if Array.mem "-t" Sys.argv then
       if argc >= 3 then
         (* filters out non-name tests *)
-        List.filter is_required sample_tests
+        List.filter is_required tests
       else 
         let () = print_endline "usage: <program> -t -o <test1> <test2> ..." in
         []
     else 
-      sample_tests
+      tests
     in
 
     if Array.mem "-o" Sys.argv then
