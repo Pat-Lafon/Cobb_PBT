@@ -2,9 +2,11 @@ let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
 
-(* re-implementing sizecheck and subs from Cobb *)
+(* re-implementing unit functions from Cobb *)
 let sizecheck s = (s <= 0)
 let subs s = s - 1
+let list_mem l x = List.mem x l
+
 
 
 (* default int list gen with size s *)

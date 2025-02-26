@@ -1,4 +1,4 @@
 (library
- (name synthesized_generators)
+ (name sized_list)
  (libraries combinators)
  (modules sized_list_prog))

@@ -12,5 +12,5 @@
 (library
  (name arbitrary_builder)
  (modules arbitrary_builder)
- (libraries qcheck synthesized_generators combinators))
+ (libraries qcheck combinators sized_list duplicate_list unique_list sorted_list))
 

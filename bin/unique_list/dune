@@ -1,0 +1,4 @@
+(library
+ (name unique_list)
+ (libraries combinators)
+ (modules unique_list_prog))
