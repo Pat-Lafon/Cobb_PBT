@@ -34,6 +34,12 @@ let sized_list_prog2_syn = arb_builder (size_wrapper Sized_list.Prog2_syn_edit.s
 (* coverage-only *)
 let sized_list_prog1_cov = arb_builder (size_wrapper Sized_list.Prog1_cov.sized_list_gen)
 let sized_list_prog2_cov = arb_builder (size_wrapper Sized_list.Prog2_cov.sized_list_gen)
+let sized_list_prog3_cov = arb_builder (size_wrapper Sized_list.Prog2_cov.sized_list_gen)
+(* safe-only *)
+let sized_list_prog1_safe = arb_builder (size_wrapper Sized_list.Prog1_safe.sized_list_gen)
+let sized_list_prog2_safe = arb_builder (size_wrapper Sized_list.Prog2_safe.sized_list_gen)
+let sized_list_prog3_safe = arb_builder (size_wrapper Sized_list.Prog3_safe.sized_list_gen)
+
 
 
 
@@ -45,6 +51,9 @@ let duplicate_list_prog2_syn = arb_builder (size_int_wrapper Duplicate_list.Prog
 (* coverage-only *)
 let duplicate_list_prog1_cov = arb_builder (size_int_wrapper Duplicate_list.Prog1_cov.duplicate_list_gen)
 let duplicate_list_prog2_cov = arb_builder (size_wrapper Duplicate_list.Prog2_cov.duplicate_list_gen)
+(* safe-only *)
+let duplicate_list_prog1_safe = arb_builder (size_int_wrapper Duplicate_list.Prog1_safe.duplicate_list_gen)
+let duplicate_list_prog2_safe = arb_builder (size_int_wrapper Duplicate_list.Prog1_safe.duplicate_list_gen)
 
 
 (* Cobb synthesized generators *)

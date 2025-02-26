@@ -1,0 +1,5 @@
+Precondition Name,Pass,Total,Time
+is_sized,10152,20200,0.1s
+is_sorted,20000,20000,0.1s
+is_duplicate,20000,20000,0.1s
+is_unique,1025,20200,0.3s
