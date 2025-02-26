@@ -33,11 +33,11 @@ let precondition_frequency_sort gen = precondition_frequency is_sorted "is_sorte
 let precondition_frequency_dup gen = precondition_frequency is_duplicate "is_duplicate" gen
 let precondition_frequency_unique gen = precondition_frequency is_unique "is_unique" gen
 
-
-(* list of all possible tests to run *)
+(* creates tests for each precondition *)
+(* probably too much extra information *)
 let create_test_list gen = precondition_frequency_size gen :: precondition_frequency_sort gen :: precondition_frequency_dup gen :: precondition_frequency_unique gen :: []
 
-let tests = create_test_list Arbitrary_builder.sized_list_prog1_syn
+let tests = create_test_list Arbitrary_builder.sized_list_prog3_cov
 
 (* command line args *)
 let args = Array.to_list(Sys.argv)
