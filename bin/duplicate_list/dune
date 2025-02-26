@@ -1,0 +1,4 @@
+(library
+ (name duplicate_list)
+ (libraries combinators)
+ (modules duplicate_list_prog))

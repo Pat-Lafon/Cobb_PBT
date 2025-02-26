@@ -1,5 +1,7 @@
 open Combinators
-open Synthesized_generators
+open Sized_list
+open Duplicate_list
+(* open Unique_list *)
 
 (* higher order programming *)
 (* make still expects random state as parameter, "_" gets rid of it *)
@@ -14,9 +16,25 @@ let int_list_unique = arb_builder int_list_unique_gen
 
 
 (* Cobb synthesized generators *)
+
 let size_wrapper f () =
-  let size = int_gen () in
-  f size
+  let x = nat_gen () in (* nat_gen instead of int_gen because size will be too large - causing stack overflow *)
+  f x
+
+
+let size_int_wrapper f () =
+  let x1 = nat_gen () in
+  let x2 = int_gen () in
+  f x1 x2
+
 
 let sized_list = arb_builder (size_wrapper Sized_list_prog.sized_list_gen)
+let duplicate_list = arb_builder (size_int_wrapper Duplicate_list_prog.duplicate_list_gen)
+
+(* Err in unique_list_gen *)
+(* let unique_list = arb_builder (size_wrapper Unique_list.unique_list_gen) *)
+
+
+(* maybe it should be a wrapper with nat and nat instead of nat and int? *)
+(* let sorted_list = arb_builder (size_int_wrapper Duplicate_list_prog.sorted_list_gen) *)
   
