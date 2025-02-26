@@ -1,4 +1,4 @@
 (library
  (name sorted_list)
  (libraries combinators)
- (modules sorted_list_prog))
+ (modules prog))
