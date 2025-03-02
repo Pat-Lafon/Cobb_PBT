@@ -14,3 +14,10 @@
  (modules arbitrary_builder)
  (libraries qcheck combinators sized_list duplicate_list unique_list sorted_list))
 
+(env
+ (dev
+  (flags
+   (:standard -w -32-26-34-69-27-21)))
+ (release
+  (ocamlopt_flags
+   (:standard -O3))))

@@ -27,17 +27,19 @@ let precondition_frequency prop name gen_type =
       assume (prop l);
       func l))
 
-let precondition_frequency_size gen = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
-  "is_sized" (QCheck.pair (QCheck.int) (gen))
+      (* fix this *)
+let precondition_frequency_size gen name = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
+  name (QCheck.pair (QCheck.int) (gen))
 let precondition_frequency_sort gen = precondition_frequency is_sorted "is_sorted" gen
 let precondition_frequency_dup gen = precondition_frequency is_duplicate "is_duplicate" gen
 let precondition_frequency_unique gen = precondition_frequency is_unique "is_unique" gen
 
 (* creates tests for each precondition *)
-(* probably too much extra information *)
-let create_test_list gen = precondition_frequency_size gen :: precondition_frequency_sort gen :: precondition_frequency_dup gen :: precondition_frequency_unique gen :: []
+let sized_list_tests = List.map (fun (gen, name) -> precondition_frequency_size gen name) Arbitrary_builder.sized_list_arbitrary
 
-let tests = create_test_list Arbitrary_builder.sized_list_prog3_cov
+let tests = sized_list_tests
+let foldername = "./bin/sized_list/"
+
 
 (* command line args *)
 let args = Array.to_list(Sys.argv)
@@ -49,7 +51,7 @@ let is_required (test : QCheck2.Test.t) = List.mem (t_get_name test) args
   
 let () = 
   let argc = Array.length Sys.argv in
-  let (tests) = 
+  (* let tests = 
     if Array.mem "-t" Sys.argv then
       if argc >= 3 then
         (* filters out non-name tests *)
@@ -59,25 +61,27 @@ let () =
         []
     else 
       tests
-    in
+    in *)
+      if Array.mem "-o" Sys.argv then
+        let () =
 
-    if Array.mem "-o" Sys.argv then
-      let argv = [| "-v"; "--verbose"; "--seed"; "0" |] in 
-      let () =
-        let oc = open_out file in
-        let fmt = Format.formatter_of_out_channel oc in
-        Format.fprintf fmt "Running QCheck Tests with options: %a\n\n" 
-          (Format.pp_print_list Format.pp_print_string) (Array.to_list argv);
+          let _ = List.iter (fun g -> 
+            QCheck_runner.set_seed 0;
+            let filename = foldername ^ (t_get_name g) ^ ".result" in
+            let oc = open_out filename in
+            ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [g]);
+            close_out oc
+            ) tests in ()
 
-        (* Run the tests using QCheck_runner.run_tests *)
-        let _ = QCheck_runner.run_tests ~verbose:true ~out:oc tests in
+        in ()
+      else 
+        let _ = List.iter (fun g -> 
+          QCheck_runner.set_seed 0;
+          ignore (QCheck_runner.run_tests ~verbose:true [g]);
+          ) tests in ()
 
-        (* Close the file after capturing results *)
-        close_out oc
-      in ()
 
-    else 
-      let () = QCheck_runner.run_tests_main ~argv:[|"-v"; "--verbose"; "--seed"; "0"|] tests in () 
+
 
 (* tried using Arg.parse for better cli, 
   however, Arg.parse is probably interfering with QCheck_runner parameters *)
