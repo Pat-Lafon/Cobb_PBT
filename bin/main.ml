@@ -35,7 +35,7 @@ let precondition_frequency_dup gen = precondition_frequency is_duplicate "is_dup
 let precondition_frequency_unique gen = precondition_frequency is_unique "is_unique" gen
 
 (* creates tests for each precondition *)
-let sized_list_tests = List.map (fun (gen, name) -> precondition_frequency_size gen name) Arbitrary_builder.sized_list_arbitrary
+let sized_list_tests = List.map (fun (gen, name) -> precondition_frequency_size gen name) Arbitrary_builder.sized_list_arbitraries
 
 let tests = sized_list_tests
 let foldername = "./bin/sized_list/"
