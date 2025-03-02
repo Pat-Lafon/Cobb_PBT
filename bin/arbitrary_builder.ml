@@ -33,7 +33,7 @@ let sized_list_generators =
   (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog1_cov") ; 
   (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ]
 
-let sized_list_arbitrary = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) sized_list_generators
+let sized_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) sized_list_generators
 
 
 (* duplicate lists *)
