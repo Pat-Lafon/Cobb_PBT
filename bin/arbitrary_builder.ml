@@ -25,20 +25,13 @@ let size_int_wrapper f () =
   f x1 x2
 
 (* sized lists *)
-let sized_list = arb_builder (size_wrapper Sized_list.Prog.sized_list_gen)
-(* synthesized *)
-let sized_list_prog1_syn = arb_builder (size_wrapper Sized_list.Prog1_syn_edit.sized_list_gen)
-let sized_list_prog2_syn = arb_builder (size_wrapper Sized_list.Prog2_syn_edit.sized_list_gen)
-(* coverage-only *)
-let sized_list_prog1_cov = arb_builder (size_wrapper Sized_list.Prog1_cov.sized_list_gen)
-let sized_list_prog2_cov = arb_builder (size_wrapper Sized_list.Prog2_cov.sized_list_gen)
-let sized_list_prog3_cov = arb_builder (size_wrapper Sized_list.Prog2_cov.sized_list_gen)
-(* safe-only *)
-let sized_list_prog1_safe = arb_builder (size_wrapper Sized_list.Prog1_safe.sized_list_gen)
-let sized_list_prog2_safe = arb_builder (size_wrapper Sized_list.Prog2_safe.sized_list_gen)
-let sized_list_prog3_safe = arb_builder (size_wrapper Sized_list.Prog3_safe.sized_list_gen)
+let sized_list_generators = 
+  [ (Sized_list.Prog.sized_list_gen, "prog") ; 
+  (Sized_list.Prog1_syn_edit.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn_edit.sized_list_gen, "prog2_syn") ;
+  (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog1_cov") ; 
+  (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ]
 
-
+let sized_list_arbitrary = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) sized_list_generators
 
 
 (* duplicate lists *)
