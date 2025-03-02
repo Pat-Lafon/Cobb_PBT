@@ -22,22 +22,28 @@ let is_unique l =
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
+  ~max_fail: 1
   ~name
     (gen_type) (fun l ->
-      assume (prop l);
+      (try assume (prop l) with 
+      Combinators.BailOut -> QCheck2.Test.fail_report "failure");
       func l))
+      (* assume (prop l);
+      func l)) *)
 
       (* fix this *)
 let precondition_frequency_size gen name = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
   name (QCheck.pair (QCheck.int) (gen))
-let precondition_frequency_sort gen = precondition_frequency is_sorted "is_sorted" gen
-let precondition_frequency_dup gen = precondition_frequency is_duplicate "is_duplicate" gen
-let precondition_frequency_unique gen = precondition_frequency is_unique "is_unique" gen
+let precondition_frequency_sort gen name = precondition_frequency is_sorted name gen
+let precondition_frequency_dup gen name = precondition_frequency is_duplicate name gen
+let precondition_frequency_unique gen name = precondition_frequency is_unique name gen
 
-(* creates tests for each precondition *)
+(* creates tests for each generator *)
 let sized_list_tests = List.map (fun (gen, name) -> precondition_frequency_size gen name) Arbitrary_builder.sized_list_arbitraries
+let example = [precondition_frequency_size Arbitrary_builder.unique_list "example"]
 
-let tests = sized_list_tests
+
+let tests = example
 let foldername = "./bin/sized_list/"
 
 
