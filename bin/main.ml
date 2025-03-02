@@ -74,7 +74,6 @@ let tests = [precondition_frequency_pair is_sized_prog3_safe (Arbitrary_builder.
 (* foldername: where results gets outputted to if -o *)
 let foldername = "./bin/sized_list/safe_prop/"
 
-let tests = create_test_list Arbitrary_builder.sized_list_prog3_cov
 
 (* command line args *)
 let args = Array.to_list(Sys.argv)
