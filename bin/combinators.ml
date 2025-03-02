@@ -7,8 +7,10 @@ let sizecheck s = (s <= 0)
 let subs s = s - 1
 let list_mem l x = List.mem x l
 
-(* exception BailOut
-let Err = raise BailOut *)
+
+(* for Err/ Exn*)
+ exception BailOut
+(* let Err = raise BailOut *)
 
 (* default int list gen with size s *)
 let int_list_gen () = 
