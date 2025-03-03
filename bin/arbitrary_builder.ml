@@ -41,12 +41,21 @@ let duplicate_list_generators =
 let unique_list_generators = 
   [ (Unique_list.Prog.unique_list_gen, "prog") ; 
   (Unique_list.Prog1_syn.unique_list_gen, "prog1_syn") ; (Unique_list.Prog2_syn.unique_list_gen, "prog2_syn") ; (Unique_list.Prog3_syn.unique_list_gen, "prog3_syn") ; 
-  (Unique_list.Prog1_cov.unique_list_gen, "prog1_cov") ; (Unique_list.Prog2_cov.unique_list_gen, "prog2_cov") ; (Unique_list.Prog1_cov.unique_list_gen, "prog3_cov") ; 
+  (Unique_list.Prog1_cov.unique_list_gen, "prog1_cov") ; (Unique_list.Prog2_cov.unique_list_gen, "prog2_cov") ; (Unique_list.Prog3_cov.unique_list_gen, "prog3_cov") ; 
   (Unique_list.Prog1_safe.unique_list_gen, "prog1_safe") ; (Unique_list.Prog2_safe.unique_list_gen, "prog2_safe") ; (Unique_list.Prog3_safe.unique_list_gen, "prog3_safe") ;]
 
+(* sorted lists *)
+let sorted_list_generators =
+  [ (Sorted_list.Prog.sorted_list_gen, "prog") ;
+  (Sorted_list.Prog1_syn.sorted_list_gen, "prog1_syn") ; (Sorted_list.Prog2_syn.sorted_list_gen, "prog2_syn") ; (Sorted_list.Prog3_syn.sorted_list_gen, "prog3_syn") ;
+  (Sorted_list.Prog1_cov.sorted_list_gen, "prog1_cov") ; (Sorted_list.Prog2_cov.sorted_list_gen, "prog2_cov") ; (Sorted_list.Prog3_cov.sorted_list_gen, "prog3_cov") ;
+  (Sorted_list.Prog1_safe.sorted_list_gen, "prog1_safe") ; (Sorted_list.Prog2_safe.sorted_list_gen, "prog2_safe") ; (Sorted_list.Prog3_safe.sorted_list_gen, "prog3_safe") ;]
 
+(* arbitary values for generator *)
 let sized_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) sized_list_generators
 let duplicate_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) duplicate_list_generators
 let unique_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) unique_list_generators
+let sorted_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) sorted_list_generators
+
 
 
