@@ -14,11 +14,11 @@ folder = args.folder
 fin = args.input_file
 fout = "./csv/" + args.output_file
 
-pattern = r"\[\\[32;1m✓\\[0m\]\s(\d+)\s+(\d+)\s+(\d+)\s(\d+)\s\/\s\d+\s+(\d\.\ds)\s+(\w+)"
+pattern = r"\[\\[32;1m✓\\[0m\]\s(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s\/\s\d+\s+(\d+\.\d+s)\s(\w+)"
 
 if folder is not None:
     files = glob.glob(folder + "*.result")
-    # print(files)
+    print(files)
     stats = []
     for file in files:
         try:
@@ -26,6 +26,7 @@ if folder is not None:
                 for line in file_in:
                     match = re.search(pattern, line)
                     if match:
+                        print(file)
                         extracted_values = list(match.groups()) 
                         extracted_values_dict = {
                             "generated" : extracted_values[0],

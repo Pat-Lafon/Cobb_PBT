@@ -1,0 +1,9 @@
+Generator Name,Pass,Fail,Total,Time
+prog1_syn,10152,0,20200,0.0s
+prog2_cov,10152,0,20200,0.2s
+prog3_syn,10152,0,20200,0.0s
+prog,10152,0,20200,0.0s
+sized_list_syn1,10152,0,20200,0.0s
+prog1_cov,10152,0,20200,0.1s
+sized_list,10152,0,20200,0.0s
+prog2_syn,10152,0,20200,0.0s
