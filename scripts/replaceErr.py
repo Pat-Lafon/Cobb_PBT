@@ -13,7 +13,7 @@ pattern = r"(Err)"
 
 
 if folder is not None:
-    files = glob.glob(folder + "*.ml")
+    files = glob.glob(folder + "*_syn.ml")
     # print(files)
     stats = []
     for file in files:

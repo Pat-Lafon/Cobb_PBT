@@ -26,24 +26,30 @@ let precondition_frequency prop name gen_type =
   ~name
     (gen_type) (fun l ->
       (try assume (prop l) with 
-      Combinators.BailOut -> QCheck2.Test.fail_report "failure");
+      Combinators.BailOut -> QCheck2.Test.fail_report "bailing out");
       func l))
       (* assume (prop l);
       func l)) *)
 
       (* fix this *)
-let precondition_frequency_size gen name = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
+let precondition_frequency_size (gen, name) = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
   name (QCheck.pair (QCheck.int) (gen))
-let precondition_frequency_sort gen name = precondition_frequency is_sorted name gen
-let precondition_frequency_dup gen name = precondition_frequency is_duplicate name gen
-let precondition_frequency_unique gen name = precondition_frequency is_unique name gen
+let precondition_frequency_sort (gen, name) = precondition_frequency is_sorted name gen
+let precondition_frequency_dup (gen, name) = precondition_frequency is_duplicate name gen
+let precondition_frequency_unique (gen, name) = precondition_frequency is_unique name gen
 
 (* creates tests for each generator *)
-let sized_list_tests = List.map (fun (gen, name) -> precondition_frequency_size gen name) Arbitrary_builder.sized_list_arbitraries
-let example = [precondition_frequency_size Arbitrary_builder.unique_list "example"]
+let sized_list_tests = List.map precondition_frequency_size Arbitrary_builder.sized_list_arbitraries
+let duplicate_list_tests = List.map precondition_frequency_dup Arbitrary_builder.duplicate_list_arbitraries
+let unique_list_tests = List.map precondition_frequency_dup Arbitrary_builder.duplicate_list_arbitraries
 
 
-let tests = example
+
+(* tests: gets run by qcheck *)
+(* maybe I should make a funtion for running tests to make it clear *)
+let tests = unique_list_tests
+
+(* foldername: where results gets outputted to if -o *)
 let foldername = "./bin/sized_list/"
 
 
@@ -68,9 +74,11 @@ let () =
     else 
       tests
     in *)
+
+      (* TODO: abstract out the iter stuff *)
       if Array.mem "-o" Sys.argv then
         let () =
-
+          (* runs each test with see 0 *)
           let _ = List.iter (fun g -> 
             QCheck_runner.set_seed 0;
             let filename = foldername ^ (t_get_name g) ^ ".result" in
@@ -78,13 +86,14 @@ let () =
             ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [g]);
             close_out oc
             ) tests in ()
-
         in ()
       else 
-        let _ = List.iter (fun g -> 
+        (* runs each test with see 0 *)
+        let () = List.iter (fun g -> 
           QCheck_runner.set_seed 0;
           ignore (QCheck_runner.run_tests ~verbose:true [g]);
-          ) tests in ()
+          ) tests 
+        in ()
 
 
 

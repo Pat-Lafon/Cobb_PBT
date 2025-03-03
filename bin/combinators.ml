@@ -8,29 +8,26 @@ let subs s = s - 1
 let list_mem l x = List.mem x l
 
 
-(* for Err/ Exn*)
- exception BailOut
-(* let Err = raise BailOut *)
+(* for Err/ Exn *)
+exception BailOut
 
-(* default int list gen with size s *)
+(* int list gen of size s *)
+let rec int_list_size_gen s =
+  if s <= 0 then
+    []
+  else
+    int_gen () :: int_list_size_gen (s - 1)
+
+(* default int list gen with random size *)
 let int_list_gen () = 
   let size = nat_gen () in
-  let rec aux s =
-    if s <= 0 then
-      []
-    else
-      int_gen () :: aux (s - 1) in
-  aux size
+  int_list_size_gen size
 
 (* int list gen of size s or less *)
+(* reminder: come back to this *)
 let int_list_variable_size_gen () s =
   let size = Random.State.int (QCheck_runner.random_state ()) (s + 1) in 
-  let rec aux s =
-    if s <= 0 then
-      []
-    else
-      int_gen () :: aux (s - 1) in
-  aux size
+  int_list_size_gen size
 
 (* int list sorted in ascending order *)
 let int_list_sorted_gen () = 
