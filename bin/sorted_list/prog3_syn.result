@@ -1,0 +1,12 @@
+generated error  fail  pass / total     time test name
+[2K[ ]     0     0     0     0 / 20000     0.0s prog3_syn[2K[[31;1m✗[0m]     0     0     0     0 / 20000     0.0s prog3_syn
+
+--- [31;1mFailure[0m --------------------------------------------------------------------
+
+Test prog3_syn failed:
+
+ERROR: uncaught exception in generator for test prog3_syn after 20000 steps:
+Exception: Combinators.BailOut
+Backtrace: 
+================================================================================
+[31;1mfailure[0m (1 tests failed, 0 tests errored, ran 1 tests)

@@ -22,7 +22,7 @@ let is_unique l =
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
   ~count:20000
-  ~max_fail: 1
+  ~max_fail: 20000
   ~name
     (gen_type) (fun l ->
       (try assume (prop l) with 
@@ -41,16 +41,16 @@ let precondition_frequency_unique (gen, name) = precondition_frequency is_unique
 (* creates tests for each generator *)
 let sized_list_tests = List.map precondition_frequency_size Arbitrary_builder.sized_list_arbitraries
 let duplicate_list_tests = List.map precondition_frequency_dup Arbitrary_builder.duplicate_list_arbitraries
-let unique_list_tests = List.map precondition_frequency_dup Arbitrary_builder.duplicate_list_arbitraries
-
+let unique_list_tests = List.map precondition_frequency_unique Arbitrary_builder.unique_list_arbitraries
+let sorted_list_tests = List.map precondition_frequency_sort Arbitrary_builder.sorted_list_arbitraries
 
 
 (* tests: gets run by qcheck *)
 (* maybe I should make a funtion for running tests to make it clear *)
-let tests = unique_list_tests
+let tests = sorted_list_tests
 
 (* foldername: where results gets outputted to if -o *)
-let foldername = "./bin/sized_list/"
+let foldername = "./bin/sorted_list/"
 
 
 (* command line args *)
