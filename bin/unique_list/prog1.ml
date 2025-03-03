@@ -1,5 +1,5 @@
 let rec unique_list_gen (s : int) : int list =
-  if sizecheck s then Err
+  if sizecheck s then raise Err
   else
     let (l : int list) = unique_list_gen (subs s) in
     let (x : int) = int_gen () in

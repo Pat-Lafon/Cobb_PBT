@@ -53,7 +53,7 @@ let precondition_frequency prop (gen_type, name) =
   ~name
     (gen_type) (fun l ->
       (try assume (prop l) with 
-      Combinators.BailOut -> QCheck2.Test.fail_report "failure");
+      Combinators.BailOut -> QCheck2.Test.fail_report "bailing out");
       func l))
       (* assume (prop l);
       func l)) *)

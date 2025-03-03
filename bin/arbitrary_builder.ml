@@ -13,13 +13,10 @@ let int_list_dup = arb_builder int_list_dup_gen
 let int_list_unique = arb_builder int_list_unique_gen
 
 (* input wrappers for Cobb generators *)
-<<<<<<< HEAD
 let pair_size f () = 
   let size = nat_gen () in
   (size, f size)
 
-=======
->>>>>>> bc6b7b5 (Worked on Err)
 let size_wrapper f () =
   let x = nat_gen () in 
   f x
@@ -34,12 +31,9 @@ let size_int_wrapper f () =
 (* sized lists *)
 let sized_list_generators = 
   [ (Sized_list.Prog.sized_list_gen, "prog") ; 
-  (Sized_list.Prog1_syn_edit.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn_edit.sized_list_gen, "prog2_syn") ;
-  (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog1_cov") ; 
+  (Sized_list.Prog1_syn_edit.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn_edit.sized_list_gen, "prog2_syn") ; (Sized_list.Prog3_syn.sized_list_gen, "prog3_syn") ;
+  (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog3_cov") ; 
   (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ]
-
-let sized_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) sized_list_generators
-
 
 (* duplicate lists *)
 let duplicate_list = arb_builder (size_int_wrapper Duplicate_list.Prog.duplicate_list_gen)
