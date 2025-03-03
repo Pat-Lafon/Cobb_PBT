@@ -1,5 +1,0 @@
-Precondition Name,Pass,Total,Time
-is_sized,10152,20200,0.0s
-is_sorted,17100,20200,0.0s
-is_duplicate,15613,20200,0.0s
-is_unique,20000,20000,0.0s
