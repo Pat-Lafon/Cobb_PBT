@@ -1,8 +1,10 @@
-
 let file = "results.txt"
+let test_count = 20000
+let test_max_fail = 20000
  
 let func _l = true[@@ gen]
 
+(* list preconditions *)
 let is_sized n l = List.length l <= n
 
 let rec is_sorted = function
@@ -19,21 +21,32 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in 
   len = Hashtbl.length set
 
+(* QCheck.make *)
 let precondition_frequency prop name gen_type =
   QCheck.(Test.make
-  ~count:20000
-  ~max_fail: 20000
+  ~count:test_count
+  ~max_fail:test_max_fail
   ~name
     (gen_type) (fun l ->
-      (try assume (prop l) with 
-      Combinators.BailOut -> QCheck2.Test.fail_report "bailing out");
+      assume (prop l);
       func l))
-      (* assume (prop l);
-      func l)) *)
 
-      (* fix this *)
-let precondition_frequency_size (gen, name) = precondition_frequency ((fun prop (n, l) -> QCheck.assume (prop n l); func l ) is_sized) 
-  name (QCheck.pair (QCheck.int) (gen))
+let precondition_frequency_pair prop name gen_type =
+  QCheck.(Test.make
+  ~count:test_count
+  ~max_fail:test_max_fail
+  ~name
+    (gen_type) (fun (n, l) ->
+      assume (prop n l);
+      func l))
+
+
+(* let precondition_frequency_size' (gen, name) = 
+  let state = Random.State.make [|0|] in
+  let size = (*100*) Arbitrary_builder.int.gen state in 
+  precondition_frequency (is_sized size) name (gen size) *)
+
+let precondition_frequency_size (gen, name) = precondition_frequency_pair is_sized name gen
 let precondition_frequency_sort (gen, name) = precondition_frequency is_sorted name gen
 let precondition_frequency_dup (gen, name) = precondition_frequency is_duplicate name gen
 let precondition_frequency_unique (gen, name) = precondition_frequency is_unique name gen
@@ -44,10 +57,9 @@ let duplicate_list_tests = List.map precondition_frequency_dup Arbitrary_builder
 let unique_list_tests = List.map precondition_frequency_unique Arbitrary_builder.unique_list_arbitraries
 let sorted_list_tests = List.map precondition_frequency_sort Arbitrary_builder.sorted_list_arbitraries
 
-
 (* tests: gets run by qcheck *)
 (* maybe I should make a funtion for running tests to make it clear *)
-let tests = sorted_list_tests
+let tests = sized_list_tests
 
 (* foldername: where results gets outputted to if -o *)
 let foldername = "./bin/sorted_list/"

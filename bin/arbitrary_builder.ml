@@ -3,8 +3,10 @@ open Combinators
 (* higher order programming *)
 (* make still expects random state as parameter, "_" gets rid of it *)
 let arb_builder f = QCheck.make (fun _ -> f ())
+(* let arb_builder' f = QCheck.make (fun _ -> f) *)
 
 (* my generators *)
+let int = arb_builder int_gen
 let int_list = arb_builder int_list_gen
 let int_list_size = arb_builder int_list_variable_size_gen
 let int_list_sorted = arb_builder int_list_sorted_gen
@@ -12,6 +14,10 @@ let int_list_dup = arb_builder int_list_dup_gen
 let int_list_unique = arb_builder int_list_unique_gen
 
 (* input wrappers for Cobb generators *)
+let pair_size f () = 
+  let size = nat_gen () in
+  (size, f size)
+
 let size_wrapper f () =
   let x = nat_gen () in 
   f x
@@ -20,6 +26,15 @@ let size_int_wrapper f () =
   let x1 = nat_gen () in
   let x2 = int_gen () in
   f x1 x2
+
+(* let size_wrapper' f =
+  let x = nat_gen () in 
+  f x
+
+let size_int_wrapper' f =
+  let x1 = nat_gen () in
+  let x2 = int_gen () in
+  f x1 x2 *)
 
 (* Cobb synthesized generators *)
 
@@ -52,7 +67,8 @@ let sorted_list_generators =
   (Sorted_list.Prog1_safe.sorted_list_gen, "prog1_safe") ; (Sorted_list.Prog2_safe.sorted_list_gen, "prog2_safe") ; (Sorted_list.Prog3_safe.sorted_list_gen, "prog3_safe") ;]
 
 (* arbitary values for generator *)
-let sized_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) sized_list_generators
+(* let sized_list_arbitraries = List.map (fun (gen, name) -> (fun x -> arb_builder' (gen x)), name) sized_list_generators *)
+let sized_list_arbitraries = List.map (fun (gen, name) -> arb_builder (pair_size gen), name) sized_list_generators
 let duplicate_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) duplicate_list_generators
 let unique_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) unique_list_generators
 let sorted_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) sorted_list_generators
