@@ -1,0 +1,4 @@
+generated error  fail  pass / total     time test name
+[2K[ ]     0     0     0     0 / 20000     0.0s prop1_safe[2K[ ]     0     0     0     0 / 20000     0.0s prop1_safe (generating)[2K[ ]  7488     0     0  7488 / 20000     0.1s prop1_safe[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.2s prop1_safe
+================================================================================
+[32;1msuccess[0m (ran 1 tests)
