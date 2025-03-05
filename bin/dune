@@ -1,13 +1,13 @@
-(executable
- (public_name Cobb_PBT)
- (name main)
- (modules main )
- (libraries qcheck arbitrary_builder))
-
 (library
  (name combinators)
  (modules combinators)
- (libraries qcheck ))
+ (libraries qcheck))
+
+(executable
+ (public_name Cobb_PBT)
+ (name main)
+ (modules main)
+ (libraries qcheck combinators arbitrary_builder))
 
 (library
  (name arbitrary_builder)
@@ -21,3 +21,9 @@
  (release
   (ocamlopt_flags
    (:standard -O3))))
+
+(executable
+ (name enumeration)
+ (public_name enumeration)
+ (modules enumeration)
+ (libraries core_unix.command_unix combinators))

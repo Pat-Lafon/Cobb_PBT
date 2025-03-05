@@ -19,7 +19,11 @@
  (name Cobb_PBT)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune qcheck)
+ (depends
+  ocaml
+  dune
+  (core_unix
+   (= v0.15.0)))
  (tags
   (topics "to describe" your project)))
 
