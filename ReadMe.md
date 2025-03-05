@@ -13,6 +13,16 @@ dune exec Cobb_PBT
 opam switch create ./ --deps-only
 ```
 
-### Future Target experiment
+### QCheck
 
-<https://hackage.haskell.org/package/target>
+Until the patch is merged, we use a fork with a patch for QCheck
+
+```sh
+pwd
+> ~/Cobb_PBT
+git clone
+```
+
+### Luck experiment
+
+Use `ghcup` for installing cabal and the specific ghc version.
