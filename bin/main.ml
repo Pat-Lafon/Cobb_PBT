@@ -52,11 +52,8 @@ let precondition_frequency prop (gen_type, name) =
   ~max_fail:test_max_fail
   ~name
     (gen_type) (fun l ->
-      (try assume (prop l) with 
-      Combinators.BailOut -> QCheck2.Test.fail_report "bailing out");
+      assume (prop l);
       func l))
-      (* assume (prop l);
-      func l)) *)
 
 let precondition_frequency_pair prop (gen_type, name) =
   QCheck.(Test.make

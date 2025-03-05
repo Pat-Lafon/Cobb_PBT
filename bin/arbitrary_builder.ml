@@ -3,6 +3,7 @@ open Combinators
 (* higher order programming *)
 (* make still expects random state as parameter, "_" gets rid of it *)
 let arb_builder f = QCheck.make (fun _ -> f ())
+(* let arb_builder' f = QCheck.make (fun _ -> f) *)
 
 (* my generators *)
 let int = arb_builder int_gen
@@ -25,6 +26,15 @@ let size_int_wrapper f () =
   let x1 = nat_gen () in
   let x2 = int_gen () in
   f x1 x2
+
+(* let size_wrapper' f =
+  let x = nat_gen () in 
+  f x
+
+let size_int_wrapper' f =
+  let x1 = nat_gen () in
+  let x2 = int_gen () in
+  f x1 x2 *)
 
 (* Cobb synthesized generators *)
 
