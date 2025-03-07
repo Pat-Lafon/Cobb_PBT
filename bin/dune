@@ -26,4 +26,12 @@
  (name enumeration)
  (public_name enumeration)
  (modules enumeration)
- (libraries core_unix.command_unix combinators))
+ (libraries core_unix.command_unix combinators rbtree))
+
+(env
+ (dev
+  (flags
+   (:standard -w -32-26-34-69-27-21)))
+ (release
+  (ocamlopt_flags
+   (:standard -O3))))
