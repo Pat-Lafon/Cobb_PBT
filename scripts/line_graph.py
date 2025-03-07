@@ -21,9 +21,9 @@ for name, values in data.items():
     plt.plot(x_values, y_values, marker='o', linestyle='-', label=name)
 
 # Add labels and title
-plt.xlabel('RBTree depth')
+plt.xlabel('RBTre black height')
 plt.ylabel('Time in seconds')
-plt.title('Time to generate RBTrees')
+plt.title('Time to generate RBTrees of varying depths')
 
 plt.xticks(np.arange(min(x_values), max(x_values) + 1, 1))
 
