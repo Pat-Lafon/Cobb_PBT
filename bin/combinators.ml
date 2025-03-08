@@ -26,6 +26,8 @@ let rec count_rbtree_nodes (t) : int =
   | Rbtleaf -> 1
   | Rbtnode (_, l, _, r) -> 1 + count_rbtree_nodes l + count_rbtree_nodes r
 
+(** This is our default rbtree generator *)
+(* TODO: Somehow I would want a slight amount of variation in height here ... *)
 let rec gen_sized_int_rbtree size =
   if size == 0 then
     Rbtleaf
@@ -36,6 +38,15 @@ let rec gen_sized_int_rbtree size =
     let r = gen_sized_int_rbtree (subs size) in
     Rbtnode (c, l, v, r)
 
+let gen_sized_int_root_red_rbtree size =
+  if size == 0 then
+    Rbtleaf
+  else
+    let c = true in
+    let l = gen_sized_int_rbtree (subs size) in
+    let v = int_gen () in
+    let r = gen_sized_int_rbtree (subs size) in
+    Rbtnode (c, l, v, r)
 
 
 
@@ -76,6 +87,39 @@ let rec rbtree_invariant t h : bool =
     else
       (not (rb_root_color l true) && not (rb_root_color r true)) &&
       rbtree_invariant l h && rbtree_invariant r h
+
+let () = assert (
+  rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 0
+)
+
+let () = assert (
+  not (rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 1)
+)
+
+let () = assert (
+  rbtree_invariant (Rbtnode (false, Rbtleaf, 1, Rbtleaf)) 1
+)
+
+let () = assert (
+  rbtree_invariant (Rbtnode (false, Rbtnode (false, Rbtleaf, 1, Rbtleaf), 1, Rbtnode (false, Rbtleaf, 1, Rbtleaf))) 2
+)
+
+let () = assert (
+  not (rbtree_invariant (Rbtnode (false, Rbtnode (false, Rbtleaf, 1, Rbtleaf), 1, Rbtnode (true, Rbtleaf, 1, Rbtleaf))) 2)
+)
+
+let () = assert (
+  not (rbtree_invariant (Rbtnode (true, Rbtnode (true, Rbtleaf, 1, Rbtleaf), 1, Rbtnode (true, Rbtleaf, 1, Rbtleaf))) 0)
+)
+
+(* let rec heigh_inv t h : bool =
+  match t with
+  | Rbtleaf -> h = 0
+  | Rbtnode (c, l, _, r) ->
+    if c then
+      heigh_inv l (h - 1) && heigh_inv r (h - 1)
+    else
+      heigh_inv l h && heigh_inv r h *)
 
 (* let heigh_inv t h : bool =
   h >= 0 &&
