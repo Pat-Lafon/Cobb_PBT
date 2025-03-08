@@ -23,7 +23,9 @@
   ocaml
   dune
   (core_unix
-   (= v0.15.0)))
+   (= v0.15.0))
+  (ocamlformat
+   (= "0.26.1")))
  (tags
   (topics "to describe" your project)))
 

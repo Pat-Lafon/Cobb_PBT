@@ -26,3 +26,13 @@ git clone
 ### Luck experiment
 
 Use `ghcup` for installing cabal and the specific ghc version.
+
+```sh
+python scripts/run_luck.py
+```
+
+### Run other enumeration evals
+
+```sh
+opam exec -- dune exec enumeration
+```
