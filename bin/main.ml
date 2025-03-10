@@ -34,19 +34,16 @@ let rec has_duplicate_int_x l x = match l with
 
 (* do the filter functions need to check for size? *)
 (* safety filter functions for duplicate *)
-let is_duplicate_prog1_safe l s x = 
+let is_duplicate_prog123_safe l s x = 
   has_same_size l s && has_duplicate_int_x l x
-let is_duplicate_prog2_safe l s x = 
-  has_same_size l s && has_duplicate_int_x l x
-let is_duplicate_prog2_safe l s x = 
-  has_same_size l s && has_duplicate_int_x l x
-
-let is_duplicate_not_safe = [
-  ("prop1_safe", fun l s x -> not (has_same_size l s && has_duplicate_int_x l x)) ;
-  ("prop2_safe", fun l s x -> not (has_same_size l s && has_duplicate_int_x l x)) ;
-  ("prop3_safe", fun l s x -> not (has_same_size l s && has_duplicate_int_x l x)) ;
-]
 (* the safety repairs are just the correct repairs *)
+
+(* list of not safe filter functions for duplicate *)
+let is_not_safe_duplicate  = [
+  ("prop1_safe", fun l s x -> not (is_duplicate_prog123_safe l s x)) ;
+  ("prop2_safe", fun l s x -> not (is_duplicate_prog123_safe l s x)) ;
+  ("prop3_safe", fun l s x -> not (is_duplicate_prog123_safe l s x)) ;
+]
 
 (* safety filter functions for unique *)
 let is_unique_prog1_safe l s = 
@@ -98,13 +95,18 @@ let precondition_frequency_pair prop (gen_type, name) =
       func l))
 
 
-let create_test_list prop gen = 
-  List.map (precondition_frequency prop) gen
-let create_test_pair_list prop gen = List.map (precondition_frequency_pair prop) gen
+let create_test_list prop gens = 
+  List.map (precondition_frequency prop) gens
+let create_test_pair_list prop gens = List.map (precondition_frequency_pair prop) gens
 
-(* let create_safe_test_list prop gen =
-  List.map (precondition_frequency ) prop *)
+(* creates list of tests for runniing against filter functions *)
+let create_test_prop_list props (gen, _ ) = List.map (fun (prop, name) -> precondition_frequency prop (gen, name)) props
 
+
+(* list of only the ref generators for each *)
+let ref_generator_assoc_list = [
+  ("duplicate_list", List.nth Arbitrary_builder.duplicate_list_arbitraries 0)
+]
 
 (* algebraic data type for the generator arbitraries,
   helps with making a cleaner association list *)
@@ -152,31 +154,33 @@ let () =
 
     try
       (* if Array.get Sys.argv 1 = "-fs" then
-        let tests = create_test_list ()
+        let tests = create_test_prop_list is_not_safe_duplicate (List.assoc gen_name ref_generator_assoc_list)
+
 
       else *)
+      
       let prop_name = Array.get Sys.argv 1 in
       let gen_name = Array.get Sys.argv 2 in
 
         (* creates a list of tests with each variation of the generator *)
-        let tests = 
-          match List.assoc gen_name generator_assoc_list with
-            | Single g -> create_test_list (List.assoc prop_name single_prop_assoc_list) g
-            | Pair g -> create_test_pair_list (List.assoc prop_name pair_prop_assoc_list) g
-            | Option g -> create_test_list (List.assoc prop_name option_prop_assoc_list) g
-        in
+      let tests = 
+        match List.assoc gen_name generator_assoc_list with
+          | Single g -> create_test_list (List.assoc prop_name single_prop_assoc_list) g
+          | Pair g -> create_test_pair_list (List.assoc prop_name pair_prop_assoc_list) g
+          | Option g -> create_test_list (List.assoc prop_name option_prop_assoc_list) g
+      in
 
-        (* folder to output to *)
-        let foldername = "./bin/" ^ gen_name ^ "/" in
+      (* folder to output to *)
+      let foldername = "./bin/" ^ gen_name ^ "/" in
 
-        (* runs test for each variation of the generator with seed 0*)
-        List.iter (fun g ->
-          QCheck_runner.set_seed 0;
-          let filename = foldername ^ (t_get_name g) ^ ".result" in
-          let oc = open_out filename in
-          ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [g]);
-          close_out oc
-          ) tests
+      (* runs test for each variation of the generator with seed 0*)
+      List.iter (fun g ->
+        QCheck_runner.set_seed 0;
+        let filename = foldername ^ (t_get_name g) ^ ".result" in
+        let oc = open_out filename in
+        ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [g]);
+        close_out oc
+        ) tests
 
     with
     (* prints usage *)
