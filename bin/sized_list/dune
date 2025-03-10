@@ -2,6 +2,6 @@
  (name sized_list)
  (libraries combinators)
  (modules prog 
- prog1_syn_edit prog2_syn_edit prog3_syn
+ prog1_syn prog2_syn prog3_syn
  prog1_cov prog2_cov prog3_cov 
  prog1_safe prog2_safe prog3_safe))
