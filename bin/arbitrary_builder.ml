@@ -38,8 +38,15 @@ let catch_err f (s : int) (x : int) (*: 'a option list*) =
 let sized_list_generators = 
   [ (Sized_list.Prog.sized_list_gen, "prog") ; 
   (Sized_list.Prog1_syn.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn.sized_list_gen, "prog2_syn") ; (Sized_list.Prog3_syn.sized_list_gen, "prog3_syn") ;
+  (Sized_list.Prog4_syn.sized_list_gen, "prog4_syn") ; (Sized_list.Prog5_syn.sized_list_gen, "prog5_syn") ; (Sized_list.Prog6_syn.sized_list_gen, "prog6_syn") ;
+  (Sized_list.Prog8_syn.sized_list_gen, "prog7_syn") ; (Sized_list.Prog8_syn.sized_list_gen, "prog8_syn") ; (Sized_list.Prog9_syn.sized_list_gen, "prog9_syn") ;
   (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog3_cov") ; 
-  (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ]
+  (Sized_list.Prog4_cov.sized_list_gen, "prog4_cov") ; (Sized_list.Prog5_cov.sized_list_gen , "prog5_cov")  ; (Sized_list.Prog6_cov.sized_list_gen , "prog6_cov") ; 
+  (Sized_list.Prog7_cov.sized_list_gen, "prog7_cov") ; (Sized_list.Prog8_cov.sized_list_gen , "prog8_cov")  ; (Sized_list.Prog9_cov.sized_list_gen , "prog9_cov") ; 
+  (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ;
+  (Sized_list.Prog4_safe.sized_list_gen , "prog4_syn")  ; (Sized_list.Prog5_safe.sized_list_gen , "prog5_syn") ; (Sized_list.Prog6_safe.sized_list_gen , "prog6_syn") ;
+  (Sized_list.Prog7_safe.sized_list_gen , "prog7_syn")  ; (Sized_list.Prog8_safe.sized_list_gen , "prog8_syn") ; (Sized_list.Prog9_safe.sized_list_gen , "prog9_syn") ;
+  ]
 
 (* duplicate lists *)
 let duplicate_list_generators = 
