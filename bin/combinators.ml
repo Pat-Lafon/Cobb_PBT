@@ -42,7 +42,7 @@ let gen_sized_int_root_red_rbtree size =
     let r = gen_sized_int_rbtree (subs size) in
     Rbtnode (c, l, v, r)
 
-let rbtree_gen () =
+let default_rbtree_gen () =
   let size = nat_gen () in
   gen_sized_int_rbtree size
 
