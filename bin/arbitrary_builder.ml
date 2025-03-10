@@ -26,15 +26,10 @@ let size_int_wrapper f () =
   let x2 = int_gen () in
   f x1 x2
 
+(* dealing with exception Bailout *)
 let catch_err f (s : int) (x : int) (*: 'a option list*) =
   try Some (f s x) with
     | BailOut -> None
-
-let a = catch_err(Sorted_list.Prog.sorted_list_gen)
-
-let b = size_int_wrapper a
-
-let c = arb_builder b
 
 
 (* Cobb synthesized generators *)
@@ -42,7 +37,7 @@ let c = arb_builder b
 (* sized lists *)
 let sized_list_generators = 
   [ (Sized_list.Prog.sized_list_gen, "prog") ; 
-  (Sized_list.Prog1_syn_edit.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn_edit.sized_list_gen, "prog2_syn") ; (Sized_list.Prog3_syn.sized_list_gen, "prog3_syn") ;
+  (Sized_list.Prog1_syn.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn.sized_list_gen, "prog2_syn") ; (Sized_list.Prog3_syn.sized_list_gen, "prog3_syn") ;
   (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog3_cov") ; 
   (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ]
 
@@ -71,9 +66,9 @@ let sized_list_generators =
 (* duplicate lists *)
 let duplicate_list_generators = 
   [ (Duplicate_list.Prog.duplicate_list_gen, "prog") ;
-  (Duplicate_list.Prog1_syn_edit.duplicate_list_gen, "prog1_syn") ; (Duplicate_list.Prog2_syn_edit.duplicate_list_gen, "prog2_syn") ; 
-  (Duplicate_list.Prog1_cov.duplicate_list_gen, "prog1_cov") ; (Duplicate_list.Prog2_cov.duplicate_list_gen, "prog2_cov") ;
-  (Duplicate_list.Prog1_safe.duplicate_list_gen, "prog1_safe") ; (Duplicate_list.Prog2_safe.duplicate_list_gen, "prog2_safe") ]
+  (Duplicate_list.Prog1_syn.duplicate_list_gen, "prog1_syn") ; (Duplicate_list.Prog2_syn.duplicate_list_gen, "prog2_syn") ; (Duplicate_list.Prog3_syn.duplicate_list_gen, "prog3_syn") ; 
+  (Duplicate_list.Prog1_cov.duplicate_list_gen, "prog1_cov") ; (Duplicate_list.Prog2_cov.duplicate_list_gen, "prog2_cov") ; (Duplicate_list.Prog3_cov.duplicate_list_gen, "prog3_cov") ;
+  (Duplicate_list.Prog1_safe.duplicate_list_gen, "prog1_safe") ; (Duplicate_list.Prog2_safe.duplicate_list_gen, "prog2_safe") ; (Duplicate_list.Prog3_safe.duplicate_list_gen, "prog3_safe") ]
 
 (* Unique lists *)
 let unique_list_generators = 
