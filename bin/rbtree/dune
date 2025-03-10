@@ -1,4 +1,12 @@
 (library
  (name rbtree)
  (libraries combinators)
- (modules prog))
+ (modules prog
+ prog1_syn
+ prog2_syn
+ prog3_syn
+ prog4_syn
+ prog5_syn
+ prog6_syn
+
+ ))
