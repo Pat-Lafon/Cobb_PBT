@@ -76,8 +76,5 @@ let duplicate_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size
 let unique_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) unique_list_generators
 let sorted_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper (catch_err gen)), name)) sorted_list_generators
 
-
-let a = catch_err(Sorted_list.Prog.sorted_list_gen)
-
 let example = arb_builder (pair_size Sized_list.Prog.sized_list_gen)
 

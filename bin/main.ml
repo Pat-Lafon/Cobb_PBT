@@ -26,28 +26,56 @@ let is_unique l =
   let () = List.iter (fun x -> Hashtbl.replace set x ()) l in
   len = Hashtbl.length set
 
+(* units for filter functions *)
+let has_same_size l s = List.length = s
+let rec has_duplicate_int_x l x = match l with
+  | [] -> true
+  | h :: t -> h = x && has_duplicate_int_x t x
 
 (* do the filter functions need to check for size? *)
 (* safety filter functions for duplicate *)
-let is_duplicate_prog1_safe l = is_duplicate l
-let is_duplicate_prog2_safe l = is_duplicate l
-let is_duplicate_prog2_safe l = is_duplicate l
+let is_duplicate_prog1_safe l s x = 
+  has_same_size l s && has_duplicate_int_x l x
+let is_duplicate_prog2_safe l s x = 
+  has_same_size l s && has_duplicate_int_x l x
+let is_duplicate_prog2_safe l s x = 
+  has_same_size l s && has_duplicate_int_x l x
+
+let is_duplicate_not_safe = [
+  ("prop1_safe", fun l s x -> not (has_same_size l s && has_duplicate_int_x l x)) ;
+  ("prop2_safe", fun l s x -> not (has_same_size l s && has_duplicate_int_x l x)) ;
+  ("prop3_safe", fun l s x -> not (has_same_size l s && has_duplicate_int_x l x)) ;
+]
 (* the safety repairs are just the correct repairs *)
 
 (* safety filter functions for unique *)
-let is_unique_prog1_safe l = is_unique l
-let is_unique_prog2_safe l = is_unique l
-let is_unique_prog3_safe l = is_unique l
+let is_unique_prog1_safe l s = 
+  has_same_size l s && is_unique l
+let is_unique_prog2_safe l s = 
+  has_same_size l s && is_unique l
+let is_unique_prog3_safe l s = 
+  has_same_size l s && is_unique l
 
 (* safety filter functions for sized *)
-let is_sized_prog1_safe n l = is_sized n l
-let is_sized_prog2_safe n l = is_sized n l
-let is_sized_prog3_safe _ l = l = []
+let is_sized_prog1_safe l s = is_sized s l
+let is_sized_prog2_safe l s = is_sized s l
+let is_sized_prog3_safe l s = l = []
+let is_sized_prog4_safe l s = is_sized s l
+let is_sized_prog5_safe l s = l = []
+let is_sized_prog6_safe l s = l = []
+let is_sized_prog7_safe l s = l = []
+let is_sized_prog8_safe l s = l = []
+let is_sized_prog9_safe l s = l = []
+
+
 
 (* safety filter functions for sorted *)
-let is_sorted_prog1_safe l = is_duplicate l
-let is_sorted_prog2_safe l = is_duplicate l
-let is_sorted_prog3_safe l = is_duplicate l
+let is_sorted_prog1_safe l s x = 
+  has_same_size l s && has_duplicate_int_x l x
+let is_sorted_prog2_safe l s x = 
+  has_same_size l s && has_duplicate_int_x l x
+let is_sorted_prog3_safe l s x = 
+  has_same_size l s && has_duplicate_int_x l x
 
 
 (* QCheck.make *)
@@ -73,6 +101,10 @@ let precondition_frequency_pair prop (gen_type, name) =
 let create_test_list prop gen = 
   List.map (precondition_frequency prop) gen
 let create_test_pair_list prop gen = List.map (precondition_frequency_pair prop) gen
+
+(* let create_safe_test_list prop gen =
+  List.map (precondition_frequency ) prop *)
+
 
 (* algebraic data type for the generator arbitraries,
   helps with making a cleaner association list *)
@@ -119,6 +151,10 @@ let () =
   let argc = Array.length Sys.argv in
 
     try
+      (* if Array.get Sys.argv 1 = "-fs" then
+        let tests = create_test_list ()
+
+      else *)
       let prop_name = Array.get Sys.argv 1 in
       let gen_name = Array.get Sys.argv 2 in
 
@@ -145,4 +181,6 @@ let () =
     with
     (* prints usage *)
     | Invalid_argument s->  print_endline "Usage: dune exec Cobb_PBT -- property_name generator_name"
+    (* dune exec Cobb_PBT -- -fs property_name *)
+    
 
