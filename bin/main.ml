@@ -2,21 +2,19 @@ let file = "results.txt"
 let test_count = 20000
 let test_max_fail = 20000
 
-let func _l = true[@@ gen]
 
+let func _l = true[@@ gen]
 
 (* preconditions for list *)
 let is_sized n l = List.length l <= n
 
-let rec is_sorted = function
-| h1 :: h2::t -> if h1 <= h2 then is_sorted (h2 :: t) else false
+let rec is_sorted_aux = function
+| h1 :: h2::t -> if h1 <= h2 then is_sorted_aux (h2 :: t) else false
 | _ -> true
 
-let is_sorted' = function
-  | Some l -> is_sorted l
+let is_sorted = function
+  | Some l -> is_sorted_aux l
   | None -> QCheck2.Test.fail_report "bail out"
-
-
 
 let rec is_duplicate = function
 | h1::h2::t -> if h1 = h2 then is_duplicate (h2::t) else false
@@ -33,6 +31,7 @@ let is_unique l =
 (* safety filter functions for duplicate *)
 let is_duplicate_prog1_safe l = is_duplicate l
 let is_duplicate_prog2_safe l = is_duplicate l
+let is_duplicate_prog2_safe l = is_duplicate l
 (* the safety repairs are just the correct repairs *)
 
 (* safety filter functions for unique *)
@@ -48,7 +47,7 @@ let is_sized_prog3_safe _ l = l = []
 (* safety filter functions for sorted *)
 let is_sorted_prog1_safe l = is_duplicate l
 let is_sorted_prog2_safe l = is_duplicate l
-
+let is_sorted_prog3_safe l = is_duplicate l
 
 
 (* QCheck.make *)
@@ -71,16 +70,43 @@ let precondition_frequency_pair prop (gen_type, name) =
       func l))
 
 
+let create_test_list prop gen = 
+  List.map (precondition_frequency prop) gen
+let create_test_pair_list prop gen = List.map (precondition_frequency_pair prop) gen
 
-let create_test_list prop gen_name = List.map (precondition_frequency prop) gen_name
-let create_test_pair_list prop gen_name = List.map (precondition_frequency_pair prop) gen_name
+(* algebraic data type for the generator arbitraries,
+  helps with making a cleaner association list *)
+type generator_t = 
+  | Single of (int list QCheck.arbitrary * string) list
+  | Pair of ((int * int list) QCheck.arbitrary * string) list
+  | Option of (int list option QCheck.arbitrary * string) list
 
-(* tests: gets run by qcheck *)
-(* maybe I should make a funtion for running tests to make it clear *)
-let tests = create_test_list is_sorted' Arbitrary_builder.sorted_list_arbitraries
+(* association list for the generators and their names *)
+let generator_assoc_list = [ 
+  ("duplicate_list", Single Arbitrary_builder.duplicate_list_arbitraries) ;
+  ("sized_list", Pair Arbitrary_builder.sized_list_arbitraries) ;
+  ("sorted_list", Option Arbitrary_builder.sorted_list_arbitraries) ;
+  ("unique_list", Single Arbitrary_builder.unique_list_arbitraries) ;
+  ]
+  
+(* I don't know if there's something similar for functions? 
+  I found something about GADT's but I would need to investigate more *)
 
-(* foldername: where results gets outputted to if -o *)
-let foldername = "./bin/sorted_list/"
+(* type property_t =
+  | Single : ('a list -> bool) -> property_t
+  | Pair : (int -> 'a list -> bool) -> property_t
+  | Option : ('a list option -> bool) -> property_t *)
+
+let single_prop_assoc_list = [ 
+  ("is_duplicate", is_duplicate) ;
+  ("is_unique", is_unique) ;
+  ]
+let pair_prop_assoc_list = [
+  ("is_sized", is_sized);
+  ]
+let option_prop_assoc_list = [
+  ("is_sorted", is_sorted) ;
+]
 
 
 (* command line args *)
@@ -89,93 +115,34 @@ let args = Array.to_list(Sys.argv)
 (* returns name of the test *)
 let t_get_name (QCheck2.Test.Test c) = QCheck2.Test.get_name c
 
-let is_required (test : QCheck2.Test.t) = List.mem (t_get_name test) args
-
 let () =
   let argc = Array.length Sys.argv in
-  (* let tests =
-    if Array.mem "-t" Sys.argv then
-      if argc >= 3 then
-        (* filters out non-name tests *)
-        List.filter is_required tests
-      else
-        let () = print_endline "usage: <program> -t -o <test1> <test2> ..." in
-        []
-    else
-      tests
-    in *)
 
-      (* TODO: abstract out the iter stuff *)
-      if Array.mem "-o" Sys.argv then
-        let () =
-          (* runs each test with see 0 *)
-          let _ = List.iter (fun g ->
-            QCheck_runner.set_seed 0;
-            let filename = foldername ^ (t_get_name g) ^ ".result" in
-            let oc = open_out filename in
-            ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [g]);
-            close_out oc
-            ) tests in ()
-        in ()
-      else
-        (* runs each test with see 0 *)
-        let () = List.iter (fun g ->
+    try
+      let prop_name = Array.get Sys.argv 1 in
+      let gen_name = Array.get Sys.argv 2 in
+
+        (* creates a list of tests with each variation of the generator *)
+        let tests = 
+          match List.assoc gen_name generator_assoc_list with
+            | Single g -> create_test_list (List.assoc prop_name single_prop_assoc_list) g
+            | Pair g -> create_test_pair_list (List.assoc prop_name pair_prop_assoc_list) g
+            | Option g -> create_test_list (List.assoc prop_name option_prop_assoc_list) g
+        in
+
+        (* folder to output to *)
+        let foldername = "./bin/" ^ gen_name ^ "/" in
+
+        (* runs test for each variation of the generator with seed 0*)
+        List.iter (fun g ->
           QCheck_runner.set_seed 0;
-          ignore (QCheck_runner.run_tests ~verbose:true [g]);
+          let filename = foldername ^ (t_get_name g) ^ ".result" in
+          let oc = open_out filename in
+          ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [g]);
+          close_out oc
           ) tests
-        in ()
 
+    with
+    (* prints usage *)
+    | Invalid_argument s->  print_endline "Usage: dune exec Cobb_PBT -- property_name generator_name"
 
-
-
-(* tried using Arg.parse for better cli,
-  however, Arg.parse is probably interfering with QCheck_runner parameters *)
-
-(*
-(* returns name of the test *)
-let t_get_name (QCheck2.Test.Test c) = QCheck2.Test.get_name c
-
-let usage_msg = "dune exec Cobb_PBT [-o] [-g] <generator> [-t] <test1> [<test2>] ... "
-
-let output_to_file = ref false
-let test_names = ref []
-(* let generator = ref "" *)
-
-let anon_fun testname = test_names := testname :: !test_names
-
-let speclist =
-  [
-    ("-o", Arg.Set output_to_file, "Output test results to txt file");
-    (* ("-g", Arg.Set_string generator, "Set generator type"); *)
-    ("-t", Arg.String anon_fun, "Set tests")
-  ]
-
-let () =
-  Arg.parse speclist anon_fun usage_msg;
-  (* Printf.printf "Flag -o: %b\n" !output_to_file;
-  Printf.printf "Flag -g: %s\n" !generator;
-  Printf.printf "Extra arguments: [%s]\n" (String.concat ", " !test_names); *)
-
-  let tests =
-    if List.is_empty !test_names then
-      sample_tests
-    else
-    (* condition for filter *)
-    let is_required (test : QCheck2.Test.t) = List.mem (t_get_name test) !test_names in
-    List.filter is_required sample_tests
-  in
-  if !output_to_file then
-    let oc = open_out file in
-      let fmt = Format.formatter_of_out_channel oc in
-      Format.fprintf fmt "Running QCheck Tests with options: %a\n\n"
-        (Format.pp_print_list Format.pp_print_string) (!test_names);
-
-      (* Run the tests using QCheck_runner.run_tests *)
-      let _ = QCheck_runner.run_tests ~verbose:true ~out:oc tests in
-      close_out oc
-  else begin
-    let st = Random.State.make [|0|] in
-    let _ = QCheck_runner.run_tests ~verbose:true ~rand:st tests in ()
-    (* QCheck_runner.run_tests_main ~argv:[|"-v"; "--verbose"; "--seed"; "0"|] tests; *)
-  end
-*)
