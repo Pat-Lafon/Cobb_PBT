@@ -49,28 +49,6 @@ let sized_list_generators =
   ]
 
 (* duplicate lists *)
-let duplicate_list = arb_builder (size_int_wrapper Duplicate_list.Prog.duplicate_list_gen)
-(* synthesized *)
-let duplicate_list_prog1_syn = arb_builder (size_int_wrapper Duplicate_list.Prog1_syn_edit.duplicate_list_gen)
-let duplicate_list_prog2_syn = arb_builder (size_int_wrapper Duplicate_list.Prog2_syn_edit.duplicate_list_gen)
-(* coverage-only *)
-let duplicate_list_prog1_cov = arb_builder (size_int_wrapper Duplicate_list.Prog1_cov.duplicate_list_gen)
-let duplicate_list_prog2_cov = arb_builder (size_int_wrapper Duplicate_list.Prog2_cov.duplicate_list_gen)
-(* safe-only *)
-let duplicate_list_prog1_safe = arb_builder (size_int_wrapper Duplicate_list.Prog1_safe.duplicate_list_gen)
-let duplicate_list_prog2_safe = arb_builder (size_int_wrapper Duplicate_list.Prog1_safe.duplicate_list_gen)
-
-
-(* Cobb synthesized generators *)
-
-(* sized lists *)
-let sized_list_generators = 
-  [ (Sized_list.Prog.sized_list_gen, "prog") ; 
-  (Sized_list.Prog1_syn_edit.sized_list_gen, "prog1_syn") ; (Sized_list.Prog2_syn_edit.sized_list_gen, "prog2_syn") ; (Sized_list.Prog3_syn.sized_list_gen, "prog3_syn") ;
-  (Sized_list.Prog1_cov.sized_list_gen, "prog1_cov") ; (Sized_list.Prog2_cov.sized_list_gen , "prog2_cov")  ; (Sized_list.Prog3_cov.sized_list_gen , "prog3_cov") ; 
-  (Sized_list.Prog1_safe.sized_list_gen , "prog1_syn")  ; (Sized_list.Prog2_safe.sized_list_gen , "prog2_syn") ; (Sized_list.Prog3_safe.sized_list_gen , "prog3_syn") ]
-
-(* duplicate lists *)
 let duplicate_list_generators = 
   [ (Duplicate_list.Prog.duplicate_list_gen, "prog") ;
   (Duplicate_list.Prog1_syn.duplicate_list_gen, "prog1_syn") ; (Duplicate_list.Prog2_syn.duplicate_list_gen, "prog2_syn") ; (Duplicate_list.Prog3_syn.duplicate_list_gen, "prog3_syn") ; 
