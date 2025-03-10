@@ -49,7 +49,6 @@ let gen_sized_int_root_red_rbtree size =
     Rbtnode (c, l, v, r)
 
 
-
 let rec num_black t h : bool =
   match t with
   | Rbtleaf -> h = 0
