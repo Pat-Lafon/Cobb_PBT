@@ -26,6 +26,16 @@ let size_int_wrapper f () =
   let x2 = int_gen () in
   f x1 x2
 
+let catch_err f (s : int) (x : int) (*: 'a option list*) =
+  try Some (f s x) with
+    | BailOut -> None
+
+let a = catch_err(Sorted_list.Prog.sorted_list_gen)
+
+let b = size_int_wrapper a
+
+let c = arb_builder b
+
 
 (* Cobb synthesized generators *)
 
@@ -84,6 +94,9 @@ let sorted_list_generators =
 let sized_list_arbitraries = List.map (fun (gen, name) -> arb_builder (pair_size gen), name) sized_list_generators
 let duplicate_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) duplicate_list_generators
 let unique_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_wrapper gen), name)) unique_list_generators
-let sorted_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper gen), name)) sorted_list_generators
+let sorted_list_arbitraries = List.map (fun (gen, name) -> (arb_builder (size_int_wrapper (catch_err gen)), name)) sorted_list_generators
+
+
+let a = catch_err(Sorted_list.Prog.sorted_list_gen)
 
 let example = arb_builder (pair_size Sized_list.Prog.sized_list_gen)

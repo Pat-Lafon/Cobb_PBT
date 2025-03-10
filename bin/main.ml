@@ -12,6 +12,12 @@ let rec is_sorted = function
 | h1 :: h2::t -> if h1 <= h2 then is_sorted (h2 :: t) else false
 | _ -> true
 
+let is_sorted' = function
+  | Some l -> is_sorted l
+  | None -> QCheck2.Test.fail_report "bail out"
+
+
+
 let rec is_duplicate = function
 | h1::h2::t -> if h1 = h2 then is_duplicate (h2::t) else false
 | _ -> true
@@ -69,10 +75,10 @@ let create_test_pair_list prop gen_name = List.map (precondition_frequency_pair 
 
 (* tests: gets run by qcheck *)
 (* maybe I should make a funtion for running tests to make it clear *)
-let tests = [precondition_frequency_pair is_sized_prog3_safe (Arbitrary_builder.example, "prop3_safe")]
+let tests = create_test_list is_sorted' Arbitrary_builder.sorted_list_arbitraries
 
 (* foldername: where results gets outputted to if -o *)
-let foldername = "./bin/sized_list/safe_prop/"
+let foldername = "./bin/sorted_list/"
 
 
 (* command line args *)
