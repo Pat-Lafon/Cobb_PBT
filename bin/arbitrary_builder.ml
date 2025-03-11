@@ -1,34 +1,9 @@
 open Combinators
 
-(* higher order programming *)
-(* make still expects random state as parameter, "_" gets rid of it *)
-let arb_builder f = QCheck.make (fun _ -> f ())
-
-(* my generators *)
-(* let int = arb_builder int_gen *)
-(* let int_list = arb_builder int_list_gen
-let int_list_sorted = arb_builder int_list_sorted_gen
-let int_list_dup = arb_builder int_list_dup_gen
-let int_list_unique = arb_builder int_list_unique_gen *)
-
-(* input wrappers for Cobb generators *)
-let pair_size f () =
-  let size = nat_gen () in
-  (size, f size)
-
-let size_wrapper f () =
-  let x = nat_gen () in
-  f x
-
-let size_int_wrapper f () =
-  let x1 = nat_gen () in
-  let x2 = int_gen () in
-  f x1 x2
-
 (* dealing with exception Bailout *)
 let catch_err f = fun () -> try Some (f ()) with BailOut -> None
 
-(* Cobb synthesized generators *)
+(* Cobb generators *)
 
 (* sized lists *)
 let sized_list_generators =
@@ -108,6 +83,29 @@ let sorted_list_generators =
     (Sorted_list.Prog3_safe.sorted_list_gen, "prog3_safe");
   ]
 
+let rbtree_generators =
+  [
+    (Rbtree.Prog.rbtree_gen, "prog");
+    (Rbtree.Prog1_syn.rbtree_gen, "prog1_syn");
+    (Rbtree.Prog2_syn.rbtree_gen, "prog2_syn");
+    (Rbtree.Prog3_syn.rbtree_gen, "prog3_syn");
+    (Rbtree.Prog4_syn.rbtree_gen, "prog4_syn");
+    (Rbtree.Prog5_syn.rbtree_gen, "prog5_syn");
+    (Rbtree.Prog6_syn.rbtree_gen, "prog6_syn");
+    (Rbtree.Prog1_cov.rbtree_gen, "prog1_cov");
+    (Rbtree.Prog2_cov.rbtree_gen, "prog2_cov");
+    (Rbtree.Prog3_cov.rbtree_gen, "prog3_cov");
+    (Rbtree.Prog4_cov.rbtree_gen, "prog4_cov");
+    (Rbtree.Prog5_cov.rbtree_gen, "prog5_cov");
+    (Rbtree.Prog6_cov.rbtree_gen, "prog6_cov");
+    (Rbtree.Prog1_safe.rbtree_gen, "prog1_safe");
+    (Rbtree.Prog2_safe.rbtree_gen, "prog2_safe");
+    (Rbtree.Prog3_safe.rbtree_gen, "prog3_safe");
+    (Rbtree.Prog4_safe.rbtree_gen, "prog4_safe");
+    (Rbtree.Prog5_safe.rbtree_gen, "prog5_safe");
+    (Rbtree.Prog6_safe.rbtree_gen, "prog6_safe");
+  ]
+
 (* arbitary values for generator *)
 (* let sized_list_arbitraries = List.map (fun (gen, name) -> (fun x -> arb_builder' (gen x)), name) sized_list_generators *)
 let sized_list_arbitraries =
@@ -147,3 +145,15 @@ let sorted_list_arbitraries =
             (size, x, gen size x)),
         name ))
     sorted_list_generators
+
+let rbtree_arbitraries =
+  List.map
+    (fun (gen, name) ->
+      ( (fun () ->
+          let height = small_nat_gen () in
+          let color = bool_gen () in
+          let inv = if color then 2 * height else (2 * height) + 1 in
+
+          (inv, color, height, gen inv color height)),
+        name ))
+    rbtree_generators
