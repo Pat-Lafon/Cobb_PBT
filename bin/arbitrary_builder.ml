@@ -5,12 +5,11 @@ open Combinators
 let arb_builder f = QCheck.make (fun _ -> f ())
 
 (* my generators *)
-let int = arb_builder int_gen
-let int_list = arb_builder int_list_gen
-let int_list_size = arb_builder int_list_variable_size_gen
+(* let int = arb_builder int_gen *)
+(* let int_list = arb_builder int_list_gen
 let int_list_sorted = arb_builder int_list_sorted_gen
 let int_list_dup = arb_builder int_list_dup_gen
-let int_list_unique = arb_builder int_list_unique_gen
+let int_list_unique = arb_builder int_list_unique_gen *)
 
 (* input wrappers for Cobb generators *)
 let pair_size f () =
