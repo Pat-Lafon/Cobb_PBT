@@ -14,6 +14,12 @@ exception BailOut
 let rec int_list_size_gen s =
   if s <= 0 then [] else int_gen () :: int_list_size_gen (s - 1)
 
+(* default int list gen with size s *)
+(* achievable with as an a' arbitrary *)
+let int_list_gen () =
+  let size = nat_gen () in
+  int_list_size_gen size
+
 type 'a rbtree = Rbtleaf | Rbtnode of bool * 'a rbtree * 'a * 'a rbtree
 
 let rec count_rbtree_nodes t : int =
@@ -115,31 +121,7 @@ let () =
               Rbtnode (true, Rbtleaf, 1, Rbtleaf) ))
          0))
 
-(* let rec heigh_inv t h : bool =
-  match t with
-  | Rbtleaf -> h = 0
-  | Rbtnode (c, l, _, r) ->
-    if c then
-      heigh_inv l (h - 1) && heigh_inv r (h - 1)
-    else
-      heigh_inv l h && heigh_inv r h *)
-
-(* let heigh_inv t h : bool =
-  h >= 0 &&
-  match t with
-  | Rbtleaf -> h = 0
-  | Rbtnode (c, l, _, r) ->
-    if c then
-      heigh_inv l (h - 1) && heigh_inv r (h - 1)
-    else
-      heigh_inv l h && heigh_inv r h *)
-
-(* default int list gen with size s *)
-(* achievable with as an a' arbitrary *)
-let int_list_gen () =
-  let size = nat_gen () in
-  int_list_size_gen size
-
+(*
 (* int list gen of size s or less *)
 (* reminder: come back to this *)
 let int_list_variable_size_gen () s =
@@ -178,4 +160,4 @@ let int_list_unique_gen () =
       if len <> Hashtbl.length set then n :: aux (s - 1) (len + 1)
       else aux (s - 1) len
   in
-  aux size 1
+  aux size 1 *)
