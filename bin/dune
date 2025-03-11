@@ -7,7 +7,7 @@
  (public_name Cobb_PBT)
  (name main)
  (modules main)
- (libraries qcheck combinators arbitrary_builder))
+ (libraries qcheck precondition combinators arbitrary_builder))
 
 (library
  (name arbitrary_builder)
@@ -17,7 +17,7 @@
 (env
  (dev
   (flags
-   (:standard -w -32-26-34-69-27-21-39)))
+   (:standard -w -32-26-34-69-27-21-39-33)))
  (release
   (ocamlopt_flags
    (:standard -O3))))
@@ -27,3 +27,8 @@
  (public_name enumeration)
  (modules enumeration)
  (libraries core_unix.command_unix combinators rbtree))
+
+(library
+ (name precondition)
+ (modules precondition)
+ (libraries combinators))
