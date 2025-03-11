@@ -1,3 +1,4 @@
+import os
 import sys
 import re
 import csv
@@ -6,8 +7,12 @@ import glob
 
 parser = argparse.ArgumentParser(description="Process.")
 parser.add_argument("-f", dest="folder", default=None, help="Specify the folder.")
-parser.add_argument("-i", dest="input_file", default=None, help="Specify the input file.")
-parser.add_argument("-o", dest="output_file", default="stats.csv", help="Specify the output file.")
+parser.add_argument(
+    "-i", dest="input_file", default=None, help="Specify the input file."
+)
+parser.add_argument(
+    "-o", dest="output_file", default="stats.csv", help="Specify the output file."
+)
 # ex: output.py -f bin/sized_list -o table1.csv
 
 args = parser.parse_args()
@@ -36,15 +41,22 @@ if folder is not None:
                         print(file)
                         extracted_values = list(match.groups())
                         extracted_values_dict = {
-                            "generated" : extracted_values[0],
-                            "error" : extracted_values[1],
-                            "fail" : extracted_values[2],
-                            "pass" : extracted_values[3],
-                            "time" : extracted_values[4],
-                            "name" : extracted_values[5]
+                            "generated": extracted_values[0],
+                            "error": extracted_values[1],
+                            "fail": extracted_values[2],
+                            "pass": extracted_values[3],
+                            "time": extracted_values[4],
+                            "name": extracted_values[5],
                         }
-                        stats.append([extracted_values_dict["name"], extracted_values_dict["pass"], extracted_values_dict["fail"],
-                        extracted_values_dict["generated"], extracted_values_dict["time"], ])
+                        stats.append(
+                            [
+                                extracted_values_dict["name"],
+                                extracted_values_dict["pass"],
+                                extracted_values_dict["fail"],
+                                extracted_values_dict["generated"],
+                                extracted_values_dict["time"],
+                            ]
+                        )
                         break
 
         except FileNotFoundError:
@@ -52,6 +64,7 @@ if folder is not None:
 
 
 else:
+    exit("Error: Please specify a folder, idk what this path does yet")
     stats = []
     try:
         with open(fin, "r") as file_in:
@@ -60,19 +73,27 @@ else:
                 if match:
                     extracted_values = list(match.groups())
                     extracted_values_dict = {
-                        "generated" : extracted_values[0],
-                        "error" : extracted_values[1],
-                        "fail" : extracted_values[2],
-                        "pass" : extracted_values[3],
-                        "time" : extracted_values[4],
-                        "name" : extracted_values[5]
+                        "generated": extracted_values[0],
+                        "error": extracted_values[1],
+                        "fail": extracted_values[2],
+                        "pass": extracted_values[3],
+                        "time": extracted_values[4],
+                        "name": extracted_values[5],
                     }
-                    stats.append([extracted_values_dict["name"], extracted_values_dict["pass"], extracted_values_dict["fail"],
-                    extracted_values_dict["generated"], extracted_values_dict["time"], ])
+                    stats.append(
+                        [
+                            extracted_values_dict["name"],
+                            extracted_values_dict["pass"],
+                            extracted_values_dict["fail"],
+                            extracted_values_dict["generated"],
+                            extracted_values_dict["time"],
+                        ]
+                    )
 
     except FileNotFoundError:
         print(f"Error: The file '{fin}' was not found.")
 
+os.makedirs(os.path.dirname(fout), exist_ok=True)
 
 with open(fout, mode="w", newline="") as file_out:
     writer = csv.writer(file_out)

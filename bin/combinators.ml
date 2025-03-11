@@ -1,6 +1,6 @@
 let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
-let small_nat_gen () = QCheck.Gen.int_bound 10 (QCheck_runner.random_state ())
+let small_nat_gen () = QCheck.Gen.int_bound 6 (QCheck_runner.random_state ())
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
 let int_range a b =
   QCheck.Gen.int_range (a + 1) (b + 2) (QCheck_runner.random_state ())

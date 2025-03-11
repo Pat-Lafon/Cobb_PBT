@@ -1,0 +1,20 @@
+Generator Name,Pass,Fail,Total,Time
+prog1_syn,20000,0,20000,0.2s
+prog3_safe,20000,0,20000,0.2s
+prog4_syn,20000,0,20000,0.2s
+prog5_cov,5681,0,20200,1.2s
+prog6_safe,20000,0,20000,0.9s
+prog5_safe,20000,0,20000,0.0s
+prog2_cov,3110,0,20200,65.1s
+prog3_syn,20000,0,20000,0.2s
+prog6_syn,20000,0,20000,0.2s
+prog,20000,0,20000,0.2s
+prog4_cov,3894,0,20200,1.3s
+prog5_syn,20000,0,20000,0.2s
+prog2_safe,20000,0,20000,0.2s
+prog1_cov,18956,0,20200,0.3s
+prog6_cov,5493,0,20200,6.5s
+prog1_safe,20000,0,20000,0.2s
+prog4_safe,20000,0,20000,0.2s
+prog2_syn,20000,0,20000,0.2s
+prog3_cov,3146,0,20200,63.7s

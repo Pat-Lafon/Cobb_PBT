@@ -12,7 +12,7 @@ args = parser.parse_args()
 table = args.table
 
 # list of names for tables
-names = ["Duplicate list", "Sized list", "Sorted list", "Unique list"]
+names = ["Duplicate list", "Sized list", "Sorted list", "Unique list", "Rbtree"]
 
 # goes through each folder, and matches the csv that matches the table name
 for name in names:

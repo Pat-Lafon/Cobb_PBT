@@ -15,4 +15,5 @@ results:
 	python scripts/output.py -f bin/sorted_list/ -o table1.csv
 	python scripts/output.py -f bin/duplicate_list/ -o table1.csv
 	python scripts/output.py -f bin/unique_list/ -o table1.csv
+	python scripts/output.py -f bin/rbtree/ -o table1.csv
 	python scripts/bar_graph.py table1
