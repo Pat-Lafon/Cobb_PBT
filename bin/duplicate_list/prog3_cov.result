@@ -1,4 +1,13 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prog3_cov[2K[ ]  6869     0     0   738 / 20000     0.1s prog3_cov (collecting)[2K[ ] 16370     0     0  1712 / 20000     0.2s prog3_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0  2106 / 20000     0.2s prog3_cov
+[2K[ ]     0     0     0     0 / 20000     0.0s prog3_cov[2K[ ]  3704     0     0     9 / 20000     0.0s prog3_cov (collecting)[2K[ ] 11214     0     0    23 / 20000     0.1s prog3_cov (collecting)[2K[ ] 18327     0     0    44 / 20000     0.2s prog3_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0    48 / 20000     0.3s prog3_cov
+
+!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Warning for test prog3_cov:
+
+WARNING: only 0.2% tests (of 20000) passed precondition for "prog3_cov"
+
+NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
 ================================================================================
+1 warning(s)
 [32;1msuccess[0m (ran 1 tests)

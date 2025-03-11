@@ -1,4 +1,0 @@
-generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prop2_safe[2K[ ]     0     0     0     0 / 20000     0.0s prop2_safe (generating)[2K[ ] 14237     0     0 14237 / 20000     0.1s prop2_safe[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.1s prop2_safe
-================================================================================
-[32;1msuccess[0m (ran 1 tests)
