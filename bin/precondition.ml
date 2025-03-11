@@ -24,3 +24,102 @@ let is_unique l =
 
 let rec has_duplicate_int_x l x =
   match l with [] -> true | h :: t -> h = x && has_duplicate_int_x t x
+
+let rec num_black t h : bool =
+  match t with
+  | Rbtleaf -> h = 0
+  | Rbtnode (c, l, _, r) ->
+      if c then num_black l (h - 1) && num_black r (h - 1)
+      else num_black l h && num_black r h
+
+(* No red node has a red child *)
+let rec no_red_red t : bool =
+  match t with
+  | Rbtleaf -> true
+  | Rbtnode (c, l, _, r) -> (
+      if not c then no_red_red l && no_red_red r
+      else (* c is true *)
+        match (l, r) with
+        | Rbtnode (c', _, _, _), Rbtnode (c'', _, _, _) ->
+            (not c') && (not c'') && no_red_red l && no_red_red r
+        | Rbtnode (c', _, _, _), Rbtleaf -> (not c') && no_red_red l
+        | Rbtleaf, Rbtnode (c'', _, _, _) -> (not c'') && no_red_red r
+        | Rbtleaf, Rbtleaf -> true)
+
+let rb_root_color t c : bool =
+  match t with Rbtleaf -> false | Rbtnode (c', _, _, _) -> c = c'
+
+let rec rbtree_invariant t h : bool =
+  match t with
+  | Rbtleaf -> h = 0
+  | Rbtnode (c, l, _, r) ->
+      if not c then rbtree_invariant l (h - 1) && rbtree_invariant r (h - 1)
+      else
+        ((not (rb_root_color l true)) && not (rb_root_color r true))
+        && rbtree_invariant l h && rbtree_invariant r h
+
+let rec depth t =
+  match t with Leaf -> 0 | Node (_, l, r) -> 1 + max (depth l) (depth r)
+
+let rec complete t =
+  match t with
+  | Leaf -> true
+  | Node (_, l, r) -> complete l && complete r && depth l = depth r
+
+let rec lower_bound t x =
+  match t with Leaf -> true | Node (y, l, r) -> x <= y && lower_bound l x
+
+let rec upper_bound t x =
+  match t with Leaf -> true | Node (y, l, r) -> y <= x && upper_bound r x
+
+let rec bst t =
+  match t with
+  | Leaf -> true
+  | Node (x, l, r) -> bst l && bst r && upper_bound l x && lower_bound r x
+
+let () = assert (rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 0)
+let () = assert (not (rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 1))
+let () = assert (rbtree_invariant (Rbtnode (false, Rbtleaf, 1, Rbtleaf)) 1)
+
+let () =
+  assert (
+    rbtree_invariant
+      (Rbtnode
+         ( false,
+           Rbtnode (false, Rbtleaf, 1, Rbtleaf),
+           1,
+           Rbtnode (false, Rbtleaf, 1, Rbtleaf) ))
+      2)
+
+let () =
+  assert (
+    not
+      (rbtree_invariant
+         (Rbtnode
+            ( false,
+              Rbtnode (false, Rbtleaf, 1, Rbtleaf),
+              1,
+              Rbtnode (true, Rbtleaf, 1, Rbtleaf) ))
+         2))
+
+let () =
+  assert (
+    not
+      (rbtree_invariant
+         (Rbtnode
+            ( true,
+              Rbtnode (true, Rbtleaf, 1, Rbtleaf),
+              1,
+              Rbtnode (true, Rbtleaf, 1, Rbtleaf) ))
+         0))
+
+let () = assert (bst Leaf)
+let () = assert (bst (Node (1, Leaf, Leaf)))
+
+let () =
+  assert (
+    bst (Node (1, Node (0, Leaf, Leaf), Leaf))
+    && bst (Node (1, Leaf, Node (2, Leaf, Leaf))))
+
+let () = assert (not (bst (Node (1, Node (2, Leaf, Leaf), Leaf))))
+let () = assert (bst (Node (2, Node (1, Leaf, Leaf), Node (3, Leaf, Leaf))))

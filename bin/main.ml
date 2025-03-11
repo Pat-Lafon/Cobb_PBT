@@ -56,7 +56,6 @@ let precondition_frequency prop (gen_type, name) =
  *)
 let create_test_list prop gens = List.map (precondition_frequency prop) gens
 
-
 (* creates list of tests for runniing against filter functions *)
 let create_test_prop_list props (gen, _) =
   List.map (fun (prop, name) -> precondition_frequency prop (gen, name)) props
@@ -99,6 +98,17 @@ let eval_2_unique_list =
            Precondition.is_unique l && Precondition.has_same_size (size, l)))
       Arbitrary_builder.unique_list_arbitraries )
 
+let eval_2_rbtree =
+  ( "rbtree",
+    List.map
+      (precondition_frequency (fun (inv, color, height, tree) ->
+           assert (if color then 2 * height = inv else (2 * height) + 1 = inv);
+           (if color then not (Precondition.rb_root_color tree true)
+            else if height == 0 then not (Precondition.rb_root_color tree false)
+            else true)
+           && Precondition.rbtree_invariant tree height))
+      Arbitrary_builder.rbtree_arbitraries )
+
 (* command line args *)
 let args = Array.to_list Sys.argv
 
@@ -111,6 +121,7 @@ let eval2 =
     eval_2_sorted_list;
     eval_2_unique_list;
     eval_2_duplicate_list;
+    eval_2_rbtree;
   ]
 
 let () =

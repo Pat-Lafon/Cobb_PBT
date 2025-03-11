@@ -12,7 +12,14 @@
 (library
  (name arbitrary_builder)
  (modules arbitrary_builder)
- (libraries qcheck combinators sized_list duplicate_list unique_list sorted_list))
+ (libraries
+  qcheck
+  combinators
+  sized_list
+  duplicate_list
+  unique_list
+  sorted_list
+  rbtree))
 
 (env
  (dev
@@ -26,7 +33,7 @@
  (name enumeration)
  (public_name enumeration)
  (modules enumeration)
- (libraries core_unix.command_unix combinators rbtree))
+ (libraries core_unix.command_unix combinators precondition rbtree))
 
 (library
  (name precondition)
