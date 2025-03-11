@@ -1,4 +1,3 @@
-let file = "results.txt"
 let test_count = 20000
 let test_max_fail = 20000
 
@@ -34,7 +33,7 @@ let rec has_duplicate_int_x l x = match l with
 
 (* do the filter functions need to check for size? *)
 (* safety filter functions for duplicate *)
-let is_duplicate_prog123_safe l s x = 
+let is_duplicate_prog123_safe l s x =
   has_same_size l s && has_duplicate_int_x l x
 (* the safety repairs are just the correct repairs *)
 
@@ -46,11 +45,11 @@ let is_not_safe_duplicate  = [
 ]
 
 (* safety filter functions for unique *)
-let is_unique_prog1_safe l s = 
+let is_unique_prog1_safe l s =
   has_same_size l s && is_unique l
-let is_unique_prog2_safe l s = 
+let is_unique_prog2_safe l s =
   has_same_size l s && is_unique l
-let is_unique_prog3_safe l s = 
+let is_unique_prog3_safe l s =
   has_same_size l s && is_unique l
 
 (* safety filter functions for sized *)
@@ -67,11 +66,11 @@ let is_sized_prog9_safe l s = l = []
 
 
 (* safety filter functions for sorted *)
-let is_sorted_prog1_safe l s x = 
+let is_sorted_prog1_safe l s x =
   has_same_size l s && has_duplicate_int_x l x
-let is_sorted_prog2_safe l s x = 
+let is_sorted_prog2_safe l s x =
   has_same_size l s && has_duplicate_int_x l x
-let is_sorted_prog3_safe l s x = 
+let is_sorted_prog3_safe l s x =
   has_same_size l s && has_duplicate_int_x l x
 
 
@@ -95,7 +94,7 @@ let precondition_frequency_pair prop (gen_type, name) =
       func l))
 
 
-let create_test_list prop gens = 
+let create_test_list prop gens =
   List.map (precondition_frequency prop) gens
 let create_test_pair_list prop gens = List.map (precondition_frequency_pair prop) gens
 
@@ -110,20 +109,20 @@ let ref_generator_assoc_list = [
 
 (* algebraic data type for the generator arbitraries,
   helps with making a cleaner association list *)
-type generator_t = 
+type generator_t =
   | Single of (int list QCheck.arbitrary * string) list
   | Pair of ((int * int list) QCheck.arbitrary * string) list
   | Option of (int list option QCheck.arbitrary * string) list
 
 (* association list for the generators and their names *)
-let generator_assoc_list = [ 
+let generator_assoc_list = [
   ("duplicate_list", Single Arbitrary_builder.duplicate_list_arbitraries) ;
   ("sized_list", Pair Arbitrary_builder.sized_list_arbitraries) ;
   ("sorted_list", Option Arbitrary_builder.sorted_list_arbitraries) ;
   ("unique_list", Single Arbitrary_builder.unique_list_arbitraries) ;
   ]
-  
-(* I don't know if there's something similar for functions? 
+
+(* I don't know if there's something similar for functions?
   I found something about GADT's but I would need to investigate more *)
 
 (* type property_t =
@@ -131,7 +130,7 @@ let generator_assoc_list = [
   | Pair : (int -> 'a list -> bool) -> property_t
   | Option : ('a list option -> bool) -> property_t *)
 
-let single_prop_assoc_list = [ 
+let single_prop_assoc_list = [
   ("is_duplicate", is_duplicate) ;
   ("is_unique", is_unique) ;
   ]
@@ -158,12 +157,12 @@ let () =
 
 
       else *)
-      
+
       let prop_name = Array.get Sys.argv 1 in
       let gen_name = Array.get Sys.argv 2 in
 
         (* creates a list of tests with each variation of the generator *)
-      let tests = 
+      let tests =
         match List.assoc gen_name generator_assoc_list with
           | Single g -> create_test_list (List.assoc prop_name single_prop_assoc_list) g
           | Pair g -> create_test_pair_list (List.assoc prop_name pair_prop_assoc_list) g
@@ -186,5 +185,3 @@ let () =
     (* prints usage *)
     | Invalid_argument s->  print_endline "Usage: dune exec Cobb_PBT -- property_name generator_name"
     (* dune exec Cobb_PBT -- -fs property_name *)
-    
-
