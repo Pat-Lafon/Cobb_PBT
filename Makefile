@@ -8,4 +8,4 @@ run: build
 
 clean:
 	opam exec -- dune clean
-	python scripts/clean.py
+	python3 scripts/clean.py
