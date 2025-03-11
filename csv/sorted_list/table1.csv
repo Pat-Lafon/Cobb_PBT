@@ -1,1 +1,11 @@
 Generator Name,Pass,Fail,Total,Time
+prog1_syn,1808,18192,20000,0.0s
+prog3_safe,3256,16744,20000,0.0s
+prog2_cov,2404,9566,20200,0.1s
+prog3_syn,1808,18192,20000,0.0s
+prog,1808,18192,20000,0.0s
+prog2_safe,3256,16744,20000,0.0s
+prog1_cov,180,18390,20200,0.0s
+prog1_safe,1808,18192,20000,0.0s
+prog2_syn,1808,18192,20000,0.0s
+prog3_cov,1502,9580,20200,0.1s
