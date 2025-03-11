@@ -38,21 +38,21 @@ for name in names:
         # Create the bar graph
         plt.figure(figsize=(10, 4))
         # TODO: fix dimensions for sized list/split it into 2, it's a squeeze to fit 9 elements
-        plt.bar(data.keys(), data.values(), color='skyblue')
+        plt.bar(data.keys(), data.values(), color="skyblue")
 
         # Add labels and title
-        plt.xlabel(name + ' generator variations')
-        plt.ylabel('Number of examples out of 20k accepted')
-        plt.title( table +' outputs from ' + name.lower() + ' generator variations')
+        plt.xlabel(name + " generator variations")
+        plt.ylabel("Number of examples out of 20k accepted")
+        plt.title(table + " outputs from " + name.lower() + " generator variations")
 
         # Add values on top of bars
-        #for name, value in data.items():
+        # for name, value in data.items():
         #    plt.text(name, value + 1, str(value), ha='center')
 
         # changes width
-        
+
         # Display the graph
         plt.tight_layout()
         print(file)
-        plt.savefig(f"./graphs/{path}_{table}_graph_1.png")
+        plt.savefig(f"./graphs/{path}_{table}_graph.png")
         # plt.show()

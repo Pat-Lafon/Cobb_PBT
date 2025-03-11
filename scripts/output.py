@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser(description="Process.")
 parser.add_argument("-f", dest="folder", default=None, help="Specify the folder.")
 parser.add_argument("-i", dest="input_file", default=None, help="Specify the input file.")
 parser.add_argument("-o", dest="output_file", default="stats.csv", help="Specify the output file.")
-# ex: output.py -f sized_list -o table1.csv
+# ex: output.py -f bin/sized_list -o table1.csv
 
 args = parser.parse_args()
 folder = args.folder
@@ -34,7 +34,7 @@ if folder is not None:
                     match = re.search(pattern, line)
                     if match:
                         print(file)
-                        extracted_values = list(match.groups()) 
+                        extracted_values = list(match.groups())
                         extracted_values_dict = {
                             "generated" : extracted_values[0],
                             "error" : extracted_values[1],
@@ -43,10 +43,10 @@ if folder is not None:
                             "time" : extracted_values[4],
                             "name" : extracted_values[5]
                         }
-                        stats.append([extracted_values_dict["name"], extracted_values_dict["pass"], extracted_values_dict["fail"], 
+                        stats.append([extracted_values_dict["name"], extracted_values_dict["pass"], extracted_values_dict["fail"],
                         extracted_values_dict["generated"], extracted_values_dict["time"], ])
                         break
-                    
+
         except FileNotFoundError:
             print(f"Error: The file '{file}' was not found.")
 
@@ -58,7 +58,7 @@ else:
             for line in file_in:
                 match = re.search(pattern, line)
                 if match:
-                    extracted_values = list(match.groups()) 
+                    extracted_values = list(match.groups())
                     extracted_values_dict = {
                         "generated" : extracted_values[0],
                         "error" : extracted_values[1],
@@ -67,9 +67,9 @@ else:
                         "time" : extracted_values[4],
                         "name" : extracted_values[5]
                     }
-                    stats.append([extracted_values_dict["name"], extracted_values_dict["pass"], extracted_values_dict["fail"], 
+                    stats.append([extracted_values_dict["name"], extracted_values_dict["pass"], extracted_values_dict["fail"],
                     extracted_values_dict["generated"], extracted_values_dict["time"], ])
-            
+
     except FileNotFoundError:
         print(f"Error: The file '{fin}' was not found.")
 
@@ -79,6 +79,3 @@ with open(fout, mode="w", newline="") as file_out:
     writer.writerow(["Generator Name", "Pass", "Fail", "Total", "Time"])
     for row in stats:
         writer.writerow(row)
-
-
-
