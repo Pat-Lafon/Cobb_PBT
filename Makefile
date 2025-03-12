@@ -15,5 +15,8 @@ results:
 	python scripts/output.py -f bin/sorted_list/ -o table1.csv
 	python scripts/output.py -f bin/duplicate_list/ -o table1.csv
 	python scripts/output.py -f bin/unique_list/ -o table1.csv
+	python scripts/output.py -f bin/complete_tree/ -o table1.csv
+	python scripts/output.py -f bin/depth_tree/ -o table1.csv
 	python scripts/output.py -f bin/rbtree/ -o table1.csv
+	python scripts/output.py -f bin/depth_bst_tree/ -o table1.csv
 	python scripts/bar_graph.py table1

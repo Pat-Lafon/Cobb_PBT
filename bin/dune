@@ -19,6 +19,9 @@
   duplicate_list
   unique_list
   sorted_list
+  complete_tree
+  depth_tree
+  depth_bst_tree
   rbtree))
 
 (env

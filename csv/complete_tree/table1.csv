@@ -1,0 +1,10 @@
+Generator Name,Pass,Fail,Total,Time
+prog3_safe,20000,0,20000,1.0s
+prog2_cov,2951,0,20200,1.3s
+prog3_syn,20000,0,20000,1.4s
+prog,20000,0,20000,1.5s
+prog2_safe,20000,0,20000,1.0s
+prog1_cov,102,0,20200,778.8s
+prog1_safe,20000,0,20000,1.5s
+prog2_syn,20000,0,20000,1.4s
+prog3_cov,1589,0,20200,1.4s

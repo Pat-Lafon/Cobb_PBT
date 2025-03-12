@@ -106,6 +106,51 @@ let rbtree_generators =
     (Rbtree.Prog6_safe.rbtree_gen, "prog6_safe");
   ]
 
+let complete_tree_generators =
+  [
+    (Complete_tree.Prog.complete_tree_gen, "prog");
+    (Complete_tree.Prog1_syn.complete_tree_gen, "prog1_syn");
+    (Complete_tree.Prog2_syn.complete_tree_gen, "prog2_syn");
+    (Complete_tree.Prog3_syn.complete_tree_gen, "prog3_syn");
+    (Complete_tree.Prog1_cov.complete_tree_gen, "prog1_cov");
+    (Complete_tree.Prog2_cov.complete_tree_gen, "prog2_cov");
+    (Complete_tree.Prog3_cov.complete_tree_gen, "prog3_cov");
+    (Complete_tree.Prog1_safe.complete_tree_gen, "prog1_safe");
+    (Complete_tree.Prog2_safe.complete_tree_gen, "prog2_safe");
+    (Complete_tree.Prog3_safe.complete_tree_gen, "prog3_safe");
+  ]
+
+let depth_tree_gen =
+  [
+    (Depth_tree.Prog.depth_tree_gen, "prog");
+    (Depth_tree.Prog1_syn.depth_tree_gen, "prog1_syn");
+    (Depth_tree.Prog2_syn.depth_tree_gen, "prog2_syn");
+    (Depth_tree.Prog3_syn.depth_tree_gen, "prog3_syn");
+    (Depth_tree.Prog1_cov.depth_tree_gen, "prog1_cov");
+    (Depth_tree.Prog2_cov.depth_tree_gen, "prog2_cov");
+    (Depth_tree.Prog3_cov.depth_tree_gen, "prog3_cov");
+    (Depth_tree.Prog1_safe.depth_tree_gen, "prog1_safe");
+    (Depth_tree.Prog2_safe.depth_tree_gen, "prog2_safe");
+    (Depth_tree.Prog3_safe.depth_tree_gen, "prog3_safe");
+  ]
+
+let depth_bst_gen =
+  [
+    (Depth_bst_tree.Prog.size_bst_gen, "prog");
+    (Depth_bst_tree.Prog1_syn.size_bst_gen, "prog1_syn");
+    (Depth_bst_tree.Prog2_syn.size_bst_gen, "prog2_syn");
+    (Depth_bst_tree.Prog3_syn.size_bst_gen, "prog3_syn");
+    (Depth_bst_tree.Prog4_syn.size_bst_gen, "prog4_syn");
+    (Depth_bst_tree.Prog1_cov.size_bst_gen, "prog1_cov");
+    (Depth_bst_tree.Prog2_cov.size_bst_gen, "prog2_cov");
+    (Depth_bst_tree.Prog3_cov.size_bst_gen, "prog3_cov");
+    (Depth_bst_tree.Prog4_cov.size_bst_gen, "prog4_cov");
+    (Depth_bst_tree.Prog1_safe.size_bst_gen, "prog1_safe");
+    (Depth_bst_tree.Prog2_safe.size_bst_gen, "prog2_safe");
+    (Depth_bst_tree.Prog3_safe.size_bst_gen, "prog3_safe");
+    (Depth_bst_tree.Prog4_safe.size_bst_gen, "prog4_safe");
+  ]
+
 (* arbitary values for generator *)
 (* let sized_list_arbitraries = List.map (fun (gen, name) -> (fun x -> arb_builder' (gen x)), name) sized_list_generators *)
 let sized_list_arbitraries =
@@ -146,11 +191,40 @@ let sorted_list_arbitraries =
         name ))
     sorted_list_generators
 
+let complete_tree_arbitraries =
+  List.map
+    (fun (gen, name) ->
+      ( (fun () ->
+          let size = tree_height_gen () in
+          (size, gen size)),
+        name ))
+    complete_tree_generators
+
+let depth_tree_arbitraries =
+  List.map
+    (fun (gen, name) ->
+      ( (fun () ->
+          let size = tree_height_gen () in
+          (size, gen size)),
+        name ))
+    depth_tree_gen
+
+let depth_bst_tree_arbitraries =
+  List.map
+    (fun (gen, name) ->
+      ( (fun () ->
+          let size = tree_height_gen () in
+          let lo = int_gen () in
+          let hi = gt_int_gen lo in
+          (size, lo, hi, gen size lo hi)),
+        name ))
+    depth_bst_gen
+
 let rbtree_arbitraries =
   List.map
     (fun (gen, name) ->
       ( (fun () ->
-          let height = small_nat_gen () in
+          let height = black_height_gen () in
           let color = bool_gen () in
           let inv = if color then 2 * height else (2 * height) + 1 in
 
