@@ -25,5 +25,6 @@ results:
 	python scripts/output.py -f bin/completeness_data/unique_list/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/depth_tree/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/complete_tree/ -o table2.csv
+	python scripts/output.py -f bin/completeness_data/depth_bst_tree/ -o table2.csv
 	python scripts/bar_graph.py table1
 	python scripts/bar_graph.py table2
