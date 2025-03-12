@@ -5,7 +5,7 @@ let test_max_fail = 20000
 
 (* do the filter functions need to check for size? *)
 (* safety filter functions for duplicate *)
-let is_duplicate_prog123_safe (s, x, l) =
+let is_duplicate_safe (s, x, l) =
   has_same_size (s, l) && has_duplicate_int_x l x
 (* the safety repairs are just the correct repairs *)
 
@@ -15,9 +15,9 @@ let check_some f x = Option.fold ~none:true ~some:f x
 (* list of not safe filter functions for duplicate *)
 let is_not_safe_duplicate =
   [
-    ("prop1_safe", neg is_duplicate_prog123_safe);
-    ("prop2_safe", neg is_duplicate_prog123_safe);
-    ("prop3_safe", neg is_duplicate_prog123_safe);
+    ("prop1_safe", neg is_duplicate_safe);
+    ("prop2_safe", neg is_duplicate_safe);
+    ("prop3_safe", neg is_duplicate_safe);
   ]
 
 let is_unique_safe (s, l) = has_same_size (s, l) && is_unique l
@@ -59,6 +59,24 @@ let is_not_safe_sorted =
     ("prop1_safe", neg (check_some is_sorted_prog1_safe));
     ("prop2_safe", neg (check_some is_sorted_prog23_safe));
     ("prop3_safe", neg (check_some is_sorted_prog23_safe));
+  ]
+
+let is_not_safe_depth =
+  [
+    ("prop1_safe", neg (fun (s, t) -> depth t <= s));
+    ("prop2_safe", neg (fun (s, t) -> depth t <= s));
+    ("prop3_safe", neg (fun (s, t) -> is_leaf t));
+  ]
+
+let is_not_safe_complete =
+  [
+    ("prop1_safe", neg (fun (s, t) -> complete t && depth t = s));
+    ( "prop2_safe",
+      neg (fun (s, t) ->
+          complete t && depth t = s && data_value_scales_by_size t) );
+    ( "prop3_safe",
+      neg (fun (s, t) ->
+          complete t && depth t = s && data_value_scales_by_size t) );
   ]
 
 (* QCheck.make *)
@@ -188,6 +206,22 @@ let eval_3_duplicate_list =
           (List.hd Arbitrary_builder.duplicate_list_arbitraries |> fst, name))
       is_not_safe_duplicate )
 
+let eval_3_depth_tree =
+  ( "depth_tree",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.depth_tree_arbitraries |> fst, name))
+      is_not_safe_depth )
+
+let eval_3_complete_tree =
+  ( "complete_tree",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.complete_tree_arbitraries |> fst, name))
+      is_not_safe_complete )
+
 (* command line args *)
 let args = Array.to_list Sys.argv
 
@@ -212,6 +246,8 @@ let eval3 =
     eval_3_sorted_list;
     eval_3_duplicate_list;
     eval_3_unique_list;
+    eval_3_depth_tree;
+    eval_3_complete_tree;
   ]
 
 let () =

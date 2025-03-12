@@ -77,6 +77,15 @@ let rec bst t =
   | Leaf -> true
   | Node (x, l, r) -> bst l && bst r && upper_bound l x && lower_bound r x
 
+let is_leaf t = match t with Leaf -> true | _ -> false
+
+let rec data_value_scales_by_size t =
+  match t with
+  | Leaf -> true
+  | Node (x, l, r) ->
+      x = depth t && data_value_scales_by_size l && data_value_scales_by_size r
+
+(* Tests *)
 let () = assert (rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 0)
 let () = assert (not (rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 1))
 let () = assert (rbtree_invariant (Rbtnode (false, Rbtleaf, 1, Rbtleaf)) 1)
