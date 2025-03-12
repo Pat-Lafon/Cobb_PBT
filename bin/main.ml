@@ -79,6 +79,14 @@ let is_not_safe_complete =
           complete t && depth t = s && data_value_scales_by_size t) );
   ]
 
+let is_not_safe_bst =
+  [
+    ("prop1_safe", neg (fun (s, low, high, t) -> bst t && depth t <= s));
+    ("prop2_safe", neg (fun (s, low, high, t) -> bst t && depth t <= s));
+    ("prop3_safe", neg (fun (s, low, high, t) -> bst t && depth t <= s));
+    ("prop4_safe", neg (fun (s, low, high, t) -> is_leaf t));
+  ]
+
 (* QCheck.make *)
 let precondition_frequency prop (gen_type, name) =
   QCheck.(
@@ -222,6 +230,14 @@ let eval_3_complete_tree =
           (List.hd Arbitrary_builder.complete_tree_arbitraries |> fst, name))
       is_not_safe_complete )
 
+let eval_3_depth_bst_tree =
+  ( "depth_bst_tree",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.depth_bst_tree_arbitraries |> fst, name))
+      is_not_safe_bst )
+
 (* command line args *)
 let args = Array.to_list Sys.argv
 
@@ -248,6 +264,7 @@ let eval3 =
     eval_3_unique_list;
     eval_3_depth_tree;
     eval_3_complete_tree;
+    eval_3_depth_bst_tree;
   ]
 
 let () =
