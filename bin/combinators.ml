@@ -1,9 +1,16 @@
 let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
-let small_nat_gen () = QCheck.Gen.int_bound 6 (QCheck_runner.random_state ())
+let black_height_gen () = QCheck.Gen.int_bound 6 (QCheck_runner.random_state ())
+
+(* Tree height is double the height of black height in general *)
+let tree_height_gen () = QCheck.Gen.int_bound 12 (QCheck_runner.random_state ())
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
+
 let int_range a b =
   QCheck.Gen.int_range (a + 1) (b + 2) (QCheck_runner.random_state ())
+
+let gt_int_gen a =
+  QCheck.Gen.int_range (a + 1) Int.max_int (QCheck_runner.random_state ())
 
 (* re-implementing unit functions from Cobb *)
 let sizecheck s = s <= 0
@@ -53,7 +60,22 @@ let gen_sized_int_root_red_rbtree size =
     Rbtnode (c, l, v, r)
 
 let default_rbtree_gen () =
-  let size = 2 * small_nat_gen () in
+  let size = tree_height_gen () in
   gen_sized_int_rbtree size
 
 type 'a tree = Leaf | Node of 'a * 'a tree * 'a tree
+
+let tree_gen () =
+  let size = tree_height_gen () in
+  let rec gen_tree s =
+    if s == 0 then Leaf
+    else
+      let l = gen_tree (subs s) in
+      let v = int_gen () in
+      let r = gen_tree (subs s) in
+      Node (v, l, r)
+  in
+  gen_tree size
+
+
+let () = assert (gt_int_gen 0 > 0)

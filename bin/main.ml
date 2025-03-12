@@ -98,6 +98,30 @@ let eval_2_unique_list =
            Precondition.is_unique l && Precondition.has_same_size (size, l)))
       Arbitrary_builder.unique_list_arbitraries )
 
+let eval_2_complete_tree =
+  ( "complete_tree",
+    List.map
+      (precondition_frequency (fun (size, tree) ->
+           Precondition.complete tree && Precondition.depth tree = size))
+      Arbitrary_builder.complete_tree_arbitraries )
+
+let eval_2_depth_tree =
+  ( "depth_tree",
+    List.map
+      (precondition_frequency (fun (size, tree) ->
+           Precondition.depth tree <= size))
+      Arbitrary_builder.depth_tree_arbitraries )
+
+let eval_2_depth_bst_tree =
+  ( "depth_bst_tree",
+    List.map
+      (precondition_frequency (fun (size, lo, high, tree) ->
+           Precondition.depth tree <= size
+           && Precondition.bst tree
+           && Precondition.lower_bound tree lo
+           && Precondition.upper_bound tree high))
+      Arbitrary_builder.depth_bst_tree_arbitraries )
+
 let eval_2_rbtree =
   ( "rbtree",
     List.map
@@ -121,6 +145,9 @@ let eval2 =
     eval_2_sorted_list;
     eval_2_unique_list;
     eval_2_duplicate_list;
+    eval_2_complete_tree;
+    eval_2_depth_tree;
+    eval_2_depth_bst_tree;
     eval_2_rbtree;
   ]
 
