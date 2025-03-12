@@ -1,0 +1,4 @@
+Generator Name,Pass,Fail,Total,Time
+prop2_safe,0,0,20200,106.1s
+prop1_safe,0,0,20200,105.0s
+prop3_safe,0,0,20200,105.0s

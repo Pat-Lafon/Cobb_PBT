@@ -22,6 +22,8 @@
  (depends
   ocaml
   dune
+  (fileutils
+   (= "0.6.6"))
   (core_unix
    (= v0.15.0))
   (ocamlformat

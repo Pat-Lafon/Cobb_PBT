@@ -5,38 +5,61 @@ let test_max_fail = 20000
 
 (* do the filter functions need to check for size? *)
 (* safety filter functions for duplicate *)
-let is_duplicate_prog123_safe l s x =
+let is_duplicate_prog123_safe (s, x, l) =
   has_same_size (s, l) && has_duplicate_int_x l x
 (* the safety repairs are just the correct repairs *)
+
+let neg f x = not (f x)
+let check_some f x = Option.fold ~none:true ~some:f x
 
 (* list of not safe filter functions for duplicate *)
 let is_not_safe_duplicate =
   [
-    ("prop1_safe", fun l s x -> not (is_duplicate_prog123_safe l s x));
-    ("prop2_safe", fun l s x -> not (is_duplicate_prog123_safe l s x));
-    ("prop3_safe", fun l s x -> not (is_duplicate_prog123_safe l s x));
+    ("prop1_safe", neg is_duplicate_prog123_safe);
+    ("prop2_safe", neg is_duplicate_prog123_safe);
+    ("prop3_safe", neg is_duplicate_prog123_safe);
   ]
 
-(* safety filter functions for unique *)
-let is_unique_prog1_safe l s = has_same_size (s, l) && is_unique l
-let is_unique_prog2_safe l s = has_same_size (s, l) && is_unique l
-let is_unique_prog3_safe l s = has_same_size (s, l) && is_unique l
+let is_unique_safe (s, l) = has_same_size (s, l) && is_unique l
 
-(* safety filter functions for sized *)
-let is_sized_prog1_safe (l, s) = is_sized (s, l)
-let is_sized_prog2_safe (l, s) = is_sized (s, l)
-let is_sized_prog3_safe (l, s) = is_empty l
-let is_sized_prog4_safe (l, s) = is_sized (s, l)
-let is_sized_prog5_safe (l, s) = is_empty l
-let is_sized_prog6_safe (l, s) = is_empty l
-let is_sized_prog7_safe (l, s) = is_empty l
-let is_sized_prog8_safe (l, s) = is_empty l
-let is_sized_prog9_safe (l, s) = is_empty l
+(* safety filter functions for unique *)
+let is_not_safe_unique =
+  [
+    ("prop1_safe", neg is_unique_safe);
+    ("prop2_safe", neg is_unique_safe);
+    ("prop3_safe", neg is_unique_safe);
+  ]
+
+let is_empty_wrapper (s, l) = is_empty l
+
+let is_not_safe_sized =
+  [
+    ("prop1_safe", neg is_sized);
+    ("prop2_safe", neg is_sized);
+    ("prop3_safe", neg is_empty_wrapper);
+    ("prop4_safe", neg is_sized);
+    ("prop5_safe", neg is_empty_wrapper);
+    ("prop6_safe", neg is_empty_wrapper);
+    ("prop7_safe", neg is_empty_wrapper);
+    ("prop8_safe", neg is_empty_wrapper);
+    ("prop9_safe", neg is_empty_wrapper);
+  ]
 
 (* safety filter functions for sorted *)
-let is_sorted_prog1_safe l s x = has_same_size (s, l) && has_duplicate_int_x l x
-let is_sorted_prog2_safe l s x = has_same_size (s, l) && has_duplicate_int_x l x
-let is_sorted_prog3_safe l s x = has_same_size (s, l) && has_duplicate_int_x l x
+let is_sorted_prog1_safe (s, x, l) =
+  has_same_size (s, l)
+  && is_sorted l
+  && if_head_map_f_else_true (fun h -> h >= x) l
+
+let is_sorted_prog23_safe (s, x, l) =
+  has_same_size (s, l) && has_duplicate_int_x l x
+
+let is_not_safe_sorted =
+  [
+    ("prop1_safe", neg (check_some is_sorted_prog1_safe));
+    ("prop2_safe", neg (check_some is_sorted_prog23_safe));
+    ("prop3_safe", neg (check_some is_sorted_prog23_safe));
+  ]
 
 (* QCheck.make *)
 let precondition_frequency prop (gen_type, name) =
@@ -133,6 +156,38 @@ let eval_2_rbtree =
            && Precondition.rbtree_invariant tree height))
       Arbitrary_builder.rbtree_arbitraries )
 
+let eval_3_sized_list =
+  ( "sized_list",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.sized_list_arbitraries |> fst, name))
+      is_not_safe_sized )
+
+let eval_3_sorted_list =
+  ( "sorted_list",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.sorted_list_arbitraries |> fst, name))
+      is_not_safe_sorted )
+
+let eval_3_unique_list =
+  ( "unique_list",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.unique_list_arbitraries |> fst, name))
+      is_not_safe_unique )
+
+let eval_3_duplicate_list =
+  ( "duplicate_list",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.duplicate_list_arbitraries |> fst, name))
+      is_not_safe_duplicate )
+
 (* command line args *)
 let args = Array.to_list Sys.argv
 
@@ -151,6 +206,14 @@ let eval2 =
     eval_2_rbtree;
   ]
 
+let eval3 =
+  [
+    eval_3_sized_list;
+    eval_3_sorted_list;
+    eval_3_duplicate_list;
+    eval_3_unique_list;
+  ]
+
 let () =
   let argc = Array.length Sys.argv in
 
@@ -165,28 +228,36 @@ let () =
       try Array.get Sys.argv 2 with Invalid_argument _ -> "any"
     in
 
-    if eval_name = "eval2" then
-      let tests =
-        if gen_name = "any" then eval2
-        else [ (gen_name, List.assoc gen_name eval2) ]
-      in
+    let eval, dir =
+      if eval_name = "eval2" then (eval2, "./bin/")
+        (* TODO: redirect to different folder... probably make a data folder for easy cleanup *)
+      else if eval_name = "eval3" then (eval3, "./bin/completeness_data/")
+      else failwith "Invalid arg 1, expected eval2|eval3"
+    in
 
-      List.iter
-        (fun (gen_name, tests) ->
-          (* folder to output to *)
-          let foldername = "./bin/" ^ gen_name ^ "/" in
-          print_endline ("Running tests for " ^ gen_name ^ "...");
-          QCheck_runner.set_seed 0;
-          List.iter
-            (fun g ->
-              (* runs test for each variation of the generator with seed 0*)
-              let filename = foldername ^ t_get_name g ^ ".result" in
-              print_endline ("> Running test for " ^ t_get_name g ^ "...");
-              let oc = open_out filename in
-              ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [ g ]);
-              close_out oc)
-            tests)
-        tests
+    let tests =
+      if gen_name = "any" then eval
+      else [ (gen_name, List.assoc gen_name eval) ]
+    in
+
+    List.iter
+      (fun (gen_name, tests) ->
+        (* folder to output to *)
+        let foldername = dir ^ gen_name ^ "/" in
+        if not (Sys.file_exists foldername) then
+          FileUtil.mkdir ~parent:true foldername;
+        print_endline ("Running tests for " ^ gen_name ^ "...");
+        QCheck_runner.set_seed 0;
+        List.iter
+          (fun g ->
+            (* runs test for each variation of the generator with seed 0*)
+            let filename = foldername ^ t_get_name g ^ ".result" in
+            print_endline ("> Running test for " ^ t_get_name g ^ "...");
+            let oc = open_out filename in
+            ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [ g ]);
+            close_out oc)
+          tests)
+      tests
   with
   (* prints usage *)
   | Invalid_argument s ->
