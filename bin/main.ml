@@ -87,6 +87,36 @@ let is_not_safe_bst =
     ("prop4_safe", neg (fun (s, low, high, t) -> is_leaf t));
   ]
 
+let rbtree_precondition (inv, color, height, tree) =
+  (if color then not (Precondition.rb_root_color tree true)
+   else if height == 0 then not (Precondition.rb_root_color tree false)
+   else true)
+  && Precondition.rbtree_invariant tree height
+
+let is_not_rbtree =
+  [
+    ("prop1_safe", neg rbtree_precondition);
+    ("prop2_safe", neg rbtree_precondition);
+    ( "prop3_safe",
+      neg (fun (inv, color, height, t) ->
+          rbtree_precondition (inv, color, height, t)
+          &&
+          if height == 0 then not (Precondition.rb_root_color t true) else true)
+    );
+    ( "prop4_safe",
+      neg (fun (inv, color, height, t) ->
+          rbtree_precondition (inv, color, height, t)
+          && Precondition.rbtree_inv_as_data_in t inv color) );
+    ( "prop5_safe",
+      neg (fun (inv, color, height, t) ->
+          rbtree_precondition (inv, color, height, t)
+          && Precondition.rbtree_missing_case_when_black t color true) );
+    ( "prop6_safe",
+      neg (fun (inv, color, height, t) ->
+          rbtree_precondition (inv, color, height, t)
+          && Precondition.rbtree_missing_case_when_black t color false) );
+  ]
+
 (* QCheck.make *)
 let precondition_frequency prop (gen_type, name) =
   QCheck.(
@@ -176,10 +206,7 @@ let eval_2_rbtree =
     List.map
       (precondition_frequency (fun (inv, color, height, tree) ->
            assert (if color then 2 * height = inv else (2 * height) + 1 = inv);
-           (if color then not (Precondition.rb_root_color tree true)
-            else if height == 0 then not (Precondition.rb_root_color tree false)
-            else true)
-           && Precondition.rbtree_invariant tree height))
+           rbtree_precondition (inv, color, height, tree)))
       Arbitrary_builder.rbtree_arbitraries )
 
 let eval_3_sized_list =
@@ -238,6 +265,14 @@ let eval_3_depth_bst_tree =
           (List.hd Arbitrary_builder.depth_bst_tree_arbitraries |> fst, name))
       is_not_safe_bst )
 
+let eval_3_rbtree =
+  ( "rbtree",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.rbtree_arbitraries |> fst, name))
+      is_not_rbtree )
+
 (* command line args *)
 let args = Array.to_list Sys.argv
 
@@ -265,6 +300,7 @@ let eval3 =
     eval_3_depth_tree;
     eval_3_complete_tree;
     eval_3_depth_bst_tree;
+    eval_3_rbtree;
   ]
 
 let () =

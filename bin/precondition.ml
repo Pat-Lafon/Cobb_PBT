@@ -58,6 +58,11 @@ let rec rbtree_invariant t h : bool =
         ((not (rb_root_color l true)) && not (rb_root_color r true))
         && rbtree_invariant l h && rbtree_invariant r h
 
+let rec rbdepth t =
+  match t with
+  | Rbtleaf -> 0
+  | Rbtnode (_, l, _, r) -> 1 + max (rbdepth l) (rbdepth r)
+
 let rec depth t =
   match t with Leaf -> 0 | Node (_, l, r) -> 1 + max (depth l) (depth r)
 
@@ -84,6 +89,28 @@ let rec data_value_scales_by_size t =
   | Leaf -> true
   | Node (x, l, r) ->
       x = depth t && data_value_scales_by_size l && data_value_scales_by_size r
+
+let rec rbtree_inv_as_data_in t inv color =
+  match t with
+  | Rbtleaf -> true
+  | Rbtnode (true, Rbtleaf, _, Rbtleaf) -> true
+  | Rbtnode (c, l, x, r) ->
+      let new_inv = if color then inv - 1 else if c then inv - 1 else inv - 2 in
+      (if c = color then x = inv else true)
+      && rbtree_inv_as_data_in l new_inv c
+      && rbtree_inv_as_data_in r new_inv c
+
+let rec rbtree_missing_case_when_black t color missing_node_color =
+  match t with
+  | Rbtleaf -> true
+  | Rbtnode (c, l, _, r) ->
+      if color then
+        rbtree_missing_case_when_black l c missing_node_color
+        && rbtree_missing_case_when_black r c missing_node_color
+      else
+        c = missing_node_color
+        && rbtree_missing_case_when_black l c missing_node_color
+        && rbtree_missing_case_when_black r c missing_node_color
 
 (* Tests *)
 let () = assert (rbtree_invariant (Rbtnode (true, Rbtleaf, 1, Rbtleaf)) 0)
