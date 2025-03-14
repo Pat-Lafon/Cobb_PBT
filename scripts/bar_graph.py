@@ -11,6 +11,10 @@ parser.add_argument("table", help="Specify table [table1|table2].")
 args = parser.parse_args()
 table = args.table
 
+assert (
+    table == "table1" or table == "table2"
+), "Invalid table name. Use 'table1' or 'table2'."
+
 # list of names for tables
 names = [
     "Duplicate list",
@@ -39,6 +43,8 @@ for name in names:
 
             rows = list(csv_reader)
             list.sort(rows, key=lambda row: row[0])
+            if table == "table1":
+                rows = [r for r in rows if not "_safe" in r[0] and not "_syn" in r[0]]
 
             for row in rows:
                 # print(row)
