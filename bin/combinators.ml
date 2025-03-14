@@ -1,9 +1,15 @@
+let black_height = 6 (* From Luck RBTree benchmark *)
+let tree_height = 12 (* black_height * 2 *)
 let int_gen () = QCheck.Gen.int (QCheck_runner.random_state ())
 let nat_gen () = QCheck.Gen.nat (QCheck_runner.random_state ())
-let black_height_gen () = QCheck.Gen.int_bound 6 (QCheck_runner.random_state ())
+
+let black_height_gen () =
+  QCheck.Gen.int_bound black_height (QCheck_runner.random_state ())
 
 (* Tree height is double the height of black height in general *)
-let tree_height_gen () = QCheck.Gen.int_bound 12 (QCheck_runner.random_state ())
+let tree_height_gen () =
+  QCheck.Gen.int_bound tree_height (QCheck_runner.random_state ())
+
 let bool_gen () = QCheck.Gen.bool (QCheck_runner.random_state ())
 
 let int_range a b =
