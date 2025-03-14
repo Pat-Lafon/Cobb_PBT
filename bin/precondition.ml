@@ -72,10 +72,14 @@ let rec complete t =
   | Node (_, l, r) -> complete l && complete r && depth l = depth r
 
 let rec lower_bound t x =
-  match t with Leaf -> true | Node (y, l, r) -> x <= y && lower_bound l x
+  match t with
+  | Leaf -> true
+  | Node (y, l, r) -> x <= y && lower_bound l x && lower_bound r x
 
 let rec upper_bound t x =
-  match t with Leaf -> true | Node (y, l, r) -> y <= x && upper_bound r x
+  match t with
+  | Leaf -> true
+  | Node (y, l, r) -> y <= x && upper_bound l x && upper_bound r x
 
 let rec bst t =
   match t with

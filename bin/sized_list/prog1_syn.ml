@@ -1,13 +1,13 @@
 open Combinators
-let rec sized_list_gen = fun s ->
-  let (xccc7) = sizecheck s in
-  match xccc7 with
-  | true -> []
-  | false ->
-      let (xccc8) = bool_gen () in
-      (match xccc8 with
-       | true -> []
-       | false ->
-           let (xccc9) = subs s in
-           let (xccc10) = sized_list_gen xccc9 in
-           let (xccc11) = int_gen () in xccc11 :: xccc10)
+
+let rec sized_list_gen =
+ fun s ->
+  let xccc7 = sizecheck s in
+
+  freq_gen s
+    ~base_case:(fun _ -> [])
+    ~recursive_case:(fun _ ->
+      let xccc8 = int_gen () in
+      let xccc9 = subs s in
+      let xccc10 = sized_list_gen xccc9 in
+      xccc8 :: xccc10)

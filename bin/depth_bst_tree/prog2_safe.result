@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prog2_safe[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.0s prog2_safe
+[2K[ ]     0     0     0     0 / 20000     0.0s prog2_safe[2K[ ]  1782     0     0  1782 / 20000     0.0s prog2_safe (collecting)[2K[ ]  6296     0     0  6296 / 20000     0.1s prog2_safe (collecting)[2K[ ] 10982     0     0 10982 / 20000     0.2s prog2_safe[2K[ ] 15586     0     0 15586 / 20000     0.3s prog2_safe[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.4s prog2_safe
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

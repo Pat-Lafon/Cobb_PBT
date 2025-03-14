@@ -1,0 +1,4 @@
+generated error  fail  pass / total     time test name
+[2K[ ]     0     0     0     0 / 20000     0.0s default_gen[2K[ ]  6259     0     0  3272 / 20000     0.1s default_gen (collecting)[2K[ ] 13796     0     0  7082 / 20000     0.2s default_gen (collecting)[2K[[32;1m✓[0m] 20200     0     0 10399 / 20000     0.3s default_gen
+================================================================================
+[32;1msuccess[0m (ran 1 tests)

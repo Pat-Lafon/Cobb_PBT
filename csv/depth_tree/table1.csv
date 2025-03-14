@@ -1,11 +1,12 @@
 Generator Name,Pass,Fail,Total,Time
-prog1_syn,20000,0,20000,0.0s
+prog1_syn,20000,0,20000,0.2s
 prog3_safe,20000,0,20000,0.0s
-prog2_cov,9056,0,20200,1.7s
-prog3_syn,20000,0,20000,0.0s
-prog,20000,0,20000,0.0s
-prog2_safe,20000,0,20000,0.0s
-prog1_cov,14531,0,20200,0.6s
-prog1_safe,20000,0,20000,0.0s
-prog2_syn,20000,0,20000,0.0s
-prog3_cov,16349,0,20200,0.3s
+default_gen,12326,0,20200,0.2s
+prog2_cov,4921,0,20200,13.1s
+prog3_syn,20000,0,20000,0.2s
+prog,20000,0,20000,0.2s
+prog2_safe,20000,0,20000,0.2s
+prog1_cov,5222,0,20200,13.2s
+prog1_safe,20000,0,20000,0.2s
+prog2_syn,20000,0,20000,0.2s
+prog3_cov,16723,0,20200,0.1s
