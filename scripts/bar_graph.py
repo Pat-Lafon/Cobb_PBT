@@ -6,7 +6,7 @@ import glob
 
 # cli
 parser = argparse.ArgumentParser(description="args for graphs.")
-parser.add_argument("table", help="Specify table [table1|table2_safe].")
+parser.add_argument("table", help="Specify table [table1|table2].")
 
 args = parser.parse_args()
 table = args.table
