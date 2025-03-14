@@ -1,4 +1,4 @@
 Generator Name,Pass,Fail,Total,Time
-prop2_safe,0,0,20200,0.0s
-prop1_safe,0,0,20200,0.0s
-prop3_safe,9378,0,20200,0.0s
+prop2_safe,0,0,20200,0.2s
+prop1_safe,0,0,20200,0.2s
+prop3_safe,15306,0,20200,0.2s

@@ -12,6 +12,11 @@ let int_range a b =
 let gt_int_gen a =
   QCheck.Gen.int_range (a + 1) Int.max_int (QCheck_runner.random_state ())
 
+let freq_gen size ~base_case ~recursive_case =
+  QCheck.Gen.frequency
+    [ (1, base_case); (size, recursive_case) ]
+    (QCheck_runner.random_state ())
+
 (* re-implementing unit functions from Cobb *)
 let sizecheck s = s <= 0
 let subs s = s - 1
@@ -70,12 +75,14 @@ let tree_gen () =
   let rec gen_tree s =
     if s == 0 then Leaf
     else
-      let l = gen_tree (subs s) in
-      let v = int_gen () in
-      let r = gen_tree (subs s) in
-      Node (v, l, r)
+      freq_gen s
+        ~base_case:(fun _ -> Leaf)
+        ~recursive_case:(fun _ ->
+          let l = gen_tree (subs s) in
+          let v = int_gen () in
+          let r = gen_tree (subs s) in
+          Node (v, l, r))
   in
   gen_tree size
-
 
 let () = assert (gt_int_gen 0 > 0)

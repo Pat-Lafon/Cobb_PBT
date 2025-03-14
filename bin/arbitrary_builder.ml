@@ -9,6 +9,7 @@ let catch_err f = fun () -> try Some (f ()) with BailOut -> None
 let sized_list_generators =
   [
     (Sized_list.Prog.sized_list_gen, "prog");
+    ((fun _ -> int_list_gen ()), "default_gen");
     (Sized_list.Prog1_syn.sized_list_gen, "prog1_syn");
     (Sized_list.Prog2_syn.sized_list_gen, "prog2_syn");
     (Sized_list.Prog3_syn.sized_list_gen, "prog3_syn");
@@ -42,6 +43,7 @@ let sized_list_generators =
 let duplicate_list_generators =
   [
     (Duplicate_list.Prog.duplicate_list_gen, "prog");
+    ((fun _ _ -> int_list_gen ()), "default_gen");
     (Duplicate_list.Prog1_syn.duplicate_list_gen, "prog1_syn");
     (Duplicate_list.Prog2_syn.duplicate_list_gen, "prog2_syn");
     (Duplicate_list.Prog3_syn.duplicate_list_gen, "prog3_syn");
@@ -57,6 +59,7 @@ let duplicate_list_generators =
 let unique_list_generators =
   [
     (Unique_list.Prog.unique_list_gen, "prog");
+    ((fun _ -> int_list_gen ()), "default_gen");
     (Unique_list.Prog1_syn.unique_list_gen, "prog1_syn");
     (Unique_list.Prog2_syn.unique_list_gen, "prog2_syn");
     (Unique_list.Prog3_syn.unique_list_gen, "prog3_syn");
@@ -72,6 +75,7 @@ let unique_list_generators =
 let sorted_list_generators =
   [
     (Sorted_list.Prog.sorted_list_gen, "prog");
+    ((fun _ _ -> int_list_gen ()), "default_gen");
     (Sorted_list.Prog1_syn.sorted_list_gen, "prog1_syn");
     (Sorted_list.Prog2_syn.sorted_list_gen, "prog2_syn");
     (Sorted_list.Prog3_syn.sorted_list_gen, "prog3_syn");
@@ -86,6 +90,7 @@ let sorted_list_generators =
 let rbtree_generators =
   [
     (Rbtree.Prog.rbtree_gen, "prog");
+    ((fun _ _ _ -> default_rbtree_gen ()), "default_gen");
     (Rbtree.Prog1_syn.rbtree_gen, "prog1_syn");
     (Rbtree.Prog2_syn.rbtree_gen, "prog2_syn");
     (Rbtree.Prog3_syn.rbtree_gen, "prog3_syn");
@@ -109,6 +114,7 @@ let rbtree_generators =
 let complete_tree_generators =
   [
     (Complete_tree.Prog.complete_tree_gen, "prog");
+    ((fun _ -> tree_gen ()), "default_gen");
     (Complete_tree.Prog1_syn.complete_tree_gen, "prog1_syn");
     (Complete_tree.Prog2_syn.complete_tree_gen, "prog2_syn");
     (Complete_tree.Prog3_syn.complete_tree_gen, "prog3_syn");
@@ -123,6 +129,7 @@ let complete_tree_generators =
 let depth_tree_gen =
   [
     (Depth_tree.Prog.depth_tree_gen, "prog");
+    ((fun _ -> tree_gen ()), "default_gen");
     (Depth_tree.Prog1_syn.depth_tree_gen, "prog1_syn");
     (Depth_tree.Prog2_syn.depth_tree_gen, "prog2_syn");
     (Depth_tree.Prog3_syn.depth_tree_gen, "prog3_syn");
@@ -137,6 +144,7 @@ let depth_tree_gen =
 let depth_bst_gen =
   [
     (Depth_bst_tree.Prog.size_bst_gen, "prog");
+    ((fun _ _ _ -> tree_gen ()), "default_gen");
     (Depth_bst_tree.Prog1_syn.size_bst_gen, "prog1_syn");
     (Depth_bst_tree.Prog2_syn.size_bst_gen, "prog2_syn");
     (Depth_bst_tree.Prog3_syn.size_bst_gen, "prog3_syn");

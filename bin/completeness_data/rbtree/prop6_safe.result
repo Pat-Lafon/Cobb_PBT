@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prop6_safe[2K[ ]  3091     0     0  2670 / 20000     0.0s prop6_safe (collecting)[2K[ ] 11399     0     0  9866 / 20000     0.1s prop6_safe (collecting)[2K[ ] 19283     0     0 16693 / 20000     0.2s prop6_safe (collecting)[2K[[32;1m✓[0m] 20200     0     0 17487 / 20000     0.2s prop6_safe
+[2K[ ]     0     0     0     0 / 20000     0.0s prop6_safe[2K[ ]  5643     0     0  4899 / 20000     0.1s prop6_safe (collecting)[2K[ ] 13909     0     0 12028 / 20000     0.2s prop6_safe[2K[[32;1m✓[0m] 20200     0     0 17487 / 20000     0.2s prop6_safe
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)
