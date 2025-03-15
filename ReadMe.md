@@ -1,10 +1,16 @@
 
-
 ## How to run
 
 ```sh
 dune build
-dune exec Cobb_PBT
+dune exec Cobb_PBT -- eval2
+dune exec Cobb_PBT -- eval3
+```
+
+Visualize Results
+
+```sh
+make results
 ```
 
 ### Creating the Opam switch
@@ -15,7 +21,7 @@ opam switch create ./ --deps-only
 
 ### QCheck
 
-Until the patch is merged, we use a fork with a patch for QCheck
+Until the patch is release, we use a fork with a patch for QCheck
 
 ```sh
 pwd
