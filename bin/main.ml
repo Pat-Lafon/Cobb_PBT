@@ -17,7 +17,7 @@ let is_not_safe_duplicate =
   [
     ("prop1_safe", neg is_duplicate_safe);
     ("prop2_safe", neg is_duplicate_safe);
-    ("prop3_safe", neg is_duplicate_safe);
+    ("sketch_safe", neg is_duplicate_safe);
   ]
 
 let is_unique_safe (s, l) = has_same_size (s, l) && is_unique l
@@ -27,7 +27,7 @@ let is_not_safe_unique =
   [
     ("prop1_safe", neg is_unique_safe);
     ("prop2_safe", neg is_unique_safe);
-    ("prop3_safe", neg is_unique_safe);
+    ("sketch_safe", neg is_unique_safe);
   ]
 
 let is_empty_wrapper (s, l) = is_empty l
@@ -42,7 +42,7 @@ let is_not_safe_sized =
     ("prop6_safe", neg is_empty_wrapper);
     ("prop7_safe", neg is_empty_wrapper);
     ("prop8_safe", neg is_empty_wrapper);
-    ("prop9_safe", neg is_empty_wrapper);
+    ("sketch_safe", neg is_empty_wrapper);
   ]
 
 (* safety filter functions for sorted *)
@@ -58,7 +58,7 @@ let is_not_safe_sorted =
   [
     ("prop1_safe", neg (check_some is_sorted_prog1_safe));
     ("prop2_safe", neg (check_some is_sorted_prog23_safe));
-    ("prop3_safe", neg (check_some is_sorted_prog23_safe));
+    ("sketch_safe", neg (check_some is_sorted_prog23_safe));
   ]
 
 let is_not_safe_depth =
@@ -66,6 +66,7 @@ let is_not_safe_depth =
     ("prop1_safe", neg (fun (s, t) -> depth t <= s));
     ("prop2_safe", neg (fun (s, t) -> depth t <= s));
     ("prop3_safe", neg (fun (s, t) -> is_leaf t));
+    ("sketch_safe", neg (fun (s, t) -> is_leaf t));
   ]
 
 let is_not_safe_complete =
@@ -74,7 +75,7 @@ let is_not_safe_complete =
     ( "prop2_safe",
       neg (fun (s, t) ->
           complete t && depth t = s && data_value_scales_by_size t) );
-    ( "prop3_safe",
+    ( "sketch_safe",
       neg (fun (s, t) ->
           complete t && depth t = s && data_value_scales_by_size t) );
   ]
@@ -85,6 +86,7 @@ let is_not_safe_bst =
     ("prop2_safe", neg (fun (s, low, high, t) -> bst t && depth t <= s));
     ("prop3_safe", neg (fun (s, low, high, t) -> bst t && depth t <= s));
     ("prop4_safe", neg (fun (s, low, high, t) -> is_leaf t));
+    ("sketch_safe", neg (fun (s, low, high, t) -> is_leaf t));
   ]
 
 let rbtree_precondition (inv, color, height, tree) =

@@ -1,4 +1,0 @@
-generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prog9_syn[2K[ ]   215     0     0   215 / 20000     0.0s prog9_syn (collecting)[2K[ ]  9355     0     0  9355 / 20000     0.1s prog9_syn (collecting)[2K[ ] 15899     0     0 15899 / 20000     0.2s prog9_syn (collecting)[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.2s prog9_syn
-================================================================================
-[32;1msuccess[0m (ran 1 tests)

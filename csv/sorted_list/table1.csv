@@ -1,12 +1,12 @@
 Generator Name,Pass,Fail,Total,Time
+sketch_safe,3247,0,20200,0.0s
 prog1_syn,1797,0,20200,0.0s
-prog3_safe,3247,0,20200,0.0s
-default_gen,83,0,20200,0.3s
+sketch_syn,1880,0,20200,0.0s
 prog2_cov,1140,0,20200,0.1s
-prog3_syn,1880,0,20200,0.0s
 prog,1774,0,20200,0.0s
+sketch_cov,87,0,20200,0.1s
 prog2_safe,3271,0,20200,0.0s
 prog1_cov,105,0,20200,0.0s
 prog1_safe,1817,0,20200,0.0s
+default,83,0,20200,0.3s
 prog2_syn,1862,0,20200,0.0s
-prog3_cov,87,0,20200,0.1s

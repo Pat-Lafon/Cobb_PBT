@@ -54,20 +54,18 @@ let rbtree_gen h =
   let inv = if color then h + h else h + h + 1 in
   Prog.rbtree_gen inv color h
 
-let default_gen h = gen_sized_int_root_red_rbtree (2 * h)
+let default h = gen_sized_int_root_red_rbtree (2 * h)
 let black_heights : int list = [ 1; 2; 3; 4; 5; 6 ]
 let number_of_trees : int list = [ 1000; 10000 ]
 
 let synthesized_gen_results_file =
   "bin/enumeration_data/synthesis_results.csv.results"
 
-let default_gen_results_file =
-  "bin/enumeration_data/default_results.csv.results"
+let default_results_file = "bin/enumeration_data/default_results.csv.results"
 
 let benchmarks =
   [
-    (synthesized_gen_results_file, rbtree_gen);
-    (default_gen_results_file, default_gen);
+    (synthesized_gen_results_file, rbtree_gen); (default_results_file, default);
   ]
 
 (* let rbtree_prog_time : float = run_X_times (fun () -> rbtree_gen 5) None (count_rbtree_nodes)  100000
@@ -98,7 +96,7 @@ let () =
                 time_out_ref := false;
 
                 try
-                  if gen == default_gen then print_endline "hello";
+                  if gen == default then print_endline "hello";
                   let rbtree_prog_time : float =
                     run_X_times
                       (fun () -> (gen h, h))

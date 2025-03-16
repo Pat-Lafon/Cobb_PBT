@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prog4_syn[2K[ ]  5366     0     0  5366 / 20000     0.1s prog4_syn (collecting)[2K[ ] 13770     0     0 13770 / 20000     0.2s prog4_syn (collecting)[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.2s prog4_syn
+[2K[ ]     0     0     0     0 / 20000     0.0s prog4_syn[2K[ ]  3000     0     0  3000 / 20000     0.0s prog4_syn (collecting)[2K[ ] 11057     0     0 11057 / 20000     0.1s prog4_syn[2K[ ] 18913     0     0 18913 / 20000     0.2s prog4_syn (collecting)[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.3s prog4_syn
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

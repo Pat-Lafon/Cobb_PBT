@@ -9,6 +9,8 @@ run: build
 clean:
 	opam exec -- dune clean
 	python3 scripts/clean.py
+	rm -r graphs
+	rm -r csv
 
 results:
 	python scripts/output.py -f bin/sized_list/ -o table1.csv
