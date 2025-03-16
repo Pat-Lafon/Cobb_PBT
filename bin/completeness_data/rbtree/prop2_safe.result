@@ -1,5 +1,5 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prop2_safe[2K[ ]   698     0     0     0 / 20000     0.0s prop2_safe (collecting)[2K[ ]  9088     0     0     0 / 20000     0.1s prop2_safe (collecting)[2K[ ] 17807     0     0     0 / 20000     0.2s prop2_safe (collecting)[2K[[32;1m✓[0m] 20200     0     0     0 / 20000     0.2s prop2_safe
+[2K[ ]     0     0     0     0 / 20000     0.0s prop2_safe[2K[ ]  2939     0     0     0 / 20000     0.0s prop2_safe (collecting)[2K[ ] 11130     0     0     0 / 20000     0.1s prop2_safe (collecting)[2K[ ] 19372     0     0     0 / 20000     0.2s prop2_safe (   testing)[2K[[32;1m✓[0m] 20200     0     0     0 / 20000     0.2s prop2_safe
 
 !!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

@@ -1,13 +1,0 @@
-generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s default_gen[2K[ ]  3334     0     0    14 / 20000     0.0s default_gen (collecting)[2K[ ] 10494     0     0    44 / 20000     0.1s default_gen (collecting)[2K[ ] 18083     0     0    75 / 20000     0.2s default_gen (collecting)[2K[[32;1m✓[0m] 20200     0     0    83 / 20000     0.3s default_gen
-
-!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-Warning for test default_gen:
-
-WARNING: only 0.4% tests (of 20000) passed precondition for "default_gen"
-
-NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
-================================================================================
-1 warning(s)
-[32;1msuccess[0m (ran 1 tests)
