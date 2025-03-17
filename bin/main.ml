@@ -117,6 +117,11 @@ let is_not_rbtree =
       neg (fun (inv, color, height, t) ->
           rbtree_precondition (inv, color, height, t)
           && Precondition.rbtree_missing_case_when_black t color false) );
+    ( "sketch_safe",
+      neg (fun (inv, color, height, t) ->
+          rbtree_precondition (inv, color, height, t)
+          && Precondition.rbtree_inv_as_data_in t inv true
+          && Precondition.rbtree_inv_as_data_in t inv false) );
   ]
 
 (* QCheck.make *)
