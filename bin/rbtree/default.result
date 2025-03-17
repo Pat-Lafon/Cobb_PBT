@@ -1,5 +1,5 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s default[2K[ ]  2290     0     0    44 / 20000     0.1s default (collecting)[2K[ ]  5949     0     0   120 / 20000     0.2s default (collecting)[2K[ ]  9575     0     0   201 / 20000     0.3s default (collecting)[2K[ ] 12973     0     0   269 / 20000     0.4s default (collecting)[2K[ ] 16667     0     0   364 / 20000     0.5s default (collecting)[2K[[32;1m✓[0m] 20200     0     0   425 / 20000     0.6s default
+[2K[ ]     0     0     0     0 / 20000     0.0s default[2K[ ]  3039     0     0    61 / 20000     0.1s default (collecting)[2K[ ]  6642     0     0   141 / 20000     0.2s default (collecting)[2K[ ] 10130     0     0   214 / 20000     0.3s default (collecting)[2K[ ] 12906     0     0   269 / 20000     0.4s default (collecting)[2K[ ] 16536     0     0   360 / 20000     0.5s default (collecting)[2K[ ] 20028     0     0   423 / 20000     0.6s default (collecting)[2K[[32;1m✓[0m] 20200     0     0   425 / 20000     0.6s default
 
 !!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

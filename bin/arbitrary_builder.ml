@@ -98,18 +98,21 @@ let rbtree_generators =
     (Rbtree.Prog4_syn.rbtree_gen, "prog4_syn");
     (Rbtree.Prog5_syn.rbtree_gen, "prog5_syn");
     (Rbtree.Prog6_syn.rbtree_gen, "prog6_syn");
+    (Rbtree.Prog7_syn.rbtree_gen, "sketch_syn");
     (Rbtree.Prog1_cov.rbtree_gen, "prog1_cov");
     (Rbtree.Prog2_cov.rbtree_gen, "prog2_cov");
     (Rbtree.Prog3_cov.rbtree_gen, "prog3_cov");
     (Rbtree.Prog4_cov.rbtree_gen, "prog4_cov");
     (Rbtree.Prog5_cov.rbtree_gen, "prog5_cov");
     (Rbtree.Prog6_cov.rbtree_gen, "prog6_cov");
+    (Rbtree.Prog7_cov.rbtree_gen, "sketch_cov");
     (Rbtree.Prog1_safe.rbtree_gen, "prog1_safe");
     (Rbtree.Prog2_safe.rbtree_gen, "prog2_safe");
     (Rbtree.Prog3_safe.rbtree_gen, "prog3_safe");
     (Rbtree.Prog4_safe.rbtree_gen, "prog4_safe");
     (Rbtree.Prog5_safe.rbtree_gen, "prog5_safe");
     (Rbtree.Prog6_safe.rbtree_gen, "prog6_safe");
+    (Rbtree.Prog7_safe.rbtree_gen, "sketch_safe");
   ]
 
 let complete_tree_generators =
@@ -145,7 +148,6 @@ let depth_tree_gen =
     (Depth_tree.Prog4_safe.depth_tree_gen, "sketch_safe");
   ]
 
-  (* TODO: sketch  *)
 let depth_bst_gen =
   [
     (Depth_bst_tree.Prog.size_bst_gen, "prog");
@@ -154,14 +156,17 @@ let depth_bst_gen =
     (Depth_bst_tree.Prog2_syn.size_bst_gen, "prog2_syn");
     (Depth_bst_tree.Prog3_syn.size_bst_gen, "prog3_syn");
     (Depth_bst_tree.Prog4_syn.size_bst_gen, "prog4_syn");
+    (Depth_bst_tree.Prog5_syn.size_bst_gen, "sketch_syn");
     (Depth_bst_tree.Prog1_cov.size_bst_gen, "prog1_cov");
     (Depth_bst_tree.Prog2_cov.size_bst_gen, "prog2_cov");
     (Depth_bst_tree.Prog3_cov.size_bst_gen, "prog3_cov");
     (Depth_bst_tree.Prog4_cov.size_bst_gen, "prog4_cov");
+    (Depth_bst_tree.Prog5_cov.size_bst_gen, "sketch_cov");
     (Depth_bst_tree.Prog1_safe.size_bst_gen, "prog1_safe");
     (Depth_bst_tree.Prog2_safe.size_bst_gen, "prog2_safe");
     (Depth_bst_tree.Prog3_safe.size_bst_gen, "prog3_safe");
     (Depth_bst_tree.Prog4_safe.size_bst_gen, "prog4_safe");
+    (Depth_bst_tree.Prog5_safe.size_bst_gen, "sketch_safe");
   ]
 
 (* arbitary values for generator *)
