@@ -16,7 +16,7 @@ def color_from_name(name):
     elif "sketch" in name:
         return "purple"
     else:
-        return "green"
+        return "limegreen"
 
 
 # cli
@@ -36,32 +36,34 @@ assert (
 
 # list of names for tables
 list_names = [
-    "Duplicate list",
     "Sized list",
-    "Sorted list",
+    "Duplicate list",
     "Unique list",
+    "Sorted list",
 ]
 tree_names = [
-    "Rbtree",
-    "Complete tree",
     "Depth tree",
+    "Complete tree",
     "Depth bst tree",
+    "Rbtree",
 ]
 
 bar_width = 0.6
+fig_width = 20  # Your figure width
 
 
 def create_graph(names, table_name):
     n_groups = len(names)
 
-    fig, axes = plt.subplots(1, n_groups, figsize=(25, 10), sharey=True)
+    fig, axes = plt.subplots(1, n_groups, sharey=True)
 
+    fig.set_size_inches(fig_width, 5)
     fig.suptitle(table_name + " outputs from generator variations", fontsize=16)
-    fig.supxlabel("generator variations")
-    fig.supylabel("Number of examples out of 20k accepted")
+    fig.supxlabel("generator variations", fontsize=14)
+    fig.supylabel("Number of examples out of 20k accepted", fontsize=14, x=0.01)
 
     # goes through each folder, and matches the csv that matches the table name
-    for name, ax in zip(names, axes):
+    for idx, (name, ax) in enumerate(zip(names, axes)):
         path = re.sub(r"\ ", "_", name)
 
         files = glob.glob("./csv/" + path + "/" + table + ".csv")
@@ -87,26 +89,64 @@ def create_graph(names, table_name):
 
             # Create the bar graph
             color = [color_from_name(name) for name in data.keys()]
-            x_pos = np.arange(len(data.keys()))
-            # TODO: Give name to section?
-            ax.bar(x_pos, data.values(), color=color, width=bar_width)
+
+            """             bar_width = 0.8 * (fig_width / (len(data.keys()) * n_groups)) """
+            x_pos = np.arange(len(data.keys())) * bar_width
+
+            bars = ax.bar(
+                x_pos, data.values(), color=color, edgecolor="black", width=bar_width
+            )
 
             # Add labels and title
             ax.set_xticks(x_pos)
-            ax.set_xticklabels(data.keys(), rotation=45, ha="right")
-            ax.set_title(name)
+            ax.set_ylim(0, 20000)
+
+            # Hack: How to get names not following implicit order?
+            names = (
+                (
+                    ["default", "Cobb"]
+                    + [str(i) for i in range(1, len(data.keys()) - 2)]
+                    + ["sketch"]
+                )
+                if table == "table1"
+                else ([str(i) for i in range(1, len(data.keys()))] + ["sketch"])
+            )
+            ax.set_xticklabels(names, rotation=45, ha="right", fontsize=14)
+            ax.set_title(name, fontsize=14)
+
+            # Add x markers for zero values
+            for i, value in enumerate(data.values()):
+                if value == 0.0:
+                    ax.plot(x_pos[i], 1000, marker="x", markersize=10, color="red")
+
+            # Add legend
+            elements = (["default", "Cobb"] if table == "table1" else []) + [
+                "incomplete_variation",
+                "sketch",
+            ]
+            bar_elements = (
+                [bars[0], bars[1]] + [bars[2], bars[-1]]
+                if table == "table1"
+                else [bars[0], bars[-1]]
+            )
+
+        # HACK: do this better
+        if idx == n_groups - 1:
+            ax.legend(bar_elements, elements, fontsize=12)
 
     # Add values on top of bars
     # for name, value in data.items():
     #    plt.text(name, value + 1, str(value), ha='center')
 
-    # changes width
-
     # Display the graph
-    # plt.tight_layout()
+    plt.tight_layout()
+    plt.subplots_adjust(wspace=0.0)
     plt.savefig(os.path.join(output_dir, f"{table_name}_graph.png"))
     # plt.show()
 
 
-create_graph(list_names, f"{table}_list")
-create_graph(tree_names, f"{table}_tree")
+if table == "table1":
+    create_graph(list_names, f"{table}_list")
+    create_graph(tree_names, f"{table}_tree")
+else:
+    create_graph(([list_names[0], list_names[-1]] + tree_names), f"{table}_combined")
