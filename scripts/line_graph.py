@@ -11,6 +11,8 @@ import numpy as np
 import csv
 import os
 
+output_dir = "./graphs"
+
 
 def parse_csv_files(file_paths):
     # Dictionary to store the results
@@ -47,9 +49,9 @@ def parse_csv_files(file_paths):
 
 # Example usage
 file_paths = [
-    "../bin/enumeration_data/default_results.csv.results",
-    "../bin/enumeration_data/luck_results.csv.results",
-    "../bin/enumeration_data/synthesis_results.csv.results",
+    "./bin/enumeration_data/default_results.csv.results",
+    "./bin/enumeration_data/luck_results.csv.results",
+    "./bin/enumeration_data/synthesis_results.csv.results",
 ]
 
 data_dict = parse_csv_files(file_paths)
@@ -62,14 +64,17 @@ plt.figure(figsize=(10, 4))
 assert len(data_dict) > 0
 x_values = []
 
+markers = ["o", "^", "s", "*", "P", "D"]
+
 # Plot each dictionary as a separate line
-for name, values in data_dict.items():
+for idx, (name, values) in enumerate(data_dict.items()):
     # Extract x and y values
     x_values = list(values.keys())
     y_values = list(values.values())
+    marker=markers[idx % len(markers)]
 
     # Plot this line with a label
-    plt.plot(x_values, y_values, marker="o", linestyle="-", label=name)
+    plt.plot(x_values, y_values, marker=marker, linestyle="-", label=name)
 
 # Add labels and title
 plt.xlabel("RBTree black height")
@@ -88,4 +93,6 @@ plt.grid(True, linestyle="--", alpha=0.7)
 
 # Display the graph
 plt.tight_layout()
-plt.show()
+
+# plt.tight_layout()
+plt.savefig(os.path.join(output_dir, f"table3_graph.png"))
