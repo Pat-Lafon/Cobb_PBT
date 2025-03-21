@@ -1,0 +1,13 @@
+generated error  fail  pass / total     time test name
+[2K[ ]     0     0     0     0 / 20000     0.0s bst_empty[2K[ ]  2153     0     0    30 / 20000     0.0s bst_empty (collecting)[2K[ ] 11946     0     0   162 / 20000     0.1s bst_empty (collecting)[2K[[32;1m✓[0m] 20200     0     0   291 / 20000     0.2s bst_empty
+
+!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Warning for test bst_empty:
+
+WARNING: only 1.5% tests (of 20000) passed precondition for "bst_empty"
+
+NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
+================================================================================
+1 warning(s)
+[32;1msuccess[0m (ran 1 tests)

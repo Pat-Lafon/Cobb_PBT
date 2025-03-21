@@ -284,6 +284,29 @@ let eval_3_rbtree =
           (List.hd Arbitrary_builder.rbtree_arbitraries |> fst, name))
       is_not_rbtree )
 
+let eval_4_depth_bst_trivial_empty =
+  ( "depth_bst_trivial_empty",
+    [
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.nth Arbitrary_builder.depth_bst_tree_arbitraries 1 |> fst, name))
+        ("bst_empty", fun (s, lo, high, t) -> Precondition.is_leaf t);
+    ] )
+
+let eval_4_depth_bst_trivial_singleton =
+  ( "depth_bst_trivial_singleton",
+    [
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.nth Arbitrary_builder.depth_bst_tree_arbitraries 1 |> fst, name))
+        ( "bst_empty",
+          fun (s, lo, high, t) ->
+            Precondition.depth t == 1
+            && Precondition.depth t <= s
+            && Precondition.lower_bound t lo
+            && Precondition.upper_bound t high );
+    ] )
+
 (* command line args *)
 let args = Array.to_list Sys.argv
 
@@ -314,6 +337,10 @@ let eval3 =
     eval_3_rbtree;
   ]
 
+(* Not a real eval *)
+let eval4 =
+  [ eval_4_depth_bst_trivial_empty; eval_4_depth_bst_trivial_singleton ]
+
 let () =
   let argc = Array.length Sys.argv in
 
@@ -332,6 +359,7 @@ let () =
       if eval_name = "eval2" then (eval2, "./bin/")
         (* TODO: redirect to different folder... probably make a data folder for easy cleanup *)
       else if eval_name = "eval3" then (eval3, "./bin/completeness_data/")
+      else if eval_name = "eval4" then (eval4, "./bin/random/")
       else failwith "Invalid arg 1, expected eval2|eval3"
     in
 

@@ -10,13 +10,13 @@ import numpy as np
 
 def color_from_name(name):
     if name == "prog":
-        return "red"
+        return "green"
     elif name == "default":
-        return "blue"
-    elif "sketch" in name:
         return "purple"
+    elif "sketch" in name:
+        return "blue"
     else:
-        return "limegreen"
+        return "cyan"
 
 
 # cli
@@ -48,19 +48,41 @@ tree_names = [
     "Rbtree",
 ]
 
+fontsize = 16
 bar_width = 0.6
 fig_width = 20  # Your figure width
+
+
+def find_numbers_in_groups(names):
+    res = []
+    for idx, (name) in enumerate(names):
+        path = re.sub(r"\ ", "_", name)
+
+        files = glob.glob("./csv/" + path + "/" + table + ".csv")
+        for file in files:
+            with open(file, "r") as fin:
+                csv_reader = csv.reader(fin)
+                # Skip the header
+                next(csv_reader)
+
+                rows = list(csv_reader)
+                res.append(len(rows))
+    return res
 
 
 def create_graph(names, table_name):
     n_groups = len(names)
 
-    fig, axes = plt.subplots(1, n_groups, sharey=True)
+    # This width ratios thing is a huge pain, but Ben really wants the bars to
+    # be of equal width
+    width_ratios = find_numbers_in_groups(names)
+
+    fig, axes = plt.subplots(1, n_groups, sharey=True, width_ratios=width_ratios)
 
     fig.set_size_inches(fig_width, 5)
-    fig.suptitle(table_name + " outputs from generator variations", fontsize=16)
-    fig.supxlabel("generator variations", fontsize=14)
-    fig.supylabel("Number of examples out of 20k accepted", fontsize=14, x=0.01)
+    # fig.suptitle(table_name + " outputs from generator variations", fontsize=fontsize)
+    # fig.supxlabel("generator variations", fontsize=fontsize)
+    fig.supylabel("Number of values out of 20k accepted", fontsize=fontsize, x=0.01)
 
     # goes through each folder, and matches the csv that matches the table name
     for idx, (name, ax) in enumerate(zip(names, axes)):
@@ -100,6 +122,7 @@ def create_graph(names, table_name):
             # Add labels and title
             ax.set_xticks(x_pos)
             ax.set_ylim(0, 20000)
+            plt.setp(ax.get_yticklabels(), fontsize=fontsize)
 
             # Hack: How to get names not following implicit order?
             names = (
@@ -111,8 +134,8 @@ def create_graph(names, table_name):
                 if table == "table1"
                 else ([str(i) for i in range(1, len(data.keys()))] + ["sketch"])
             )
-            ax.set_xticklabels(names, rotation=45, ha="right", fontsize=14)
-            ax.set_title(name, fontsize=14)
+            ax.set_xticklabels(names, rotation=45, ha="right", fontsize=fontsize)
+            ax.set_title(name, fontsize=fontsize)
 
             # Add x markers for zero values
             for i, value in enumerate(data.values()):
@@ -132,7 +155,7 @@ def create_graph(names, table_name):
 
         # HACK: do this better
         if idx == n_groups - 1:
-            ax.legend(bar_elements, elements, fontsize=12)
+            ax.legend(bar_elements, elements, fontsize=fontsize - 2)
 
     # Add values on top of bars
     # for name, value in data.items():
