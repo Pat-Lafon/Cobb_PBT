@@ -36,16 +36,16 @@ assert (
 
 # list of names for tables
 list_names = [
-    "Sized list",
-    "Duplicate list",
-    "Unique list",
-    "Sorted list",
+    "Sized List",
+    "Duplicate List",
+    "Unique List",
+    "Sorted List",
 ]
 tree_names = [
     "Depth tree",
     "Complete tree",
-    "Depth bst tree",
-    "Rbtree",
+    "BSTs",
+    "Red-Black tree",
 ]
 
 fontsize = 16
@@ -56,7 +56,7 @@ fig_width = 20  # Your figure width
 def find_numbers_in_groups(names):
     res = []
     for idx, (name) in enumerate(names):
-        path = re.sub(r"\ ", "_", name)
+        path = re.sub(r"-", "_", re.sub(r"\ ", "_", name))
 
         files = glob.glob("./csv/" + path + "/" + table + ".csv")
         for file in files:
@@ -86,7 +86,7 @@ def create_graph(names, table_name):
 
     # goes through each folder, and matches the csv that matches the table name
     for idx, (name, ax) in enumerate(zip(names, axes)):
-        path = re.sub(r"\ ", "_", name)
+        path = re.sub(r"-", "_", re.sub(r"\ ", "_", name))
 
         files = glob.glob("./csv/" + path + "/" + table + ".csv")
         for file in files:
