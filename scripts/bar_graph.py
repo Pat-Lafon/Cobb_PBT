@@ -10,13 +10,13 @@ import numpy as np
 
 def color_from_name(name):
     if name == "prog":
-        return "green"
+        return "#228833"  # "green"
     elif name == "default":
-        return "purple"
+        return "#AA3377"  # "purple"
     elif "sketch" in name:
-        return "blue"
+        return "#4477AA"  # "blue"
     else:
-        return "cyan"
+        return "#66CCEE"  # "cyan"
 
 
 # cli
