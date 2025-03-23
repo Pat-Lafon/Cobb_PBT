@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prog5_syn[2K[ ]  4216     0     0  4216 / 20000     0.0s prog5_syn (collecting)[2K[ ] 14250     0     0 14250 / 20000     0.1s prog5_syn (collecting)[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.2s prog5_syn
+[2K[ ]     0     0     0     0 / 20000     0.0s prog5_syn[2K[ ]  6536     0     0  6536 / 20000     0.1s prog5_syn (collecting)[2K[ ] 16152     0     0 16152 / 20000     0.2s prog5_syn (collecting)[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.2s prog5_syn
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

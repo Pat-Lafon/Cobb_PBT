@@ -27,6 +27,7 @@ let freq_gen size ~base_case ~recursive_case =
 let sizecheck s = s <= 0
 let subs s = s - 1
 let incr s = s + 1
+let double s = s * 2
 let list_mem l x = List.mem x l
 
 (* for Err/ Exn *)

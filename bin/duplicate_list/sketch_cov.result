@@ -1,5 +1,5 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s sketch_cov[2K[ ]  3557     0     0     2 / 20000     0.1s sketch_cov (collecting)[2K[ ] 11084     0     0    19 / 20000     0.2s sketch_cov (collecting)[2K[ ] 18850     0     0    37 / 20000     0.3s sketch_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0    42 / 20000     0.3s sketch_cov
+[2K[ ]     0     0     0     0 / 20000     0.0s sketch_cov[2K[ ]  3270     0     0     2 / 20000     0.0s sketch_cov (collecting)[2K[ ] 10904     0     0    19 / 20000     0.1s sketch_cov (collecting)[2K[ ] 18631     0     0    35 / 20000     0.2s sketch_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0    42 / 20000     0.3s sketch_cov
 
 !!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s sketch_syn[2K[ ]  1754     0     0  1754 / 20000     0.0s sketch_syn (collecting)[2K[ ] 11438     0     0 11438 / 20000     0.1s sketch_syn[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.2s sketch_syn
+[2K[ ]     0     0     0     0 / 20000     0.0s sketch_syn[2K[ ]   581     0     0   581 / 20000     0.0s sketch_syn[2K[ ]  6626     0     0  6626 / 20000     0.1s sketch_syn (collecting)[2K[ ] 12351     0     0 12351 / 20000     0.2s sketch_syn (collecting)[2K[ ] 18989     0     0 18989 / 20000     0.3s sketch_syn (collecting)[2K[[32;1m✓[0m] 20000     0     0 20000 / 20000     0.3s sketch_syn
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

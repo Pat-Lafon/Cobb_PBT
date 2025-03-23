@@ -169,6 +169,33 @@ let depth_bst_gen =
     (Depth_bst_tree.Prog5_safe.size_bst_gen, "sketch_safe");
   ]
 
+let even_list_gen =
+  [
+    (Even_list.Prog.even_list_gen, "prog");
+    ((fun _ -> int_list_gen ()), "default");
+    (Even_list.Prog1_syn.even_list_gen, "prog1_syn");
+    (Even_list.Prog2_syn.even_list_gen, "prog2_syn");
+    (Even_list.Prog3_syn.even_list_gen, "prog3_syn");
+    (Even_list.Prog4_syn.even_list_gen, "prog4_syn");
+    (Even_list.Prog5_syn.even_list_gen, "prog5_syn");
+    (Even_list.Prog6_syn.even_list_gen, "prog6_syn");
+    (Even_list.Prog7_syn.even_list_gen, "sketch_syn");
+    (Even_list.Prog1_cov.even_list_gen, "prog1_cov");
+    (Even_list.Prog2_cov.even_list_gen, "prog2_cov");
+    (Even_list.Prog3_cov.even_list_gen, "prog3_cov");
+    (Even_list.Prog4_cov.even_list_gen, "prog4_cov");
+    (Even_list.Prog5_cov.even_list_gen, "prog5_cov");
+    (Even_list.Prog6_cov.even_list_gen, "prog6_cov");
+    (Even_list.Prog7_cov.even_list_gen, "sketch_cov");
+    (Even_list.Prog1_safe.even_list_gen, "prog1_safe");
+    (Even_list.Prog2_safe.even_list_gen, "prog2_safe");
+    (Even_list.Prog3_safe.even_list_gen, "prog3_safe");
+    (Even_list.Prog4_safe.even_list_gen, "prog4_safe");
+    (Even_list.Prog5_safe.even_list_gen, "prog5_safe");
+    (Even_list.Prog6_safe.even_list_gen, "prog6_safe");
+    (Even_list.Prog7_safe.even_list_gen, "sketch_safe");
+  ]
+
 (* arbitary values for generator *)
 (* let sized_list_arbitraries = List.map (fun (gen, name) -> (fun x -> arb_builder' (gen x)), name) sized_list_generators *)
 let sized_list_arbitraries =
@@ -198,6 +225,15 @@ let unique_list_arbitraries =
           (size, gen size)),
         name ))
     unique_list_generators
+
+let even_list_arbitraries =
+  List.map
+    (fun (gen, name) ->
+      ( (fun () ->
+          let size = nat_gen () in
+          (size, gen size)),
+        name ))
+    even_list_gen
 
 let sorted_list_arbitraries =
   List.map

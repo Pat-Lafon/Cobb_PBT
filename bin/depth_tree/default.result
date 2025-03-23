@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s default[2K[ ]  2126     0     0  1343 / 20000     0.0s default (collecting)[2K[ ] 12682     0     0  7783 / 20000     0.1s default (collecting)[2K[[32;1m✓[0m] 20200     0     0 12326 / 20000     0.2s default
+[2K[ ]     0     0     0     0 / 20000     0.0s default[2K[ ]  8541     0     0  5312 / 20000     0.1s default[2K[ ] 17931     0     0 10932 / 20000     0.2s default (collecting)[2K[[32;1m✓[0m] 20200     0     0 12326 / 20000     0.2s default
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

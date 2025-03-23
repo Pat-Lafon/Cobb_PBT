@@ -61,6 +61,23 @@ let is_not_safe_sorted =
     ("sketch_safe", neg (check_some is_sorted_prog23_safe));
   ]
 
+let is_not_safe_even =
+  [
+    ("prop1_safe", fun (s, l) -> if s == 0 then l != [ 0 ] else false);
+    ( "prop2_safe",
+      fun (s, l) ->
+        if s+1 != List.length l then List.rev l |> List.hd != 0 else false );
+    ("prop3_safe", fun (s, l) -> if s > 1 then List.length l > 1 else false);
+    ( "prop4_safe",
+      fun (s, l) ->
+        if s > 0 && List.length l < s then List.rev l |> List.hd != 0 else false
+    );
+    ("prop5_safe", fun (s, l) -> if s > 0 then l != [ 0 ] else false);
+    ( "prop6_safe",
+      fun (s, l) -> if s == 0 then l != [ 0 ] else List.length l > 1 );
+    ("sketch_safe", fun (s, l) -> l != [ 0 ] );
+  ]
+
 let is_not_safe_depth =
   [
     ("prop1_safe", neg (fun (s, t) -> depth t <= s));
@@ -117,7 +134,8 @@ let is_not_rbtree =
       neg (fun (inv, color, height, t) ->
           rbtree_precondition (inv, color, height, t)
           && Precondition.rbtree_missing_case_when_black t color false) );
-    ( "sketch_safe", (* TODO: This is probably slightly off ... *)
+    ( "sketch_safe",
+      (* TODO: This is probably slightly off ... *)
       neg (fun (inv, color, height, t) ->
           rbtree_precondition (inv, color, height, t)
           && Precondition.rbtree_inv_as_data_in t inv true
@@ -188,6 +206,15 @@ let eval_2_unique_list =
            Precondition.is_unique l && Precondition.has_same_size (size, l)))
       Arbitrary_builder.unique_list_arbitraries )
 
+let eval_2_even_list =
+  ( "even_list",
+    List.map
+      (precondition_frequency (fun (size, l) ->
+           Precondition.is_even_list l
+           && Precondition.is_sized (size + 1, l)
+           && List.length l != 0))
+      Arbitrary_builder.even_list_arbitraries )
+
 let eval_2_complete_tree =
   ( "complete_tree",
     List.map
@@ -203,7 +230,7 @@ let eval_2_depth_tree =
       Arbitrary_builder.depth_tree_arbitraries )
 
 let eval_2_depth_bst_tree =
-  ( "depth_bst_tree",
+  ( "bsts",
     List.map
       (precondition_frequency (fun (size, lo, high, tree) ->
            Precondition.depth tree <= size
@@ -213,7 +240,7 @@ let eval_2_depth_bst_tree =
       Arbitrary_builder.depth_bst_tree_arbitraries )
 
 let eval_2_rbtree =
-  ( "rbtree",
+  ( "red_black_tree",
     List.map
       (precondition_frequency (fun (inv, color, height, tree) ->
            assert (if color then 2 * height = inv else (2 * height) + 1 = inv);
@@ -252,6 +279,14 @@ let eval_3_duplicate_list =
           (List.hd Arbitrary_builder.duplicate_list_arbitraries |> fst, name))
       is_not_safe_duplicate )
 
+let eval_3_even_list =
+  ( "even_list",
+    List.map
+      (fun (name, f) ->
+        precondition_frequency f
+          (List.hd Arbitrary_builder.even_list_arbitraries |> fst, name))
+      is_not_safe_even )
+
 let eval_3_depth_tree =
   ( "depth_tree",
     List.map
@@ -269,7 +304,7 @@ let eval_3_complete_tree =
       is_not_safe_complete )
 
 let eval_3_depth_bst_tree =
-  ( "depth_bst_tree",
+  ( "bsts",
     List.map
       (fun (name, f) ->
         precondition_frequency f
@@ -277,7 +312,7 @@ let eval_3_depth_bst_tree =
       is_not_safe_bst )
 
 let eval_3_rbtree =
-  ( "rbtree",
+  ( "red_black_tree",
     List.map
       (fun (name, f) ->
         precondition_frequency f
@@ -319,6 +354,7 @@ let eval2 =
     eval_2_sorted_list;
     eval_2_unique_list;
     eval_2_duplicate_list;
+    eval_2_even_list;
     eval_2_complete_tree;
     eval_2_depth_tree;
     eval_2_depth_bst_tree;
@@ -331,6 +367,7 @@ let eval3 =
     eval_3_sorted_list;
     eval_3_duplicate_list;
     eval_3_unique_list;
+    eval_3_even_list;
     eval_3_depth_tree;
     eval_3_complete_tree;
     eval_3_depth_bst_tree;

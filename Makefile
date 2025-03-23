@@ -16,6 +16,7 @@ results:
 	python scripts/output.py -f bin/sized_list/ -o table1.csv
 	python scripts/output.py -f bin/sorted_list/ -o table1.csv
 	python scripts/output.py -f bin/duplicate_list/ -o table1.csv
+	python scripts/output.py -f bin/even_list/ -o table1.csv
 	python scripts/output.py -f bin/unique_list/ -o table1.csv
 	python scripts/output.py -f bin/complete_tree/ -o table1.csv
 	python scripts/output.py -f bin/depth_tree/ -o table1.csv
@@ -24,6 +25,7 @@ results:
 	python scripts/output.py -f bin/completeness_data/sized_list/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/sorted_list/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/duplicate_list/ -o table2.csv
+	python scripts/output.py -f bin/completeness_data/even_list/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/unique_list/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/depth_tree/ -o table2.csv
 	python scripts/output.py -f bin/completeness_data/complete_tree/ -o table2.csv
