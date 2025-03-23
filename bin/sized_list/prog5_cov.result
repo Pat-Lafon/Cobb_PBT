@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prog5_cov[2K[ ]   112     0     0    69 / 20000     0.0s prog5_cov (collecting)[2K[ ]  7874     0     0  4450 / 20000     0.1s prog5_cov (collecting)[2K[ ] 15492     0     0  8748 / 20000     0.2s prog5_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0 11414 / 20000     0.3s prog5_cov
+[2K[ ]     0     0     0     0 / 20000     0.0s prog5_cov[2K[ ]  7405     0     0  4200 / 20000     0.1s prog5_cov (collecting)[2K[ ] 15047     0     0  8507 / 20000     0.2s prog5_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0 11414 / 20000     0.3s prog5_cov
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

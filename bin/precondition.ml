@@ -14,6 +14,11 @@ let rec is_duplicate = function
   | h1 :: h2 :: t -> if h1 = h2 then is_duplicate (h2 :: t) else false
   | _ -> true
 
+let rec is_even_list =
+  function
+  | [] -> true
+  | h :: t -> h mod 2 = 0 && is_even_list t
+
 let is_unique l =
   let len = List.length l in
   let set = Hashtbl.create len in

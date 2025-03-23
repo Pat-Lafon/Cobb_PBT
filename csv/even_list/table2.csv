@@ -1,0 +1,8 @@
+Generator Name,Pass,Fail,Total,Time
+sketch_safe,20000,0,20000,0.2s
+prop2_safe,16991,0,20200,0.3s
+prop1_safe,1105,0,20200,0.2s
+prop4_safe,14759,0,20200,0.2s
+prop3_safe,16413,0,20200,0.2s
+prop6_safe,17978,0,20200,0.2s
+prop5_safe,19119,0,20200,0.2s

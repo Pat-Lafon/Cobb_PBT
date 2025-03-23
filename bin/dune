@@ -22,6 +22,7 @@
   complete_tree
   depth_tree
   depth_bst_tree
+  even_list
   rbtree))
 
 (env

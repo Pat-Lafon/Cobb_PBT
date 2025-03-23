@@ -40,6 +40,7 @@ list_names = [
     "Duplicate List",
     "Unique List",
     "Sorted List",
+    "Even List"
 ]
 tree_names = [
     "Depth tree",

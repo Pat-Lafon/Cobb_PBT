@@ -1,4 +1,4 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s sketch_safe[2K[ ]  4462     0     0  4026 / 20000     0.1s sketch_safe (collecting)[2K[ ] 13071     0     0 11752 / 20000     0.2s sketch_safe (collecting)[2K[[32;1m✓[0m] 20200     0     0 18127 / 20000     0.2s sketch_safe
+[2K[ ]     0     0     0     0 / 20000     0.0s sketch_safe[2K[ ]  6366     0     0  5745 / 20000     0.1s sketch_safe (collecting)[2K[ ] 14857     0     0 13343 / 20000     0.2s sketch_safe (collecting)[2K[[32;1m✓[0m] 20200     0     0 18127 / 20000     0.2s sketch_safe
 ================================================================================
 [32;1msuccess[0m (ran 1 tests)

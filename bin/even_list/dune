@@ -1,0 +1,26 @@
+(library
+ (name even_list)
+ (libraries combinators)
+ (modules
+  prog
+  prog1_syn
+  prog2_syn
+  prog3_syn
+  prog4_syn
+  prog5_syn
+  prog6_syn
+  prog7_syn
+  prog1_cov
+  prog2_cov
+  prog3_cov
+  prog4_cov
+  prog5_cov
+  prog6_cov
+  prog7_cov
+  prog1_safe
+  prog2_safe
+  prog3_safe
+  prog4_safe
+  prog5_safe
+  prog6_safe
+  prog7_safe))
