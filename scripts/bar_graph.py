@@ -74,8 +74,6 @@ def find_numbers_in_groups(names):
 def create_graph(names, table_name):
     n_groups = len(names)
 
-    # This width ratios thing is a huge pain, but Ben really wants the bars to
-    # be of equal width
     width_ratios = find_numbers_in_groups(names)
 
     fig, axes = plt.subplots(1, n_groups, sharey=True, width_ratios=width_ratios)
