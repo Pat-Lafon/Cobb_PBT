@@ -107,7 +107,7 @@ for idx, (name, values) in enumerate(data_dict.items()):
 # Add labels and title
 plt.xlabel("Red-Black Tree black height")
 plt.ylabel("Time in seconds(log)")
-plt.title("Time to generate Red-Black Trees of varying depths")
+#plt.title("Time to generate Red-Black Trees of varying depths")
 
 plt.xticks(np.arange(min(x_values), max(x_values) + 1, 1))
 
