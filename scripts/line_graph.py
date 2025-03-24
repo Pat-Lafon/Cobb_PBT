@@ -66,20 +66,48 @@ x_values = []
 
 markers = ["o", "^", "s", "*", "P", "D"]
 
+
+# HACK: TODO FIX THIS
+def map_names(name):
+    if "default" in name:
+        if "10000" in name:
+            return "Default 10k"
+        elif "1000" in name:
+            return "Default 1k"
+        else:
+            raise "Unknown default"
+    elif "luck" in name:
+        if "10000" in name:
+            return "Luck 10k"
+        elif "1000" in name:
+            return "Luck 1k"
+        else:
+            raise "Unknown Luck"
+    elif "synthesis" in name:
+        if "10000" in name:
+            return "Cobb 10k"
+        elif "1000" in name:
+            return "Cobb 1k"
+        else:
+            raise "Unknown Cobb"
+    else:
+        raise "Unknown name"
+
+
 # Plot each dictionary as a separate line
 for idx, (name, values) in enumerate(data_dict.items()):
     # Extract x and y values
     x_values = list(values.keys())
     y_values = list(values.values())
-    marker=markers[idx % len(markers)]
+    marker = markers[idx % len(markers)]
 
     # Plot this line with a label
-    plt.plot(x_values, y_values, marker=marker, linestyle="-", label=name)
+    plt.plot(x_values, y_values, marker=marker, linestyle="-", label=map_names(name))
 
 # Add labels and title
-plt.xlabel("RBTree black height")
-plt.ylabel("Time in seconds")
-plt.title("Time to generate RBTrees of varying depths")
+plt.xlabel("Red-Black Tree black height")
+plt.ylabel("Time in seconds(log)")
+plt.title("Time to generate Red-Black Trees of varying depths")
 
 plt.xticks(np.arange(min(x_values), max(x_values) + 1, 1))
 
