@@ -1,4 +1,5 @@
 (library
+ (public_name Cobb_PBT.depth_tree)
  (name depth_tree)
  (libraries combinators)
  (modules
