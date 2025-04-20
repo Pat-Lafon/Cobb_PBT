@@ -1,4 +1,5 @@
 (library
+ (public_name Cobb_PBT.combinators)
  (name combinators)
  (modules combinators)
  (libraries qcheck))
@@ -10,6 +11,7 @@
  (libraries qcheck fileutils precondition combinators arbitrary_builder))
 
 (library
+ (public_name Cobb_PBT.arbitrary_builder)
  (name arbitrary_builder)
  (modules arbitrary_builder)
  (libraries
@@ -40,6 +42,7 @@
  (libraries core_unix.command_unix combinators precondition rbtree))
 
 (library
+ (public_name Cobb_PBT.precondition)
  (name precondition)
  (modules precondition)
  (libraries combinators))

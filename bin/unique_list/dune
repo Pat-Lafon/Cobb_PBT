@@ -1,4 +1,5 @@
 (library
+ (public_name Cobb_PBT.unique_list)
  (name unique_list)
  (libraries combinators)
  (modules prog 
