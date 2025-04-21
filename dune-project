@@ -21,7 +21,7 @@
  (description "A longer description")
  (depends
   (ocaml
-   (= 4.14))
+   (= 4.14.2))
   (dune
    (= 3.17))
   (fileutils
