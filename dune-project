@@ -20,12 +20,16 @@
  (synopsis "A short synopsis")
  (description "A longer description")
  (depends
-  ocaml
-  dune
+  (ocaml
+   (= 4.14.0))
+  (dune
+   (= 3.17))
   (fileutils
    (= "0.6.6"))
   (core_unix
    (= v0.15.0))
+  (qcheck
+   (= "0.24"))
   (ocamlformat
    (= "0.26.1")))
  (tags
