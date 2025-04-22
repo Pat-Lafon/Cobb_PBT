@@ -11,7 +11,7 @@ doc: "https://url/to/documentation"
 bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "ocaml" {= "4.12.1"}
-  "dune" {>= "3.16" & = "3.17.2"}
+  "dune" {>= "3.16" & = "3.7.0"}
   "fileutils" {= "0.6.6"}
   "core_unix" {= "v0.15.0"}
   "qcheck" {= "0.24"}
