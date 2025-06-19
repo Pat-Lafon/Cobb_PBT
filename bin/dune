@@ -46,3 +46,9 @@
  (name precondition)
  (modules precondition)
  (libraries combinators))
+
+(executable
+ (public_name num_valid)
+ (name num_valid)
+ (modules num_valid)
+ (libraries core_unix.command_unix qcheck fileutils precondition combinators arbitrary_builder))

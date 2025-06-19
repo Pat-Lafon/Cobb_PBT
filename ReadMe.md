@@ -3,9 +3,12 @@
 
 ```sh
 dune build
-dune exec Cobb_PBT -- eval2
-dune exec Cobb_PBT -- eval3
+QCHECK_MSG_INTERVAL=2000.0 && dune exec Cobb_PBT -- eval2
+QCHECK_MSG_INTERVAL=2000.0 && dune exec Cobb_PBT -- eval3
 ```
+
+We set a high message interval to avoid seeing a bunch of intermediate
+output at every 0.1 seconds.
 
 Visualize Results
 

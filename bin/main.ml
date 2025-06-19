@@ -66,7 +66,7 @@ let is_not_safe_even =
     ("prop1_safe", fun (s, l) -> if s == 0 then l != [ 0 ] else false);
     ( "prop2_safe",
       fun (s, l) ->
-        if s+1 != List.length l then List.rev l |> List.hd != 0 else false );
+        if s + 1 != List.length l then List.rev l |> List.hd != 0 else false );
     ("prop3_safe", fun (s, l) -> if s > 1 then List.length l > 1 else false);
     ( "prop4_safe",
       fun (s, l) ->
@@ -75,7 +75,7 @@ let is_not_safe_even =
     ("prop5_safe", fun (s, l) -> if s > 0 then l != [ 0 ] else false);
     ( "prop6_safe",
       fun (s, l) -> if s == 0 then l != [ 0 ] else List.length l > 1 );
-    ("sketch_safe", fun (s, l) -> l != [ 0 ] );
+    ("sketch_safe", fun (s, l) -> l != [ 0 ]);
   ]
 
 let is_not_safe_depth =
@@ -419,7 +419,9 @@ let () =
             let filename = foldername ^ t_get_name g ^ ".result" in
             print_endline ("> Running test for " ^ t_get_name g ^ "...");
             let oc = open_out filename in
-            ignore (QCheck_runner.run_tests ~verbose:true ~out:oc [ g ]);
+            ignore
+              (QCheck_runner.run_tests ~colors:false
+                 ~verbose:true ~out:oc [ g ]);
             close_out oc)
           tests)
       tests

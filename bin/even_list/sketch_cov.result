@@ -1,7 +1,8 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s sketch_cov[2K[ ]  3397     0     0   179 / 20000     0.0s sketch_cov (collecting)[2K[ ] 10741     0     0   529 / 20000     0.1s sketch_cov (collecting)[2K[ ] 18234     0     0   882 / 20000     0.2s sketch_cov (collecting)[2K[[32;1m✓[0m] 20200     0     0   985 / 20000     0.3s sketch_cov
+[ ]     0     0     0     0 / 20000     0.0s sketch_cov
+[✓] 20200     0     0   985 / 20000     0.3s sketch_cov
 
-!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Warning for test sketch_cov:
 
@@ -10,4 +11,4 @@ WARNING: only 4.9% tests (of 20000) passed precondition for "sketch_cov"
 NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
 ================================================================================
 1 warning(s)
-[32;1msuccess[0m (ran 1 tests)
+success (ran 1 tests)
