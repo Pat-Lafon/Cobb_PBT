@@ -3,8 +3,8 @@
 
 ```sh
 dune build
-QCHECK_MSG_INTERVAL=2000.0 && dune exec Cobb_PBT -- eval2
-QCHECK_MSG_INTERVAL=2000.0 && dune exec Cobb_PBT -- eval3
+export QCHECK_MSG_INTERVAL=2000.0 && dune exec Cobb_PBT -- eval2
+export QCHECK_MSG_INTERVAL=2000.0 && dune exec Cobb_PBT -- eval3
 ```
 
 We set a high message interval to avoid seeing a bunch of intermediate
