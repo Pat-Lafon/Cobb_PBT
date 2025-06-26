@@ -21,7 +21,7 @@ fin = args.input_file
 # fout = "./csv/" + args.output_file
 
 # sorted_list files have [[31;1m✗[0m] because of failures
-pattern = r"\[[✗✓]\]\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+/\s+(\d+)\s+(\d+\.\d+s)\s+(\w+)" # TODO: Is there a more readable version of this?
+pattern = r"\[[✗✓]\]\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+/\s+\d+\s+(\d+\.\d+s)\s+(\w+)" # TODO: Is there a more readable version of this?
 folder_pattern = r"\/([^\/]+)\/$" # TODO: Don't use a regex for file name finding
 
 if folder is not None:
