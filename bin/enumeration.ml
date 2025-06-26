@@ -96,7 +96,7 @@ let () =
                 time_out_ref := false;
 
                 try
-                  if gen == default then print_endline "hello";
+                  if gen == default then (* print_endline "hello"; *)
                   let rbtree_prog_time : float =
                     run_X_times
                       (fun () -> (gen h, h))

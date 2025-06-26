@@ -1,3 +1,6 @@
 [submodule "qcheck"]
 	path = qcheck
 	url = https://github.com/Pat-Lafon/qcheck.git
+[submodule "Luck"]
+	path = Luck
+	url = https://github.com/Pat-Lafon/Luck.git
