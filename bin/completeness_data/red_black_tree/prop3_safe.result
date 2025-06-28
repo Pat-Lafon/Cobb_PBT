@@ -1,13 +1,14 @@
 generated error  fail  pass / total     time test name
-[2K[ ]     0     0     0     0 / 20000     0.0s prop3_safe[2K[ ]  2024     0     0    65 / 20000     0.0s prop3_safe[2K[ ] 10910     0     0   382 / 20000     0.1s prop3_safe (collecting)[2K[ ] 19323     0     0   653 / 20000     0.2s prop3_safe (collecting)[2K[[32;1m✓[0m] 20200     0     0   678 / 20000     0.2s prop3_safe
+[ ]     0     0     0     0 / 20000     0.0s prop3_safe
+[✓] 20200     0     0   705 / 20000     0.2s prop3_safe
 
-!!! [33;1mWarning[0m !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Warning for test prop3_safe:
 
-WARNING: only 3.4% tests (of 20000) passed precondition for "prop3_safe"
+WARNING: only 3.5% tests (of 20000) passed precondition for "prop3_safe"
 
 NOTE: it is likely that the precondition is too strong, or that the generator is buggy.
 ================================================================================
 1 warning(s)
-[32;1msuccess[0m (ran 1 tests)
+success (ran 1 tests)
