@@ -9,13 +9,13 @@ luck_dir = "Luck/luck"
 luck_example_dir = "examples"
 files = [1, 2, 3, 4, 5, 6]
 num_evals = [1000, 10000]
-timeout = 300 # 5 minutes
+timeout = 300  # 5 minutes
 
 
 # Setup
 os.chdir(luck_dir)
 
-result_build = subprocess.run("cabal build luck", capture_output=True, text=True, timeout=timeout)
+result_build = subprocess.run("cabal build exe:luck".split(" "))
 
 assert result_build.returncode == 0
 
