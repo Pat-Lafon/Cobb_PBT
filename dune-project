@@ -21,9 +21,9 @@
  (description "A longer description")
  (depends
   (ocaml
-   (= 4.12.1))
+   (= 5.1.0))
   (dune
-   (= 3.7.0))
+   (= 3.17.0))
   (fileutils
    (= "0.6.6"))
   (core_unix
