@@ -14,6 +14,11 @@ timeout = 300 # 5 minutes
 
 # Setup
 os.chdir(luck_dir)
+
+result_build = subprocess.run("cabal build luck", capture_output=True, text=True, timeout=timeout)
+
+assert result_build.returncode == 0
+
 ## Black height, num generated, time
 results_triple = []
 
