@@ -48,7 +48,7 @@
  (libraries combinators))
 
 (executable
- (public_name num_valid)
- (name num_valid)
- (modules num_valid)
+ (public_name num_unique)
+ (name num_unique)
+ (modules num_unique)
  (libraries core_unix.command_unix qcheck fileutils precondition combinators arbitrary_builder))
