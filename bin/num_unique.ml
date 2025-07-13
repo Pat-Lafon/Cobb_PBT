@@ -1,22 +1,10 @@
 open Combinators
 
-let timeout = 300 (*  5 minutes *)
-let time_out_ref = ref false
-
-exception Timed_out
-
-let () =
-  Core.Signal.Expert.handle Core.Signal.alrm (fun (_ : Core.Signal.t) ->
-      Printf.printf "Timed out";
-      time_out_ref := true)
-
-let counter = ref 0
-
-let run_X_times (f : unit -> 'a option) (num : int) : (_ * int) list * int =
+let run_X_times (f : unit -> 'a option) (num : int) :
+    (_ * int) list * int * (_ * int) list =
   let map = ref [] in
   let none_count = ref 0 in
   let rec loop n =
-    if !time_out_ref then raise Timed_out;
     if n >= num then ()
     else
       match f () with
@@ -24,8 +12,7 @@ let run_X_times (f : unit -> 'a option) (num : int) : (_ * int) list * int =
           none_count := !none_count + 1;
           loop (n + 1)
       | Some result ->
-          let size = result |> fst in
-          if size <= 1 then counter := !counter + 1;
+          let _size = result |> fst in
           let result = result |> snd in
           (match List.assoc_opt result !map with
           | Some count ->
@@ -34,8 +21,8 @@ let run_X_times (f : unit -> 'a option) (num : int) : (_ * int) list * int =
           loop (n + 1)
   in
   let () = loop 0 in
-  print_newline ();
-  (!map, !none_count)
+  let duplicates = List.filter (fun (_, count) -> count > 1) !map in
+  (!map, !none_count, duplicates)
 
 (* List of (label, generator) for the first generator of each kind *)
 let first_gens =
@@ -75,35 +62,62 @@ let first_gens =
           | Rbtnode (_c, l, v, r) -> v :: (tree_to_list l @ tree_to_list r)
         in
         Some (height, tree_to_list tree) );
+    ( "complete_tree",
+      fun () ->
+        let v =
+          (Arbitrary_builder.complete_tree_arbitraries |> List.hd |> fst) ()
+        in
+        let height, tree = v in
+        let rec tree_to_list t =
+          match t with
+          | Leaf -> []
+          | Node (v, l, r) -> v :: (tree_to_list l @ tree_to_list r)
+        in
+        Some (height, tree_to_list tree) );
+    ( "depth_tree",
+      fun () ->
+        let v =
+          (Arbitrary_builder.depth_tree_arbitraries |> List.hd |> fst) ()
+        in
+        let height, tree = v in
+        let rec tree_to_list t =
+          match t with
+          | Leaf -> []
+          | Node (v, l, r) -> v :: (tree_to_list l @ tree_to_list r)
+        in
+        Some (height, tree_to_list tree) );
   ]
 
+(* Clean CSV output *)
+let output_file = "bin/unique_data/unique_results.csv.results"
+
+let print_csv_header oc =
+  Printf.fprintf oc
+    "Generator,Unique_Count,Total_Duplicates,Duplicate_Count,None_Count\n"
+
+let print_csv_row oc label num_unique total_duplicates duplicate_count
+    none_count =
+  Printf.fprintf oc "%s,%d,%d,%d,%d\n" label num_unique total_duplicates
+    duplicate_count none_count
+
 let () =
+  (* Create directory if it doesn't exist *)
+  let dir = Filename.dirname output_file in
+  (try Unix.mkdir dir 0o755 with Unix.Unix_error (Unix.EEXIST, _, _) -> ());
+
+  let oc = open_out output_file in
+  print_csv_header oc;
   List.iter
     (fun (label, gen) ->
       QCheck_runner.set_seed 0;
-      counter := 0;
-      Printf.printf "\n--- Benchmarking first %s generator ---\n" label;
-      let res, none_count = run_X_times gen 20000 in
+      let res, none_count, duplicates = run_X_times gen 20000 in
       let num_unique = List.length res in
-      Printf.printf "Number of unique %s: %d\n" label num_unique;
-      Printf.printf "Number of None results: %d\n" none_count;
-      if num_unique = 0 then Printf.printf "No unique %s found.\n" label
-      else (
-        Printf.printf "Found %d unique %s.\n" num_unique label;
-        Printf.printf "Sample unique %s:\n" label;
-        List.iter
-          (fun (l, count) ->
-            if count > 1 then
-              Printf.printf "Value: %s, Count: %d (repeated)\n"
-                (match l with
-                | l when label = "rbtree" -> "<tree>"
-                | l -> String.concat ", " (List.map string_of_int l))
-                count
-            else ())
-          res);
-      if !counter > 0 then
-        Printf.printf "Number of small sizes found: %d\n" !counter;
-      if !time_out_ref then
-        Printf.printf "The operation timed out after %d seconds.\n" timeout
-      else Printf.printf "Operation completed successfully.\n")
-    first_gens
+      let duplicate_count = List.length duplicates in
+      let total_duplicates =
+        List.fold_left (fun acc (_, count) -> acc + count - 1) 0 duplicates
+      in
+      print_csv_row oc label num_unique total_duplicates duplicate_count
+        none_count)
+    first_gens;
+  close_out oc;
+  Printf.printf "Results written to %s\n" output_file

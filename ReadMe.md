@@ -45,3 +45,9 @@ python scripts/run_luck.py
 ```sh
 opam exec -- dune exec enumeration
 ```
+
+### Running the number of unique values eval
+
+```sh
+opam exec -- dune exec num_unique
+```

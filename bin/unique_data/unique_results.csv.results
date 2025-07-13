@@ -1,0 +1,9 @@
+Generator,Unique_Count,Total_Duplicates,Duplicate_Count,None_Count
+sized_list,16790,3210,1,0
+unique_list,18926,1074,1,0
+even_list,20000,0,0,0
+sorted_list,702,1053,1,18245
+duplicate_list,18943,1057,1,0
+rbtree,17815,2185,1,0
+complete_tree,18468,1532,1,0
+depth_tree,15143,4857,1,0
