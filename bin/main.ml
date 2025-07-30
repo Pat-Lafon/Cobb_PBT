@@ -230,7 +230,7 @@ let eval_2_depth_tree =
       Arbitrary_builder.depth_tree_arbitraries )
 
 let eval_2_depth_bst_tree =
-  ( "bsts",
+  ( "bst",
     List.map
       (precondition_frequency (fun (size, lo, high, tree) ->
            Precondition.depth tree <= size
@@ -304,7 +304,7 @@ let eval_3_complete_tree =
       is_not_safe_complete )
 
 let eval_3_depth_bst_tree =
-  ( "bsts",
+  ( "bst",
     List.map
       (fun (name, f) ->
         precondition_frequency f

@@ -1,10 +1,10 @@
 Generator Name,Pass,Fail,Total,Time
-sketch_safe,16927,0,20200,0.3s
-prop7_safe,16955,0,20200,0.4s
+sketch_safe,16913,0,20200,0.2s
+prop7_safe,16893,0,20200,0.2s
 prop2_safe,0,0,20200,0.2s
-prop8_safe,16951,0,20200,0.3s
+prop8_safe,17040,0,20200,0.2s
 prop1_safe,0,0,20200,0.2s
 prop4_safe,0,0,20200,0.2s
-prop3_safe,16952,0,20200,0.2s
-prop6_safe,17031,0,20200,0.2s
-prop5_safe,16891,0,20200,0.2s
+prop3_safe,16931,0,20200,0.2s
+prop6_safe,16959,0,20200,0.2s
+prop5_safe,16968,0,20200,0.2s

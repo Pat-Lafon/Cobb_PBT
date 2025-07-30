@@ -4,7 +4,7 @@ prog1_syn,1797,0,20200,0.0s
 sketch_syn,1880,0,20200,0.0s
 prog2_cov,1140,0,20200,0.1s
 prog,1774,0,20200,0.0s
-sketch_cov,87,0,20200,0.1s
+sketch_cov,87,0,20200,0.2s
 prog2_safe,3271,0,20200,0.0s
 prog1_cov,105,0,20200,0.0s
 prog1_safe,1817,0,20200,0.0s

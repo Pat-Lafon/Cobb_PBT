@@ -43,10 +43,10 @@ list_names = [
     "Even List"
 ]
 tree_names = [
-    "Depth tree",
-    "Complete tree",
-    "BSTs",
-    "Red-Black tree",
+    "Depth Tree",
+    "Complete Tree",
+    "BST",
+    "Red-Black Tree",
 ]
 
 fontsize = 16
