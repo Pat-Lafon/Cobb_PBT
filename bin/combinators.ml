@@ -23,6 +23,11 @@ let freq_gen size ~base_case ~recursive_case =
     [ (1, base_case); (size, recursive_case) ]
     (QCheck_runner.random_state ())
 
+let unif_gen case1 case2 =
+  QCheck.Gen.frequency
+    [ (1, case1); (1, case2) ]
+    (QCheck_runner.random_state ())
+
 (* re-implementing unit functions from Cobb *)
 let sizecheck s = s <= 0
 let subs s = s - 1
