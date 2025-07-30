@@ -8,6 +8,13 @@ import glob
 import numpy as np
 
 
+# Translation function for clean graph labels
+def translate_label(name):
+    if name == "Depth Tree":
+        return "Sized Tree"
+    return name
+
+
 def color_from_name(name):
     if name == "prog":
         return "#228833"  # "green"
@@ -35,13 +42,7 @@ assert (
 ), "Invalid table name. Use 'table1' or 'table2'."
 
 # list of names for tables
-list_names = [
-    "Sized List",
-    "Duplicate List",
-    "Unique List",
-    "Sorted List",
-    "Even List"
-]
+list_names = ["Sized List", "Duplicate List", "Unique List", "Sorted List", "Even List"]
 tree_names = [
     "Depth Tree",
     "Complete Tree",
@@ -134,7 +135,7 @@ def create_graph(names, table_name):
                 else ([str(i) for i in range(1, len(data.keys()))] + ["sketch"])
             )
             ax.set_xticklabels(names, rotation=45, ha="right", fontsize=fontsize)
-            ax.set_title(name, fontsize=fontsize)
+            ax.set_title(translate_label(name), fontsize=fontsize)
 
             # Add x markers for zero values
             for i, value in enumerate(data.values()):

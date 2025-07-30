@@ -24,6 +24,18 @@ let run_X_times (f : unit -> 'a option) (num : int) :
   let duplicates = List.filter (fun (_, count) -> count > 1) !map in
   (!map, !none_count, duplicates)
 
+(* Translation function for clean CSV labels *)
+let translate_label = function
+  | "sized_list" -> "Sized List"
+  | "unique_list" -> "Unique List"
+  | "even_list" -> "Even List"
+  | "sorted_list" -> "Sorted List"
+  | "duplicate_list" -> "Duplicate List"
+  | "rbtree" -> "Red-Black Tree"
+  | "complete_tree" -> "Complete Tree"
+  | "depth_tree" -> "Sized Tree"
+  | label -> label (* fallback for any unknown labels *)
+
 (* List of (label, generator) for the first generator of each kind *)
 let first_gens =
   [
@@ -116,7 +128,7 @@ let () =
       let total_duplicates =
         List.fold_left (fun acc (_, count) -> acc + count - 1) 0 duplicates
       in
-      print_csv_row oc label num_unique total_duplicates duplicate_count
+      print_csv_row oc (translate_label label) num_unique total_duplicates duplicate_count
         none_count)
     first_gens;
   close_out oc;
