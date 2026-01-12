@@ -51,4 +51,16 @@
  (public_name num_unique)
  (name num_unique)
  (modules num_unique)
- (libraries core_unix.command_unix qcheck fileutils precondition combinators arbitrary_builder))
+ (libraries
+  core_unix.command_unix
+  qcheck
+  fileutils
+  precondition
+  combinators
+  arbitrary_builder))
+
+(executable
+ (public_name example)
+ (name example)
+ (modules example)
+ (libraries qcheck precondition arbitrary_builder))
