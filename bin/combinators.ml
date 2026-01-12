@@ -19,12 +19,12 @@ let gt_int_gen a =
   QCheck.Gen.int_range (a + 1) Int.max_int (QCheck_runner.random_state ())
 
 let freq_gen size ~base_case ~recursive_case =
-  QCheck.Gen.frequency
+  QCheck.Gen.oneof_list_weighted
     [ (1, base_case); (size, recursive_case) ]
     (QCheck_runner.random_state ())
 
 let unif_gen case1 case2 =
-  QCheck.Gen.frequency
+  QCheck.Gen.oneof_list_weighted
     [ (1, case1); (1, case2) ]
     (QCheck_runner.random_state ())
 
