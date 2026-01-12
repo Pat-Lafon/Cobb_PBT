@@ -2,6 +2,8 @@
 
 (name Cobb_PBT)
 
+(vendored_dirs qcheck)
+
 (generate_opam_files true)
 
 (source
@@ -21,17 +23,17 @@
  (description "A longer description")
  (depends
   (ocaml
-   (= 5.1.0))
+   (>= 4.14))
   (dune
    (>= 3.7))
   (fileutils
-   (= "0.6.6"))
+   (>= "0.6.0"))
   (core_unix
-   (= v0.15.0))
+   (>= "0.15.0"))
   (qcheck
-   (= "0.24"))
+   (path qcheck))
   (ocamlformat
-   (= "0.26.1")))
+   (>= "0.20")))
  (tags
   (topics "to describe" your project)))
 
