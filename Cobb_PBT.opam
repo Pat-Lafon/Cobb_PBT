@@ -14,7 +14,6 @@ depends: [
   "dune" {>= "3.7" & >= "3.7"}
   "fileutils" {>= "0.6.0"}
   "core_unix" {>= "0.15.0"}
-  "qcheck" {>= "0.20"}
   "ocamlformat" {>= "0.20"}
   "odoc" {with-doc}
 ]

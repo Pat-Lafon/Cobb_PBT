@@ -2,8 +2,6 @@
 
 (name Cobb_PBT)
 
-(vendored_dirs qcheck)
-
 (generate_opam_files true)
 
 (source
@@ -30,8 +28,6 @@
    (>= "0.6.0"))
   (core_unix
    (>= "0.15.0"))
-  (qcheck
-   (path qcheck))
   (ocamlformat
    (>= "0.20")))
  (tags
