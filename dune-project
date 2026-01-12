@@ -23,7 +23,7 @@
   (ocaml
    (= 5.1.0))
   (dune
-   (= 3.17.0))
+   (>= 3.7))
   (fileutils
    (= "0.6.6"))
   (core_unix
