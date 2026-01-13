@@ -29,7 +29,14 @@
   (core_unix
    (>= "0.15.0"))
   (ocamlformat
-   (>= "0.20")))
+   (>= "0.20"))
+  (ppxlib
+   (>= "0.36.0"))
+  (ppx_deriving
+   (>= "6.1.0"))
+  (ounit2 :with-test)
+  (alcotest
+   (and :with-test (>= "1.2.0"))))
  (tags
   (topics "to describe" your project)))
 

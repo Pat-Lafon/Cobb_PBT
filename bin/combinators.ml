@@ -22,6 +22,7 @@ let freq_gen size ~base_case ~recursive_case =
   QCheck.Gen.oneof_list_weighted
     [ (1, base_case); (size, recursive_case) ]
     (QCheck_runner.random_state ())
+    ()
 
 let unif_gen case1 case2 =
   QCheck.Gen.oneof_list_weighted
@@ -88,8 +89,8 @@ let tree_gen () =
     if s == 0 then Leaf
     else
       freq_gen s
-        ~base_case:(fun _ -> Leaf)
-        ~recursive_case:(fun _ ->
+        ~base_case:(fun () -> Leaf)
+        ~recursive_case:(fun () ->
           let l = gen_tree (subs s) in
           let v = int_gen () in
           let r = gen_tree (subs s) in
